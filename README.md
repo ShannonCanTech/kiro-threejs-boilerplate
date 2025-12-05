@@ -294,8 +294,7 @@ Thank you Kay for creating and sharing these amazing assets!
 
 ## 💬 Support
 
-- **Issues:** Open an issue on GitHub
-- **Discussions:** Use GitHub Discussions
+- There is no support. Use at own risk.
 - **Kiro:** Ask Kiro for help with Three.js questions
 
 ## 🎉 Get Started
