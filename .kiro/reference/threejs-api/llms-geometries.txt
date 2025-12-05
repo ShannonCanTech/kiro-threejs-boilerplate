@@ -1,0 +1,342 @@
+# three.js 
+
+> JavaScript 3D Library. 
+
+<a name="AnimationClipCreator"></a>
+
+## BoxLineGeometry ⇐ <code>BufferGeometry</code>
+A special type of box geometry intended for [LineSegments](LineSegments).
+
+```js
+const geometry = new THREE.BoxLineGeometry();
+const material = new THREE.LineBasicMaterial( { color: 0x00ff00 } );
+const lines = new THREE.LineSegments( geometry, material );
+scene.add( lines );
+```
+
+**Kind**: global class  
+**Extends**: <code>BufferGeometry</code>  
+<a name="new_BoxLineGeometry_new"></a>
+
+### new BoxLineGeometry([width], [height], [depth], [widthSegments], [heightSegments], [depthSegments])
+Constructs a new box line geometry.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [width] | <code>number</code> | <code>1</code> | The width. That is, the length of the edges parallel to the X axis. |
+| [height] | <code>number</code> | <code>1</code> | The height. That is, the length of the edges parallel to the Y axis. |
+| [depth] | <code>number</code> | <code>1</code> | The depth. That is, the length of the edges parallel to the Z axis. |
+| [widthSegments] | <code>number</code> | <code>1</code> | Number of segmented rectangular sections along the width of the sides. |
+| [heightSegments] | <code>number</code> | <code>1</code> | Number of segmented rectangular sections along the height of the sides. |
+| [depthSegments] | <code>number</code> | <code>1</code> | Number of segmented rectangular sections along the depth of the sides. |
+
+<a name="ConvexGeometry"></a>
+
+## ConvexGeometry ⇐ <code>BufferGeometry</code>
+This class can be used to generate a convex hull for a given array of 3D points.
+The average time complexity for this task is considered to be O(nlog(n)).
+
+```js
+const geometry = new ConvexGeometry( points );
+const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+const mesh = new THREE.Mesh( geometry, material );
+scene.add( mesh );
+```
+
+**Kind**: global class  
+**Extends**: <code>BufferGeometry</code>  
+<a name="new_ConvexGeometry_new"></a>
+
+### new ConvexGeometry(points)
+Constructs a new convex geometry.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| points | <code>Array.&lt;Vector3&gt;</code> | An array of points in 3D space which should be enclosed by the convex hull. |
+
+<a name="DecalGeometry"></a>
+
+## DecalGeometry ⇐ <code>BufferGeometry</code>
+This class can be used to create a decal mesh that serves different kinds of purposes e.g.
+adding unique details to models, performing dynamic visual environmental changes or covering seams.
+
+Please not that decal projections can be distorted when used around corners. More information at
+this GitHub issue: [Decal projections without distortions](https://github.com/mrdoob/three.js/issues/21187).
+
+Reference: [How to project decals](http://blog.wolfire.com/2009/06/how-to-project-decals/)
+
+```js
+const geometry = new DecalGeometry( mesh, position, orientation, size );
+const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+const mesh = new THREE.Mesh( geometry, material );
+scene.add( mesh );
+```
+
+**Kind**: global class  
+**Extends**: <code>BufferGeometry</code>  
+<a name="new_DecalGeometry_new"></a>
+
+### new DecalGeometry([mesh], [position], [orientation], [size])
+Constructs a new decal geometry.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [mesh] | <code>Mesh</code> | The base mesh the decal should be projected on. |
+| [position] | <code>Vector3</code> | The position of the decal projector. |
+| [orientation] | <code>Euler</code> | The orientation of the decal projector. |
+| [size] | <code>Vector3</code> | Tje scale of the decal projector. |
+
+<a name="module_ParametricFunctions"></a>
+
+## ParametricFunctions
+
+* [ParametricFunctions](#module_ParametricFunctions)
+    * [~klein(v, u, target)](#module_ParametricFunctions..klein)
+    * [~plane(u, v, target)](#module_ParametricFunctions..plane)
+    * [~mobius(u, t, target)](#module_ParametricFunctions..mobius)
+    * [~mobius3d(u, t, target)](#module_ParametricFunctions..mobius3d)
+
+<a name="module_ParametricFunctions..klein"></a>
+
+### ParametricFunctions~klein(v, u, target)
+A parametric function representing the Klein bottle.
+
+**Kind**: inner method of [<code>ParametricFunctions</code>](#module_ParametricFunctions)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| v | <code>number</code> | The `v` coordinate on the surface in the range `[0,1]`. |
+| u | <code>number</code> | The `u` coordinate on the surface in the range `[0,1]`. |
+| target | <code>Vector3</code> | The target vector that is used to store the method's result. |
+
+<a name="module_ParametricFunctions..plane"></a>
+
+### ParametricFunctions~plane(u, v, target)
+A parametric function representing a flat plane.
+
+**Kind**: inner method of [<code>ParametricFunctions</code>](#module_ParametricFunctions)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| u | <code>number</code> | The `u` coordinate on the surface in the range `[0,1]`. |
+| v | <code>number</code> | The `v` coordinate on the surface in the range `[0,1]`. |
+| target | <code>Vector3</code> | The target vector that is used to store the method's result. |
+
+<a name="module_ParametricFunctions..mobius"></a>
+
+### ParametricFunctions~mobius(u, t, target)
+A parametric function representing a flat mobius strip.
+
+**Kind**: inner method of [<code>ParametricFunctions</code>](#module_ParametricFunctions)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| u | <code>number</code> | The `u` coordinate on the surface in the range `[0,1]`. |
+| t | <code>number</code> | The `v` coordinate on the surface in the range `[0,1]`. |
+| target | <code>Vector3</code> | The target vector that is used to store the method's result. |
+
+<a name="module_ParametricFunctions..mobius3d"></a>
+
+### ParametricFunctions~mobius3d(u, t, target)
+A parametric function representing a volumetric mobius strip.
+
+**Kind**: inner method of [<code>ParametricFunctions</code>](#module_ParametricFunctions)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| u | <code>number</code> | The `u` coordinate on the surface in the range `[0,1]`. |
+| t | <code>number</code> | The `v` coordinate on the surface in the range `[0,1]`. |
+| target | <code>Vector3</code> | The target vector that is used to store the method's result. |
+
+<a name="ParametricGeometry"></a>
+
+## ParametricGeometry ⇐ <code>BufferGeometry</code>
+This class can be used to generate a geometry based on a parametric surface.
+
+Reference: [Mesh Generation with Python](https://prideout.net/blog/old/blog/index.html@p=44.html)
+
+```js
+const geometry = new THREE.ParametricGeometry( klein, 25, 25 );
+const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+const klein = new THREE.Mesh( geometry, material );
+scene.add( klein );
+```
+
+**Kind**: global class  
+**Extends**: <code>BufferGeometry</code>  
+
+* [ParametricGeometry](#ParametricGeometry) ⇐ <code>BufferGeometry</code>
+    * [new ParametricGeometry(func, [slices], [stacks])](#new_ParametricGeometry_new)
+    * _instance_
+        * [.parameters](#ParametricGeometry+parameters) : <code>Object</code>
+    * _inner_
+        * [~Func](#ParametricGeometry..Func) : <code>function</code>
+
+<a name="new_ParametricGeometry_new"></a>
+
+### new ParametricGeometry(func, [slices], [stacks])
+Constructs a new parametric geometry.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| func | [<code>Func</code>](#ParametricGeometry..Func) |  | The parametric function. Default is a function that generates a curved plane surface. |
+| [slices] | <code>number</code> | <code>8</code> | The number of slices to use for the parametric function. |
+| [stacks] | <code>number</code> | <code>8</code> | The stacks of slices to use for the parametric function. |
+
+<a name="ParametricGeometry+parameters"></a>
+
+### parametricGeometry.parameters : <code>Object</code>
+Holds the constructor parameters that have been
+used to generate the geometry. Any modification
+after instantiation does not change the geometry.
+
+**Kind**: instance property of [<code>ParametricGeometry</code>](#ParametricGeometry)  
+<a name="ParametricGeometry..Func"></a>
+
+### ParametricGeometry~Func : <code>function</code>
+Parametric function definition of `ParametricGeometry`.
+
+**Kind**: inner typedef of [<code>ParametricGeometry</code>](#ParametricGeometry)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| u | <code>number</code> | The `u` coordinate on the surface in the range `[0,1]`. |
+| v | <code>number</code> | The `v` coordinate on the surface in the range `[0,1]`. |
+| target | <code>Vector3</code> | The target vector that is used to store the method's result. |
+
+<a name="RoundedBoxGeometry"></a>
+
+## RoundedBoxGeometry ⇐ <code>BoxGeometry</code>
+A special type of box geometry with rounded corners and edges.
+
+```js
+const geometry = new THREE.RoundedBoxGeometry();
+const material = new THREE.MeshStandardMaterial( { color: 0x00ff00 } );
+const cube = new THREE.Mesh( geometry, material );
+scene.add( cube );
+```
+
+**Kind**: global class  
+**Extends**: <code>BoxGeometry</code>  
+<a name="new_RoundedBoxGeometry_new"></a>
+
+### new RoundedBoxGeometry([width], [height], [depth], [segments], [radius])
+Constructs a new rounded box geometry.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [width] | <code>number</code> | <code>1</code> | The width. That is, the length of the edges parallel to the X axis. |
+| [height] | <code>number</code> | <code>1</code> | The height. That is, the length of the edges parallel to the Y axis. |
+| [depth] | <code>number</code> | <code>1</code> | The depth. That is, the length of the edges parallel to the Z axis. |
+| [segments] | <code>number</code> | <code>2</code> | Number of segmented that form the rounded corners. |
+| [radius] | <code>number</code> | <code>0.1</code> | The radius of the rounded corners. |
+
+<a name="TeapotGeometry"></a>
+
+## TeapotGeometry ⇐ <code>BufferGeometry</code>
+Tessellates the famous Utah teapot database by Martin Newell into triangles.
+
+The teapot should normally be rendered as a double sided object, since for some
+patches both sides can be seen, e.g., the gap around the lid and inside the spout.
+
+Segments 'n' determines the number of triangles output. Total triangles = 32*2*n*n - 8*n
+(degenerates at the top and bottom cusps are deleted).
+
+Code based on [SPD software](http://tog.acm.org/resources/SPD/)
+Created for the Udacity course [Interactive Rendering](http://bit.ly/ericity)
+
+```js
+const geometry = new TeapotGeometry( 50, 18 );
+const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+const teapot = new THREE.Mesh( geometry, material );
+scene.add( teapot );
+```
+
+**Kind**: global class  
+**Extends**: <code>BufferGeometry</code>  
+<a name="new_TeapotGeometry_new"></a>
+
+### new TeapotGeometry([size], [segments], [bottom], [lid], [body], [fitLid], [blinn])
+Constructs a new teapot geometry.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [size] | <code>number</code> | <code>50</code> | Relative scale of the teapot. |
+| [segments] | <code>number</code> | <code>10</code> | Number of line segments to subdivide each patch edge. |
+| [bottom] | <code>boolean</code> | <code>true</code> | Whether the bottom of the teapot is generated or not. |
+| [lid] | <code>boolean</code> | <code>true</code> | Whether the lid is generated or not. |
+| [body] | <code>boolean</code> | <code>true</code> | Whether the body is generated or not. |
+| [fitLid] | <code>boolean</code> | <code>true</code> | Whether the lid is slightly stretched to prevent gaps between the body and lid or not. |
+| [blinn] | <code>boolean</code> | <code>true</code> | Whether the teapot is scaled vertically for better aesthetics or not. |
+
+<a name="TextGeometry"></a>
+
+## TextGeometry ⇐ <code>ExtrudeGeometry</code>
+A class for generating text as a single geometry. It is constructed by providing a string of text, and a set of
+parameters consisting of a loaded font and extrude settings.
+
+See the [FontLoader](FontLoader) page for additional details.
+
+`TextGeometry` uses [typeface.json](http://gero3.github.io/facetype.js/) generated fonts.
+Some existing fonts can be found located in `/examples/fonts`.
+
+```js
+const loader = new FontLoader();
+const font = await loader.loadAsync( 'fonts/helvetiker_regular.typeface.json' );
+const geometry = new TextGeometry( 'Hello three.js!', {
+	font: font,
+	size: 80,
+	depth: 5,
+	curveSegments: 12
+} );
+```
+
+**Kind**: global class  
+**Extends**: <code>ExtrudeGeometry</code>  
+
+* [TextGeometry](#TextGeometry) ⇐ <code>ExtrudeGeometry</code>
+    * [new TextGeometry(text, [parameters])](#new_TextGeometry_new)
+    * [~Options](#TextGeometry..Options) : <code>Object</code>
+
+<a name="new_TextGeometry_new"></a>
+
+### new TextGeometry(text, [parameters])
+Constructs a new text geometry.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| text | <code>string</code> | The text that should be transformed into a geometry. |
+| [parameters] | [<code>Options</code>](#TextGeometry..Options) | The text settings. |
+
+<a name="TextGeometry..Options"></a>
+
+### TextGeometry~Options : <code>Object</code>
+Represents the `options` type of the geometry's constructor.
+
+**Kind**: inner typedef of [<code>TextGeometry</code>](#TextGeometry)  
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [font] | <code>Font</code> |  | The font. |
+| [size] | <code>number</code> | <code>100</code> | The text size. |
+| [depth] | <code>number</code> | <code>50</code> | Depth to extrude the shape. |
+| [curveSegments] | <code>number</code> | <code>12</code> | Number of points on the curves. |
+| [steps] | <code>number</code> | <code>1</code> | Number of points used for subdividing segments along the depth of the extruded spline. |
+| [bevelEnabled] | <code>boolean</code> | <code>false</code> | Whether to beveling to the shape or not. |
+| [bevelThickness] | <code>number</code> | <code>10</code> | How deep into the original shape the bevel goes. |
+| [bevelSize] | <code>number</code> | <code>8</code> | Distance from the shape outline that the bevel extends. |
+| [bevelOffset] | <code>number</code> | <code>0</code> | Distance from the shape outline that the bevel starts. |
+| [bevelSegments] | <code>number</code> | <code>3</code> | Number of bevel layers. |
+| [extrudePath] | <code>Curve</code> | <code></code> | A 3D spline path along which the shape should be extruded. Bevels not supported for path extrusion. |
+| [UVGenerator] | <code>Object</code> |  | An object that provides UV generator functions for custom UV generation. |
+
+<a name="LightProbeHelper"></a>
+

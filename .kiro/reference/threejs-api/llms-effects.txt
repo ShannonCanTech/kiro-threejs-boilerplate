@@ -1,0 +1,491 @@
+# three.js 
+
+> JavaScript 3D Library. 
+
+<a name="AnimationClipCreator"></a>
+
+## AnaglyphEffect
+A class that creates an anaglyph effect.
+
+Note that this class can only be used with [WebGLRenderer](WebGLRenderer).
+When using [WebGPURenderer](WebGPURenderer), use [AnaglyphPassNode](AnaglyphPassNode).
+
+**Kind**: global class  
+
+* [AnaglyphEffect](#AnaglyphEffect)
+    * [new AnaglyphEffect(renderer, width, height)](#new_AnaglyphEffect_new)
+    * [.setSize(width, height)](#AnaglyphEffect+setSize)
+    * [.render(scene, camera)](#AnaglyphEffect+render)
+    * [.dispose()](#AnaglyphEffect+dispose)
+
+<a name="new_AnaglyphEffect_new"></a>
+
+### new AnaglyphEffect(renderer, width, height)
+Constructs a new anaglyph effect.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| renderer | <code>WebGLRenderer</code> |  | The renderer. |
+| width | <code>number</code> | <code>512</code> | The width of the effect in physical pixels. |
+| height | <code>number</code> | <code>512</code> | The height of the effect in physical pixels. |
+
+<a name="AnaglyphEffect+setSize"></a>
+
+### anaglyphEffect.setSize(width, height)
+Resizes the effect.
+
+**Kind**: instance method of [<code>AnaglyphEffect</code>](#AnaglyphEffect)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| width | <code>number</code> | The width of the effect in logical pixels. |
+| height | <code>number</code> | The height of the effect in logical pixels. |
+
+<a name="AnaglyphEffect+render"></a>
+
+### anaglyphEffect.render(scene, camera)
+When using this effect, this method should be called instead of the
+default [WebGLRenderer#render](WebGLRenderer#render).
+
+**Kind**: instance method of [<code>AnaglyphEffect</code>](#AnaglyphEffect)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| scene | <code>Object3D</code> | The scene to render. |
+| camera | <code>Camera</code> | The camera. |
+
+<a name="AnaglyphEffect+dispose"></a>
+
+### anaglyphEffect.dispose()
+Frees internal resources. This method should be called
+when the effect is no longer required.
+
+**Kind**: instance method of [<code>AnaglyphEffect</code>](#AnaglyphEffect)  
+<a name="AsciiEffect"></a>
+
+## AsciiEffect
+A class that creates an ASCII effect.
+
+The ASCII generation is based on [jsascii](https://github.com/hassadee/jsascii/blob/master/jsascii.js).
+
+**Kind**: global class  
+
+* [AsciiEffect](#AsciiEffect)
+    * [new AsciiEffect(renderer, [charSet], [options])](#new_AsciiEffect_new)
+    * _instance_
+        * [.domElement](#AsciiEffect+domElement) : <code>HTMLDivElement</code>
+        * [.setSize(w, h)](#AsciiEffect+setSize)
+        * [.render(scene, camera)](#AsciiEffect+render)
+    * _inner_
+        * [~Options](#AsciiEffect..Options) : <code>Object</code>
+
+<a name="new_AsciiEffect_new"></a>
+
+### new AsciiEffect(renderer, [charSet], [options])
+Constructs a new ASCII effect.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| renderer | <code>WebGLRenderer</code> |  | The renderer. |
+| [charSet] | <code>string</code> | <code>&quot;&#x27; .:-&#x3D;+*#%@&#x27;&quot;</code> | The char set. |
+| [options] | [<code>Options</code>](#AsciiEffect..Options) |  | The configuration parameter. |
+
+<a name="AsciiEffect+domElement"></a>
+
+### asciiEffect.domElement : <code>HTMLDivElement</code>
+The DOM element of the effect. This element must be used instead of the
+default [WebGLRenderer#domElement](WebGLRenderer#domElement).
+
+**Kind**: instance property of [<code>AsciiEffect</code>](#AsciiEffect)  
+<a name="AsciiEffect+setSize"></a>
+
+### asciiEffect.setSize(w, h)
+Resizes the effect.
+
+**Kind**: instance method of [<code>AsciiEffect</code>](#AsciiEffect)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| w | <code>number</code> | The width of the effect in logical pixels. |
+| h | <code>number</code> | The height of the effect in logical pixels. |
+
+<a name="AsciiEffect+render"></a>
+
+### asciiEffect.render(scene, camera)
+When using this effect, this method should be called instead of the
+default [WebGLRenderer#render](WebGLRenderer#render).
+
+**Kind**: instance method of [<code>AsciiEffect</code>](#AsciiEffect)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| scene | <code>Object3D</code> | The scene to render. |
+| camera | <code>Camera</code> | The camera. |
+
+<a name="AsciiEffect..Options"></a>
+
+### AsciiEffect~Options : <code>Object</code>
+This type represents configuration settings of `AsciiEffect`.
+
+**Kind**: inner typedef of [<code>AsciiEffect</code>](#AsciiEffect)  
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [resolution] | <code>number</code> | <code>0.15</code> | A higher value leads to more details. |
+| [scale] | <code>number</code> | <code>1</code> | The scale of the effect. |
+| [color] | <code>boolean</code> | <code>false</code> | Whether colors should be enabled or not. Better quality but slows down rendering. |
+| [alpha] | <code>boolean</code> | <code>false</code> | Whether transparency should be enabled or not. |
+| [block] | <code>boolean</code> | <code>false</code> | Whether blocked characters should be enabled or not. |
+| [invert] | <code>boolean</code> | <code>false</code> | Whether colors should be inverted or not. |
+| [strResolution] | <code>&#x27;low&#x27;</code> \| <code>&#x27;medium&#x27;</code> \| <code>&#x27;high&#x27;</code> | <code>&#x27;low&#x27;</code> | The string resolution. |
+
+<a name="OutlineEffect"></a>
+
+## OutlineEffect
+An outline effect for toon shaders.
+
+Note that this class can only be used with [WebGLRenderer](WebGLRenderer).
+When using [WebGPURenderer](WebGPURenderer), use [ToonOutlinePassNode](ToonOutlinePassNode).
+
+```js
+const effect = new OutlineEffect( renderer );
+
+function render() {
+
+	effect.render( scene, camera );
+
+}
+```
+
+**Kind**: global class  
+
+* [OutlineEffect](#OutlineEffect)
+    * [new OutlineEffect(renderer, [parameters])](#new_OutlineEffect_new)
+    * _instance_
+        * [.render(scene, camera)](#OutlineEffect+render)
+        * [.renderOutline(scene, camera)](#OutlineEffect+renderOutline)
+        * [.setSize(width, height)](#OutlineEffect+setSize)
+    * _inner_
+        * [~Options](#OutlineEffect..Options) : <code>Object</code>
+
+<a name="new_OutlineEffect_new"></a>
+
+### new OutlineEffect(renderer, [parameters])
+Constructs a new outline effect.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| renderer | <code>WebGLRenderer</code> | The renderer. |
+| [parameters] | [<code>Options</code>](#OutlineEffect..Options) | The configuration parameter. |
+
+<a name="OutlineEffect+render"></a>
+
+### outlineEffect.render(scene, camera)
+When using this effect, this method should be called instead of the
+default [WebGLRenderer#render](WebGLRenderer#render).
+
+**Kind**: instance method of [<code>OutlineEffect</code>](#OutlineEffect)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| scene | <code>Object3D</code> | The scene to render. |
+| camera | <code>Camera</code> | The camera. |
+
+<a name="OutlineEffect+renderOutline"></a>
+
+### outlineEffect.renderOutline(scene, camera)
+This method can be used to render outlines in VR.
+
+```js
+const effect = new OutlineEffect( renderer );
+let renderingOutline = false;
+
+scene.onAfterRender = function () {
+
+	if ( renderingOutline ) return;
+
+	renderingOutline = true;
+	effect.renderOutline( scene, camera );
+	renderingOutline = false;
+};
+
+function render() {
+	renderer.render( scene, camera );
+}
+```
+
+**Kind**: instance method of [<code>OutlineEffect</code>](#OutlineEffect)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| scene | <code>Object3D</code> | The scene to render. |
+| camera | <code>Camera</code> | The camera. |
+
+<a name="OutlineEffect+setSize"></a>
+
+### outlineEffect.setSize(width, height)
+Resizes the effect.
+
+**Kind**: instance method of [<code>OutlineEffect</code>](#OutlineEffect)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| width | <code>number</code> | The width of the effect in logical pixels. |
+| height | <code>number</code> | The height of the effect in logical pixels. |
+
+<a name="OutlineEffect..Options"></a>
+
+### OutlineEffect~Options : <code>Object</code>
+This type represents configuration settings of `OutlineEffect`.
+
+**Kind**: inner typedef of [<code>OutlineEffect</code>](#OutlineEffect)  
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [defaultThickness] | <code>number</code> | <code>0.003</code> | The outline thickness. |
+| [defaultColor] | <code>Array.&lt;number&gt;</code> | <code>[0,0,0]</code> | The outline color. |
+| [defaultAlpha] | <code>number</code> | <code>1</code> | The outline alpha value. |
+| [defaultKeepAlive] | <code>boolean</code> | <code>false</code> | Whether to keep alive cached internal materials or not. |
+
+<a name="ParallaxBarrierEffect"></a>
+
+## ParallaxBarrierEffect
+A class that creates an parallax barrier effect.
+
+Note that this class can only be used with [WebGLRenderer](WebGLRenderer).
+When using [WebGPURenderer](WebGPURenderer), use [ParallaxBarrierPassNode](ParallaxBarrierPassNode).
+
+**Kind**: global class  
+
+* [ParallaxBarrierEffect](#ParallaxBarrierEffect)
+    * [new ParallaxBarrierEffect(renderer)](#new_ParallaxBarrierEffect_new)
+    * [.setSize(width, height)](#ParallaxBarrierEffect+setSize)
+    * [.render(scene, camera)](#ParallaxBarrierEffect+render)
+    * [.dispose()](#ParallaxBarrierEffect+dispose)
+
+<a name="new_ParallaxBarrierEffect_new"></a>
+
+### new ParallaxBarrierEffect(renderer)
+Constructs a new parallax barrier effect.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| renderer | <code>WebGLRenderer</code> | The renderer. |
+
+<a name="ParallaxBarrierEffect+setSize"></a>
+
+### parallaxBarrierEffect.setSize(width, height)
+Resizes the effect.
+
+**Kind**: instance method of [<code>ParallaxBarrierEffect</code>](#ParallaxBarrierEffect)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| width | <code>number</code> | The width of the effect in logical pixels. |
+| height | <code>number</code> | The height of the effect in logical pixels. |
+
+<a name="ParallaxBarrierEffect+render"></a>
+
+### parallaxBarrierEffect.render(scene, camera)
+When using this effect, this method should be called instead of the
+default [WebGLRenderer#render](WebGLRenderer#render).
+
+**Kind**: instance method of [<code>ParallaxBarrierEffect</code>](#ParallaxBarrierEffect)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| scene | <code>Object3D</code> | The scene to render. |
+| camera | <code>Camera</code> | The camera. |
+
+<a name="ParallaxBarrierEffect+dispose"></a>
+
+### parallaxBarrierEffect.dispose()
+Frees internal resources. This method should be called
+when the effect is no longer required.
+
+**Kind**: instance method of [<code>ParallaxBarrierEffect</code>](#ParallaxBarrierEffect)  
+<a name="PeppersGhostEffect"></a>
+
+## PeppersGhostEffect
+A class that implements a peppers ghost effect.
+
+Reference: [Reflective Prism](http://www.instructables.com/id/Reflective-Prism/?ALLSTEPS)
+
+**Kind**: global class  
+
+* [PeppersGhostEffect](#PeppersGhostEffect)
+    * [new PeppersGhostEffect(renderer)](#new_PeppersGhostEffect_new)
+    * [.setSize(width, height)](#PeppersGhostEffect+setSize)
+    * [.render(scene, camera)](#PeppersGhostEffect+render)
+
+<a name="new_PeppersGhostEffect_new"></a>
+
+### new PeppersGhostEffect(renderer)
+Constructs a new peppers ghost effect.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| renderer | <code>WebGPURenderer</code> \| <code>WebGLRenderer</code> | The renderer. |
+
+<a name="PeppersGhostEffect+setSize"></a>
+
+### peppersGhostEffect.setSize(width, height)
+Resizes the effect.
+
+**Kind**: instance method of [<code>PeppersGhostEffect</code>](#PeppersGhostEffect)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| width | <code>number</code> | The width of the effect in logical pixels. |
+| height | <code>number</code> | The height of the effect in logical pixels. |
+
+<a name="PeppersGhostEffect+render"></a>
+
+### peppersGhostEffect.render(scene, camera)
+When using this effect, this method should be called instead of the
+default [WebGLRenderer#render](WebGLRenderer#render).
+
+**Kind**: instance method of [<code>PeppersGhostEffect</code>](#PeppersGhostEffect)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| scene | <code>Object3D</code> | The scene to render. |
+| camera | <code>Camera</code> | The camera. |
+
+<a name="StereoEffect"></a>
+
+## StereoEffect
+A class that creates an stereo effect.
+
+Note that this class can only be used with [WebGLRenderer](WebGLRenderer).
+When using [WebGPURenderer](WebGPURenderer), use [StereoPassNode](StereoPassNode).
+
+**Kind**: global class  
+
+* [StereoEffect](#StereoEffect)
+    * [new StereoEffect(renderer)](#new_StereoEffect_new)
+    * [.setEyeSeparation(eyeSep)](#StereoEffect+setEyeSeparation)
+    * [.setSize(width, height)](#StereoEffect+setSize)
+    * [.render(scene, camera)](#StereoEffect+render)
+
+<a name="new_StereoEffect_new"></a>
+
+### new StereoEffect(renderer)
+Constructs a new stereo effect.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| renderer | <code>WebGLRenderer</code> | The renderer. |
+
+<a name="StereoEffect+setEyeSeparation"></a>
+
+### stereoEffect.setEyeSeparation(eyeSep)
+Sets the given eye separation.
+
+**Kind**: instance method of [<code>StereoEffect</code>](#StereoEffect)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| eyeSep | <code>number</code> | The eye separation to set. |
+
+<a name="StereoEffect+setSize"></a>
+
+### stereoEffect.setSize(width, height)
+Resizes the effect.
+
+**Kind**: instance method of [<code>StereoEffect</code>](#StereoEffect)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| width | <code>number</code> | The width of the effect in logical pixels. |
+| height | <code>number</code> | The height of the effect in logical pixels. |
+
+<a name="StereoEffect+render"></a>
+
+### stereoEffect.render(scene, camera)
+When using this effect, this method should be called instead of the
+default [WebGLRenderer#render](WebGLRenderer#render).
+
+**Kind**: instance method of [<code>StereoEffect</code>](#StereoEffect)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| scene | <code>Object3D</code> | The scene to render. |
+| camera | <code>Camera</code> | The camera. |
+
+<a name="DebugEnvironment"></a>
+
+## DebugEnvironment ⇐ <code>Scene</code>
+This class represents a scene with a very basic room setup that can be used as
+input for [PMREMGenerator#fromScene](PMREMGenerator#fromScene). The resulting PMREM represents the room's
+lighting and can be used for Image Based Lighting by assigning it to [Scene#environment](Scene#environment)
+or directly as an environment map to PBR materials.
+
+This class uses a simple room setup and should only be used for development purposes.
+A more appropriate setup for production is [RoomEnvironment](RoomEnvironment).
+
+```js
+const environment = new DebugEnvironment();
+const pmremGenerator = new THREE.PMREMGenerator( renderer );
+
+const envMap = pmremGenerator.fromScene( environment ).texture;
+scene.environment = envMap;
+```
+
+**Kind**: global class  
+**Extends**: <code>Scene</code>  
+
+* [DebugEnvironment](#DebugEnvironment) ⇐ <code>Scene</code>
+    * [new DebugEnvironment()](#new_DebugEnvironment_new)
+    * [.dispose()](#DebugEnvironment+dispose)
+
+<a name="new_DebugEnvironment_new"></a>
+
+### new DebugEnvironment()
+Constructs a new debug environment.
+
+<a name="DebugEnvironment+dispose"></a>
+
+### debugEnvironment.dispose()
+Frees internal resources. This method should be called
+when the environment is no longer required.
+
+**Kind**: instance method of [<code>DebugEnvironment</code>](#DebugEnvironment)  
+<a name="RoomEnvironment"></a>
+
+## RoomEnvironment ⇐ <code>Scene</code>
+This class represents a scene with a basic room setup that can be used as
+input for [PMREMGenerator#fromScene](PMREMGenerator#fromScene). The resulting PMREM represents the room's
+lighting and can be used for Image Based Lighting by assigning it to [Scene#environment](Scene#environment)
+or directly as an environment map to PBR materials.
+
+The implementation is based on the [EnvironmentScene](https://github.com/google/model-viewer/blob/master/packages/model-viewer/src/three-components/EnvironmentScene.ts)
+component from the `model-viewer` project.
+
+```js
+const environment = new RoomEnvironment();
+const pmremGenerator = new THREE.PMREMGenerator( renderer );
+
+const envMap = pmremGenerator.fromScene( environment ).texture;
+scene.environment = envMap;
+```
+
+**Kind**: global class  
+**Extends**: <code>Scene</code>  
+<a name="RoomEnvironment+dispose"></a>
+
+### roomEnvironment.dispose()
+Frees internal resources. This method should be called
+when the environment is no longer required.
+
+**Kind**: instance method of [<code>RoomEnvironment</code>](#RoomEnvironment)  
+<a name="DRACOExporter"></a>
+

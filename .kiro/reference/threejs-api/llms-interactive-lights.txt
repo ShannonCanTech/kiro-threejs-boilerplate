@@ -1,0 +1,671 @@
+# three.js 
+
+> JavaScript 3D Library. 
+
+<a name="AnimationClipCreator"></a>
+
+## LightProbeGenerator
+Utility class for creating instances of [LightProbe](LightProbe).
+
+**Kind**: global class  
+
+* [LightProbeGenerator](#LightProbeGenerator)
+    * [.fromCubeTexture(cubeTexture)](#LightProbeGenerator.fromCubeTexture) ⇒ <code>LightProbe</code>
+    * [.fromCubeRenderTarget(renderer, cubeRenderTarget)](#LightProbeGenerator.fromCubeRenderTarget) ⇒ <code>Promise.&lt;LightProbe&gt;</code>
+
+<a name="LightProbeGenerator.fromCubeTexture"></a>
+
+### LightProbeGenerator.fromCubeTexture(cubeTexture) ⇒ <code>LightProbe</code>
+Creates a light probe from the given (radiance) environment map.
+The method expects that the environment map is represented as a cube texture.
+
+**Kind**: static method of [<code>LightProbeGenerator</code>](#LightProbeGenerator)  
+**Returns**: <code>LightProbe</code> - The created light probe.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| cubeTexture | <code>CubeTexture</code> | The environment map. |
+
+<a name="LightProbeGenerator.fromCubeRenderTarget"></a>
+
+### LightProbeGenerator.fromCubeRenderTarget(renderer, cubeRenderTarget) ⇒ <code>Promise.&lt;LightProbe&gt;</code>
+Creates a light probe from the given (radiance) environment map.
+The method expects that the environment map is represented as a cube render target.
+
+The cube render target must be in RGBA so `cubeRenderTarget.texture.format` must be
+set to [RGBAFormat](RGBAFormat).
+
+**Kind**: static method of [<code>LightProbeGenerator</code>](#LightProbeGenerator)  
+**Returns**: <code>Promise.&lt;LightProbe&gt;</code> - A Promise that resolves with the created light probe.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| renderer | <code>WebGPURenderer</code> \| <code>WebGLRenderer</code> | The renderer. |
+| cubeRenderTarget | <code>CubeRenderTarget</code> \| <code>WebGLCubeRenderTarget</code> | The environment map. |
+
+<a name="RectAreaLightTexturesLib"></a>
+
+## RectAreaLightTexturesLib
+Texture library for [RectAreaLight](RectAreaLight). This class holds the LTC BRDF data
+in data textures for further use in the renderer.
+
+Reference: Real-Time Polygonal-Light Shading with Linearly Transformed Cosines
+by Eric Heitz, Jonathan Dupuy, Stephen Hill and David Neubelt. [Code](https://github.com/selfshadow/ltc_code/).
+
+NOTE: This is a temporary location for the BRDF approximation texture data
+based off of Eric Heitz's work (see citation). BRDF data for
+`RectAreaLight` is currently approximated using a precomputed texture
+of roughly 80kb in size. The hope is to find a better way to include
+the large texture data before including the full RectAreaLight implementation
+in the main build files.
+
+**Kind**: global class  
+
+* [RectAreaLightTexturesLib](#RectAreaLightTexturesLib)
+    * [.LTC_HALF_1](#RectAreaLightTexturesLib.LTC_HALF_1) : <code>DataTexture</code>
+    * [.LTC_HALF_2](#RectAreaLightTexturesLib.LTC_HALF_2) : <code>DataTexture</code>
+    * [.LTC_FLOAT_1](#RectAreaLightTexturesLib.LTC_FLOAT_1) : <code>DataTexture</code>
+    * [.LTC_FLOAT_2](#RectAreaLightTexturesLib.LTC_FLOAT_2) : <code>DataTexture</code>
+    * [.init()](#RectAreaLightTexturesLib.init) ⇒ [<code>RectAreaLightTexturesLib</code>](#RectAreaLightTexturesLib)
+
+<a name="RectAreaLightTexturesLib.LTC_HALF_1"></a>
+
+### RectAreaLightTexturesLib.LTC\_HALF\_1 : <code>DataTexture</code>
+The first LTC FP16 data texture.
+
+**Kind**: static property of [<code>RectAreaLightTexturesLib</code>](#RectAreaLightTexturesLib)  
+**Default**: <code>null</code>  
+<a name="RectAreaLightTexturesLib.LTC_HALF_2"></a>
+
+### RectAreaLightTexturesLib.LTC\_HALF\_2 : <code>DataTexture</code>
+The second LTC FP16 data texture.
+
+**Kind**: static property of [<code>RectAreaLightTexturesLib</code>](#RectAreaLightTexturesLib)  
+**Default**: <code>null</code>  
+<a name="RectAreaLightTexturesLib.LTC_FLOAT_1"></a>
+
+### RectAreaLightTexturesLib.LTC\_FLOAT\_1 : <code>DataTexture</code>
+The first LTC FP32 data texture.
+
+**Kind**: static property of [<code>RectAreaLightTexturesLib</code>](#RectAreaLightTexturesLib)  
+**Default**: <code>null</code>  
+<a name="RectAreaLightTexturesLib.LTC_FLOAT_2"></a>
+
+### RectAreaLightTexturesLib.LTC\_FLOAT\_2 : <code>DataTexture</code>
+The second LTC FP32 data texture.
+
+**Kind**: static property of [<code>RectAreaLightTexturesLib</code>](#RectAreaLightTexturesLib)  
+**Default**: <code>null</code>  
+<a name="RectAreaLightTexturesLib.init"></a>
+
+### RectAreaLightTexturesLib.init() ⇒ [<code>RectAreaLightTexturesLib</code>](#RectAreaLightTexturesLib)
+Inits the texture library.
+
+**Kind**: static method of [<code>RectAreaLightTexturesLib</code>](#RectAreaLightTexturesLib)  
+<a name="RectAreaLightUniformsLib"></a>
+
+## RectAreaLightUniformsLib
+This class is only relevant when using [RectAreaLight](RectAreaLight) with [WebGLRenderer](WebGLRenderer).
+
+Before rect area lights can be used, the internal uniform library of the renderer must be
+enhanced with the following code.
+
+```js
+RectAreaLightUniformsLib.init();
+```
+
+**Kind**: global class  
+<a name="RectAreaLightUniformsLib.init"></a>
+
+### RectAreaLightUniformsLib.init()
+Inits the uniform library required when using rect area lights.
+
+**Kind**: static method of [<code>RectAreaLightUniformsLib</code>](#RectAreaLightUniformsLib)  
+<a name="Line2"></a>
+
+## Line2 ⇐ <code>LineSegments2</code>
+A polyline drawn between vertices.
+
+This adds functionality beyond [Line](Line), like arbitrary line width and changing width to
+be in world units.It extends [LineSegments2](LineSegments2), simplifying constructing segments from a
+chain of points.
+
+This module can only be used with [WebGLRenderer](WebGLRenderer). When using [WebGPURenderer](WebGPURenderer),
+import the class from `lines/webgpu/Line2.js`.
+
+```js
+const geometry = new LineGeometry();
+geometry.setPositions( positions );
+geometry.setColors( colors );
+
+const material = new LineMaterial( { linewidth: 5, vertexColors: true } };
+
+const line = new Line2( geometry, material );
+scene.add( line );
+```
+
+**Kind**: global class  
+**Extends**: <code>LineSegments2</code>  
+
+* [Line2](#Line2) ⇐ <code>LineSegments2</code>
+    * [new Line2([geometry], [material])](#new_Line2_new)
+    * [.isLine2](#Line2+isLine2) : <code>boolean</code>
+
+<a name="new_Line2_new"></a>
+
+### new Line2([geometry], [material])
+Constructs a new wide line.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [geometry] | <code>LineGeometry</code> | The line geometry. |
+| [material] | <code>LineMaterial</code> | The line material. |
+
+<a name="Line2+isLine2"></a>
+
+### line2.isLine2 : <code>boolean</code>
+This flag can be used for type testing.
+
+**Kind**: instance property of [<code>Line2</code>](#Line2)  
+**Default**: <code>true</code>  
+**Read only**: true  
+<a name="LineGeometry"></a>
+
+## LineGeometry ⇐ <code>LineSegmentsGeometry</code>
+A chain of vertices, forming a polyline.
+
+This is used in [Line2](Line2) to describe the shape.
+
+```js
+const points = [
+	new THREE.Vector3( - 10, 0, 0 ),
+	new THREE.Vector3( 0, 5, 0 ),
+	new THREE.Vector3( 10, 0, 0 ),
+];
+
+const geometry = new LineGeometry();
+geometry.setFromPoints( points );
+```
+
+**Kind**: global class  
+**Extends**: <code>LineSegmentsGeometry</code>  
+
+* [LineGeometry](#LineGeometry) ⇐ <code>LineSegmentsGeometry</code>
+    * [new LineGeometry()](#new_LineGeometry_new)
+    * [.isLineGeometry](#LineGeometry+isLineGeometry) : <code>boolean</code>
+    * [.setPositions(array)](#LineGeometry+setPositions) ⇒ [<code>LineGeometry</code>](#LineGeometry)
+    * [.setColors(array)](#LineGeometry+setColors) ⇒ [<code>LineGeometry</code>](#LineGeometry)
+    * [.setFromPoints(points)](#LineGeometry+setFromPoints) ⇒ [<code>LineGeometry</code>](#LineGeometry)
+    * [.fromLine(line)](#LineGeometry+fromLine) ⇒ [<code>LineGeometry</code>](#LineGeometry)
+
+<a name="new_LineGeometry_new"></a>
+
+### new LineGeometry()
+Constructs a new line geometry.
+
+<a name="LineGeometry+isLineGeometry"></a>
+
+### lineGeometry.isLineGeometry : <code>boolean</code>
+This flag can be used for type testing.
+
+**Kind**: instance property of [<code>LineGeometry</code>](#LineGeometry)  
+**Default**: <code>true</code>  
+**Read only**: true  
+<a name="LineGeometry+setPositions"></a>
+
+### lineGeometry.setPositions(array) ⇒ [<code>LineGeometry</code>](#LineGeometry)
+Sets the given line positions for this geometry.
+
+**Kind**: instance method of [<code>LineGeometry</code>](#LineGeometry)  
+**Returns**: [<code>LineGeometry</code>](#LineGeometry) - A reference to this geometry.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| array | <code>Float32Array</code> \| <code>Array.&lt;number&gt;</code> | The position data to set. |
+
+<a name="LineGeometry+setColors"></a>
+
+### lineGeometry.setColors(array) ⇒ [<code>LineGeometry</code>](#LineGeometry)
+Sets the given line colors for this geometry.
+
+**Kind**: instance method of [<code>LineGeometry</code>](#LineGeometry)  
+**Returns**: [<code>LineGeometry</code>](#LineGeometry) - A reference to this geometry.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| array | <code>Float32Array</code> \| <code>Array.&lt;number&gt;</code> | The position data to set. |
+
+<a name="LineGeometry+setFromPoints"></a>
+
+### lineGeometry.setFromPoints(points) ⇒ [<code>LineGeometry</code>](#LineGeometry)
+Setups this line segments geometry from the given sequence of points.
+
+**Kind**: instance method of [<code>LineGeometry</code>](#LineGeometry)  
+**Returns**: [<code>LineGeometry</code>](#LineGeometry) - A reference to this geometry.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| points | <code>Array.&lt;(Vector3\|Vector2)&gt;</code> | An array of points in 2D or 3D space. |
+
+<a name="LineGeometry+fromLine"></a>
+
+### lineGeometry.fromLine(line) ⇒ [<code>LineGeometry</code>](#LineGeometry)
+Setups this line segments geometry from the given line.
+
+**Kind**: instance method of [<code>LineGeometry</code>](#LineGeometry)  
+**Returns**: [<code>LineGeometry</code>](#LineGeometry) - A reference to this geometry.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| line | <code>Line</code> | The line that should be used as a data source for this geometry. |
+
+<a name="LineMaterial"></a>
+
+## LineMaterial ⇐ <code>ShaderMaterial</code>
+A material for drawing wireframe-style geometries.
+
+Unlike [LineBasicMaterial](LineBasicMaterial), it supports arbitrary line widths and allows using world units
+instead of screen space units. This material is used with [LineSegments2](LineSegments2) and [Line2](Line2).
+
+This module can only be used with [WebGLRenderer](WebGLRenderer). When using [WebGPURenderer](WebGPURenderer),
+use [Line2NodeMaterial](Line2NodeMaterial).
+
+**Kind**: global class  
+**Extends**: <code>ShaderMaterial</code>  
+
+* [LineMaterial](#LineMaterial) ⇐ <code>ShaderMaterial</code>
+    * [new LineMaterial([parameters])](#new_LineMaterial_new)
+    * [.isLineMaterial](#LineMaterial+isLineMaterial) : <code>boolean</code>
+    * [.color](#LineMaterial+color) : <code>Color</code>
+    * [.worldUnits](#LineMaterial+worldUnits) : <code>boolean</code>
+    * [.linewidth](#LineMaterial+linewidth) : <code>number</code>
+    * [.dashed](#LineMaterial+dashed) : <code>boolean</code>
+    * [.dashScale](#LineMaterial+dashScale) : <code>number</code>
+    * [.dashSize](#LineMaterial+dashSize) : <code>number</code>
+    * [.dashOffset](#LineMaterial+dashOffset) : <code>number</code>
+    * [.gapSize](#LineMaterial+gapSize) : <code>number</code>
+    * [.opacity](#LineMaterial+opacity) : <code>number</code>
+    * [.resolution](#LineMaterial+resolution) : <code>Vector2</code>
+    * [.alphaToCoverage](#LineMaterial+alphaToCoverage) : <code>boolean</code>
+
+<a name="new_LineMaterial_new"></a>
+
+### new LineMaterial([parameters])
+Constructs a new line segments geometry.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [parameters] | <code>Object</code> | An object with one or more properties defining the material's appearance. Any property of the material (including any property from inherited materials) can be passed in here. Color values can be passed any type of value accepted by [Color#set](Color#set). |
+
+<a name="LineMaterial+isLineMaterial"></a>
+
+### lineMaterial.isLineMaterial : <code>boolean</code>
+This flag can be used for type testing.
+
+**Kind**: instance property of [<code>LineMaterial</code>](#LineMaterial)  
+**Default**: <code>true</code>  
+**Read only**: true  
+<a name="LineMaterial+color"></a>
+
+### lineMaterial.color : <code>Color</code>
+The material's color.
+
+**Kind**: instance property of [<code>LineMaterial</code>](#LineMaterial)  
+**Default**: <code>(1,1,1)</code>  
+<a name="LineMaterial+worldUnits"></a>
+
+### lineMaterial.worldUnits : <code>boolean</code>
+Whether the material's sizes (width, dash gaps) are in world units.
+
+**Kind**: instance property of [<code>LineMaterial</code>](#LineMaterial)  
+**Default**: <code>false</code>  
+<a name="LineMaterial+linewidth"></a>
+
+### lineMaterial.linewidth : <code>number</code>
+Controls line thickness in CSS pixel units when `worldUnits` is `false` (default),
+or in world units when `worldUnits` is `true`.
+
+**Kind**: instance property of [<code>LineMaterial</code>](#LineMaterial)  
+**Default**: <code>1</code>  
+<a name="LineMaterial+dashed"></a>
+
+### lineMaterial.dashed : <code>boolean</code>
+Whether the line is dashed, or solid.
+
+**Kind**: instance property of [<code>LineMaterial</code>](#LineMaterial)  
+**Default**: <code>false</code>  
+<a name="LineMaterial+dashScale"></a>
+
+### lineMaterial.dashScale : <code>number</code>
+The scale of the dashes and gaps.
+
+**Kind**: instance property of [<code>LineMaterial</code>](#LineMaterial)  
+**Default**: <code>1</code>  
+<a name="LineMaterial+dashSize"></a>
+
+### lineMaterial.dashSize : <code>number</code>
+The size of the dash.
+
+**Kind**: instance property of [<code>LineMaterial</code>](#LineMaterial)  
+**Default**: <code>1</code>  
+<a name="LineMaterial+dashOffset"></a>
+
+### lineMaterial.dashOffset : <code>number</code>
+Where in the dash cycle the dash starts.
+
+**Kind**: instance property of [<code>LineMaterial</code>](#LineMaterial)  
+**Default**: <code>0</code>  
+<a name="LineMaterial+gapSize"></a>
+
+### lineMaterial.gapSize : <code>number</code>
+The size of the gap.
+
+**Kind**: instance property of [<code>LineMaterial</code>](#LineMaterial)  
+**Default**: <code>0</code>  
+<a name="LineMaterial+opacity"></a>
+
+### lineMaterial.opacity : <code>number</code>
+The opacity.
+
+**Kind**: instance property of [<code>LineMaterial</code>](#LineMaterial)  
+**Default**: <code>1</code>  
+<a name="LineMaterial+resolution"></a>
+
+### lineMaterial.resolution : <code>Vector2</code>
+The size of the viewport, in screen pixels. This must be kept updated to make
+screen-space rendering accurate.The `LineSegments2.onBeforeRender` callback
+performs the update for visible objects.
+
+**Kind**: instance property of [<code>LineMaterial</code>](#LineMaterial)  
+<a name="LineMaterial+alphaToCoverage"></a>
+
+### lineMaterial.alphaToCoverage : <code>boolean</code>
+Whether to use alphaToCoverage or not. When enabled, this can improve the
+anti-aliasing of line edges when using MSAA.
+
+**Kind**: instance property of [<code>LineMaterial</code>](#LineMaterial)  
+<a name="LineSegments2"></a>
+
+## LineSegments2 ⇐ <code>Mesh</code>
+A series of lines drawn between pairs of vertices.
+
+This adds functionality beyond [LineSegments](LineSegments), like arbitrary line width and changing width
+to be in world units. [Line2](Line2) extends this object, forming a polyline instead of individual
+segments.
+
+This module can only be used with [WebGLRenderer](WebGLRenderer). When using [WebGPURenderer](WebGPURenderer),
+import the class from `lines/webgpu/LineSegments2.js`.
+
+ ```js
+const geometry = new LineSegmentsGeometry();
+geometry.setPositions( positions );
+geometry.setColors( colors );
+
+const material = new LineMaterial( { linewidth: 5, vertexColors: true } };
+
+const lineSegments = new LineSegments2( geometry, material );
+scene.add( lineSegments );
+```
+
+**Kind**: global class  
+**Extends**: <code>Mesh</code>  
+
+* [LineSegments2](#LineSegments2) ⇐ <code>Mesh</code>
+    * [new LineSegments2([geometry], [material])](#new_LineSegments2_new)
+    * [.isLineSegments2](#LineSegments2+isLineSegments2) : <code>boolean</code>
+    * [.computeLineDistances()](#LineSegments2+computeLineDistances) ⇒ [<code>LineSegments2</code>](#LineSegments2)
+    * [.raycast(raycaster, intersects)](#LineSegments2+raycast)
+
+<a name="new_LineSegments2_new"></a>
+
+### new LineSegments2([geometry], [material])
+Constructs a new wide line.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [geometry] | <code>LineSegmentsGeometry</code> | The line geometry. |
+| [material] | <code>LineMaterial</code> | The line material. |
+
+<a name="LineSegments2+isLineSegments2"></a>
+
+### lineSegments2.isLineSegments2 : <code>boolean</code>
+This flag can be used for type testing.
+
+**Kind**: instance property of [<code>LineSegments2</code>](#LineSegments2)  
+**Default**: <code>true</code>  
+**Read only**: true  
+<a name="LineSegments2+computeLineDistances"></a>
+
+### lineSegments2.computeLineDistances() ⇒ [<code>LineSegments2</code>](#LineSegments2)
+Computes an array of distance values which are necessary for rendering dashed lines.
+For each vertex in the geometry, the method calculates the cumulative length from the
+current point to the very beginning of the line.
+
+**Kind**: instance method of [<code>LineSegments2</code>](#LineSegments2)  
+**Returns**: [<code>LineSegments2</code>](#LineSegments2) - A reference to this instance.  
+<a name="LineSegments2+raycast"></a>
+
+### lineSegments2.raycast(raycaster, intersects)
+Computes intersection points between a casted ray and this instance.
+
+**Kind**: instance method of [<code>LineSegments2</code>](#LineSegments2)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| raycaster | <code>Raycaster</code> | The raycaster. |
+| intersects | <code>Array.&lt;Object&gt;</code> | The target array that holds the intersection points. |
+
+<a name="LineSegmentsGeometry"></a>
+
+## LineSegmentsGeometry ⇐ <code>InstancedBufferGeometry</code>
+A series of vertex pairs, forming line segments.
+
+This is used in [LineSegments2](LineSegments2) to describe the shape.
+
+**Kind**: global class  
+**Extends**: <code>InstancedBufferGeometry</code>  
+
+* [LineSegmentsGeometry](#LineSegmentsGeometry) ⇐ <code>InstancedBufferGeometry</code>
+    * [new LineSegmentsGeometry()](#new_LineSegmentsGeometry_new)
+    * [.isLineSegmentsGeometry](#LineSegmentsGeometry+isLineSegmentsGeometry) : <code>boolean</code>
+    * [.applyMatrix4(matrix)](#LineSegmentsGeometry+applyMatrix4) ⇒ [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)
+    * [.setPositions(array)](#LineSegmentsGeometry+setPositions) ⇒ [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)
+    * [.setColors(array)](#LineSegmentsGeometry+setColors) ⇒ [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)
+    * [.fromWireframeGeometry(geometry)](#LineSegmentsGeometry+fromWireframeGeometry) ⇒ [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)
+    * [.fromEdgesGeometry(geometry)](#LineSegmentsGeometry+fromEdgesGeometry) ⇒ [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)
+    * [.fromMesh(mesh)](#LineSegmentsGeometry+fromMesh) ⇒ [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)
+    * [.fromLineSegments(lineSegments)](#LineSegmentsGeometry+fromLineSegments) ⇒ [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)
+
+<a name="new_LineSegmentsGeometry_new"></a>
+
+### new LineSegmentsGeometry()
+Constructs a new line segments geometry.
+
+<a name="LineSegmentsGeometry+isLineSegmentsGeometry"></a>
+
+### lineSegmentsGeometry.isLineSegmentsGeometry : <code>boolean</code>
+This flag can be used for type testing.
+
+**Kind**: instance property of [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)  
+**Default**: <code>true</code>  
+**Read only**: true  
+<a name="LineSegmentsGeometry+applyMatrix4"></a>
+
+### lineSegmentsGeometry.applyMatrix4(matrix) ⇒ [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)
+Applies the given 4x4 transformation matrix to the geometry.
+
+**Kind**: instance method of [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)  
+**Returns**: [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry) - A reference to this instance.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| matrix | <code>Matrix4</code> | The matrix to apply. |
+
+<a name="LineSegmentsGeometry+setPositions"></a>
+
+### lineSegmentsGeometry.setPositions(array) ⇒ [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)
+Sets the given line positions for this geometry. The length must be a multiple of six since
+each line segment is defined by a start end vertex in the pattern `(xyz xyz)`.
+
+**Kind**: instance method of [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)  
+**Returns**: [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry) - A reference to this geometry.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| array | <code>Float32Array</code> \| <code>Array.&lt;number&gt;</code> | The position data to set. |
+
+<a name="LineSegmentsGeometry+setColors"></a>
+
+### lineSegmentsGeometry.setColors(array) ⇒ [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)
+Sets the given line colors for this geometry. The length must be a multiple of six since
+each line segment is defined by a start end color in the pattern `(rgb rgb)`.
+
+**Kind**: instance method of [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)  
+**Returns**: [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry) - A reference to this geometry.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| array | <code>Float32Array</code> \| <code>Array.&lt;number&gt;</code> | The position data to set. |
+
+<a name="LineSegmentsGeometry+fromWireframeGeometry"></a>
+
+### lineSegmentsGeometry.fromWireframeGeometry(geometry) ⇒ [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)
+Setups this line segments geometry from the given wireframe geometry.
+
+**Kind**: instance method of [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)  
+**Returns**: [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry) - A reference to this geometry.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| geometry | <code>WireframeGeometry</code> | The geometry that should be used as a data source for this geometry. |
+
+<a name="LineSegmentsGeometry+fromEdgesGeometry"></a>
+
+### lineSegmentsGeometry.fromEdgesGeometry(geometry) ⇒ [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)
+Setups this line segments geometry from the given edges geometry.
+
+**Kind**: instance method of [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)  
+**Returns**: [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry) - A reference to this geometry.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| geometry | <code>EdgesGeometry</code> | The geometry that should be used as a data source for this geometry. |
+
+<a name="LineSegmentsGeometry+fromMesh"></a>
+
+### lineSegmentsGeometry.fromMesh(mesh) ⇒ [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)
+Setups this line segments geometry from the given mesh.
+
+**Kind**: instance method of [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)  
+**Returns**: [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry) - A reference to this geometry.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| mesh | <code>Mesh</code> | The mesh geometry that should be used as a data source for this geometry. |
+
+<a name="LineSegmentsGeometry+fromLineSegments"></a>
+
+### lineSegmentsGeometry.fromLineSegments(lineSegments) ⇒ [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)
+Setups this line segments geometry from the given line segments.
+
+**Kind**: instance method of [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry)  
+**Returns**: [<code>LineSegmentsGeometry</code>](#LineSegmentsGeometry) - A reference to this geometry.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| lineSegments | <code>LineSegments</code> | The line segments that should be used as a data source for this geometry. Assumes the source geometry is not using indices. |
+
+<a name="Wireframe"></a>
+
+## Wireframe ⇐ <code>Mesh</code>
+A class for creating wireframes based on wide lines.
+
+This module can only be used with [WebGLRenderer](WebGLRenderer). When using [WebGPURenderer](WebGPURenderer),
+import the class from `lines/webgpu/Wireframe.js`.
+
+```js
+const geometry = new THREE.IcosahedronGeometry();
+const wireframeGeometry = new WireframeGeometry2( geo );
+
+const wireframe = new Wireframe( wireframeGeometry, material );
+scene.add( wireframe );
+```
+
+**Kind**: global class  
+**Extends**: <code>Mesh</code>  
+
+* [Wireframe](#Wireframe) ⇐ <code>Mesh</code>
+    * [new Wireframe([geometry], [material])](#new_Wireframe_new)
+    * [.isWireframe](#Wireframe+isWireframe) : <code>boolean</code>
+    * [.computeLineDistances()](#Wireframe+computeLineDistances) ⇒ [<code>Wireframe</code>](#Wireframe)
+
+<a name="new_Wireframe_new"></a>
+
+### new Wireframe([geometry], [material])
+Constructs a new wireframe.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [geometry] | <code>LineSegmentsGeometry</code> | The line geometry. |
+| [material] | <code>LineMaterial</code> | The line material. |
+
+<a name="Wireframe+isWireframe"></a>
+
+### wireframe.isWireframe : <code>boolean</code>
+This flag can be used for type testing.
+
+**Kind**: instance property of [<code>Wireframe</code>](#Wireframe)  
+**Default**: <code>true</code>  
+**Read only**: true  
+<a name="Wireframe+computeLineDistances"></a>
+
+### wireframe.computeLineDistances() ⇒ [<code>Wireframe</code>](#Wireframe)
+Computes an array of distance values which are necessary for rendering dashed lines.
+For each vertex in the geometry, the method calculates the cumulative length from the
+current point to the very beginning of the line.
+
+**Kind**: instance method of [<code>Wireframe</code>](#Wireframe)  
+**Returns**: [<code>Wireframe</code>](#Wireframe) - A reference to this instance.  
+<a name="WireframeGeometry2"></a>
+
+## WireframeGeometry2 ⇐ <code>LineSegmentsGeometry</code>
+A special type of line segments geometry intended for wireframe rendering.
+
+This is used in [Wireframe](Wireframe) to describe the shape.
+
+```js
+const geometry = new THREE.IcosahedronGeometry();
+const wireframeGeometry = new WireframeGeometry2( geo );
+```
+
+**Kind**: global class  
+**Extends**: <code>LineSegmentsGeometry</code>  
+
+* [WireframeGeometry2](#WireframeGeometry2) ⇐ <code>LineSegmentsGeometry</code>
+    * [new WireframeGeometry2([geometry])](#new_WireframeGeometry2_new)
+    * [.isWireframeGeometry2](#WireframeGeometry2+isWireframeGeometry2) : <code>boolean</code>
+
+<a name="new_WireframeGeometry2_new"></a>
+
+### new WireframeGeometry2([geometry])
+Constructs a new wireframe geometry.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [geometry] | <code>BufferGeometry</code> | The geometry to render the wireframe for. |
+
+<a name="WireframeGeometry2+isWireframeGeometry2"></a>
+
+### wireframeGeometry2.isWireframeGeometry2 : <code>boolean</code>
+This flag can be used for type testing.
+
+**Kind**: instance property of [<code>WireframeGeometry2</code>](#WireframeGeometry2)  
+**Default**: <code>true</code>  
+**Read only**: true  
+<a name="Rhino3dmLoader"></a>
+

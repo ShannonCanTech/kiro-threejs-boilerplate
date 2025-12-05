@@ -1,0 +1,1292 @@
+# three.js 
+
+> JavaScript 3D Library. 
+
+<a name="AnimationClipCreator"></a>
+
+## CSMFrustum
+Represents the frustum of a CSM instance.
+
+**Kind**: global class  
+
+* [CSMFrustum](#CSMFrustum)
+    * [new CSMFrustum([data])](#new_CSMFrustum_new)
+    * _instance_
+        * [.zNear](#CSMFrustum+zNear) : <code>number</code>
+        * [.vertices](#CSMFrustum+vertices) : <code>Object</code>
+        * [.setFromProjectionMatrix(projectionMatrix, maxFar)](#CSMFrustum+setFromProjectionMatrix) ⇒ <code>Object</code>
+        * [.split(breaks, target)](#CSMFrustum+split)
+        * [.toSpace(cameraMatrix, target)](#CSMFrustum+toSpace)
+    * _inner_
+        * [~Data](#CSMFrustum..Data) : <code>Object</code>
+
+<a name="new_CSMFrustum_new"></a>
+
+### new CSMFrustum([data])
+Constructs a new CSM frustum.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [data] | [<code>Data</code>](#CSMFrustum..Data) | The CSM data. |
+
+<a name="CSMFrustum+zNear"></a>
+
+### csmFrustum.zNear : <code>number</code>
+The zNear value. This value depends on whether the CSM
+is used with WebGL or WebGPU. Both API use different
+conventions for their projection matrices.
+
+**Kind**: instance property of [<code>CSMFrustum</code>](#CSMFrustum)  
+<a name="CSMFrustum+vertices"></a>
+
+### csmFrustum.vertices : <code>Object</code>
+An object representing the vertices of the near and
+far plane in view space.
+
+**Kind**: instance property of [<code>CSMFrustum</code>](#CSMFrustum)  
+<a name="CSMFrustum+setFromProjectionMatrix"></a>
+
+### csmFrustum.setFromProjectionMatrix(projectionMatrix, maxFar) ⇒ <code>Object</code>
+Setups this CSM frustum from the given projection matrix and max far value.
+
+**Kind**: instance method of [<code>CSMFrustum</code>](#CSMFrustum)  
+**Returns**: <code>Object</code> - An object representing the vertices of the near and far plane in view space.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| projectionMatrix | <code>Matrix4</code> | The projection matrix, usually of the scene's camera. |
+| maxFar | <code>number</code> | The maximum far value. |
+
+<a name="CSMFrustum+split"></a>
+
+### csmFrustum.split(breaks, target)
+Splits the CSM frustum by the given array. The new CSM frustum are pushed into the given
+target array.
+
+**Kind**: instance method of [<code>CSMFrustum</code>](#CSMFrustum)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| breaks | <code>Array.&lt;number&gt;</code> | An array of numbers in the range `[0,1]` the defines how the CSM frustum should be split up. |
+| target | [<code>Array.&lt;CSMFrustum&gt;</code>](#CSMFrustum) | The target array that holds the new CSM frustums. |
+
+<a name="CSMFrustum+toSpace"></a>
+
+### csmFrustum.toSpace(cameraMatrix, target)
+Transforms the given target CSM frustum into the different coordinate system defined by the
+given camera matrix.
+
+**Kind**: instance method of [<code>CSMFrustum</code>](#CSMFrustum)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| cameraMatrix | <code>Matrix4</code> | The matrix that defines the new coordinate system. |
+| target | [<code>CSMFrustum</code>](#CSMFrustum) | The CSM to convert. |
+
+<a name="CSMFrustum..Data"></a>
+
+### CSMFrustum~Data : <code>Object</code>
+Constructor data of `CSMFrustum`.
+
+**Kind**: inner typedef of [<code>CSMFrustum</code>](#CSMFrustum)  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| [webGL] | <code>boolean</code> | Whether this CSM frustum is used with WebGL or WebGPU. |
+| [projectionMatrix] | <code>Matrix4</code> | A projection matrix usually of the scene's camera. |
+| [maxFar] | <code>number</code> | The maximum far value. |
+
+<a name="CSMHelper"></a>
+
+## CSMHelper ⇐ <code>Group</code>
+A helper for visualizing the cascades of a CSM instance.
+
+**Kind**: global class  
+**Extends**: <code>Group</code>  
+
+* [CSMHelper](#CSMHelper) ⇐ <code>Group</code>
+    * [new CSMHelper(csm)](#new_CSMHelper_new)
+    * [.csm](#CSMHelper+csm) : <code>CSM</code> \| <code>CSMShadowNode</code>
+    * [.displayFrustum](#CSMHelper+displayFrustum) : <code>boolean</code>
+    * [.displayPlanes](#CSMHelper+displayPlanes) : <code>boolean</code>
+    * [.displayShadowBounds](#CSMHelper+displayShadowBounds) : <code>boolean</code>
+    * [.updateVisibility()](#CSMHelper+updateVisibility)
+    * [.update()](#CSMHelper+update)
+    * [.dispose()](#CSMHelper+dispose)
+
+<a name="new_CSMHelper_new"></a>
+
+### new CSMHelper(csm)
+Constructs a new CSM helper.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| csm | <code>CSM</code> \| <code>CSMShadowNode</code> | The CSM instance to visualize. |
+
+<a name="CSMHelper+csm"></a>
+
+### csmHelper.csm : <code>CSM</code> \| <code>CSMShadowNode</code>
+The CSM instance to visualize.
+
+**Kind**: instance property of [<code>CSMHelper</code>](#CSMHelper)  
+<a name="CSMHelper+displayFrustum"></a>
+
+### csmHelper.displayFrustum : <code>boolean</code>
+Whether to display the CSM frustum or not.
+
+**Kind**: instance property of [<code>CSMHelper</code>](#CSMHelper)  
+**Default**: <code>true</code>  
+<a name="CSMHelper+displayPlanes"></a>
+
+### csmHelper.displayPlanes : <code>boolean</code>
+Whether to display the cascade planes or not.
+
+**Kind**: instance property of [<code>CSMHelper</code>](#CSMHelper)  
+**Default**: <code>true</code>  
+<a name="CSMHelper+displayShadowBounds"></a>
+
+### csmHelper.displayShadowBounds : <code>boolean</code>
+Whether to display the shadow bounds or not.
+
+**Kind**: instance property of [<code>CSMHelper</code>](#CSMHelper)  
+**Default**: <code>true</code>  
+<a name="CSMHelper+updateVisibility"></a>
+
+### csmHelper.updateVisibility()
+This method must be called if one of the `display*` properties is changed at runtime.
+
+**Kind**: instance method of [<code>CSMHelper</code>](#CSMHelper)  
+<a name="CSMHelper+update"></a>
+
+### csmHelper.update()
+Updates the helper. This method should be called in the app's animation loop.
+
+**Kind**: instance method of [<code>CSMHelper</code>](#CSMHelper)  
+<a name="CSMHelper+dispose"></a>
+
+### csmHelper.dispose()
+Frees the GPU-related resources allocated by this instance. Call this
+method whenever this instance is no longer used in your app.
+
+**Kind**: instance method of [<code>CSMHelper</code>](#CSMHelper)  
+<a name="module_CSMShader"></a>
+
+## CSMShader
+<a name="module_CSMShader..CSMShader"></a>
+
+### CSMShader~CSMShader : <code>Object</code>
+The object that holds the GLSL enhancements to enable CSM. This
+code is injected into the built-in material shaders by [CSM](CSM).
+
+**Kind**: inner constant of [<code>CSMShader</code>](#module_CSMShader)  
+<a name="CSMShadowNode"></a>
+
+## CSMShadowNode ⇐ <code>ShadowBaseNode</code>
+An implementation of Cascade Shadow Maps (CSM).
+
+This module can only be used with [WebGPURenderer](WebGPURenderer). When using [WebGLRenderer](WebGLRenderer),
+use [CSM](CSM) instead.
+
+**Kind**: global class  
+**Extends**: <code>ShadowBaseNode</code>  
+
+* [CSMShadowNode](#CSMShadowNode) ⇐ <code>ShadowBaseNode</code>
+    * [new CSMShadowNode(light, [data])](#new_CSMShadowNode_new)
+    * _instance_
+        * [.camera](#CSMShadowNode+camera) : <code>Camera</code>
+        * [.cascades](#CSMShadowNode+cascades) : <code>number</code>
+        * [.maxFar](#CSMShadowNode+maxFar) : <code>number</code>
+        * [.mode](#CSMShadowNode+mode) : <code>&#x27;practical&#x27;</code> \| <code>&#x27;uniform&#x27;</code> \| <code>&#x27;logarithmic&#x27;</code> \| <code>&#x27;custom&#x27;</code>
+        * [.lightMargin](#CSMShadowNode+lightMargin) : <code>number</code>
+        * [.customSplitsCallback](#CSMShadowNode+customSplitsCallback) : <code>function</code>
+        * [.fade](#CSMShadowNode+fade) : <code>boolean</code>
+        * [.breaks](#CSMShadowNode+breaks) : <code>Array.&lt;number&gt;</code>
+        * [.mainFrustum](#CSMShadowNode+mainFrustum) : <code>CSMFrustum</code>
+        * [.frustums](#CSMShadowNode+frustums) : <code>Array.&lt;CSMFrustum&gt;</code>
+        * [.lights](#CSMShadowNode+lights) : <code>Array.&lt;DirectionalLight&gt;</code>
+        * [.updateFrustums()](#CSMShadowNode+updateFrustums)
+        * [.dispose()](#CSMShadowNode+dispose)
+    * _inner_
+        * [~Data](#CSMShadowNode..Data) : <code>Object</code>
+
+<a name="new_CSMShadowNode_new"></a>
+
+### new CSMShadowNode(light, [data])
+Constructs a new CSM shadow node.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| light | <code>DirectionalLight</code> |  | The CSM light. |
+| [data] | [<code>Data</code>](#CSMShadowNode..Data) | <code>{}</code> | The CSM data. |
+
+<a name="CSMShadowNode+camera"></a>
+
+### csmShadowNode.camera : <code>Camera</code>
+The scene's camera.
+
+**Kind**: instance property of [<code>CSMShadowNode</code>](#CSMShadowNode)  
+**Default**: <code>null</code>  
+<a name="CSMShadowNode+cascades"></a>
+
+### csmShadowNode.cascades : <code>number</code>
+The number of cascades.
+
+**Kind**: instance property of [<code>CSMShadowNode</code>](#CSMShadowNode)  
+**Default**: <code>3</code>  
+<a name="CSMShadowNode+maxFar"></a>
+
+### csmShadowNode.maxFar : <code>number</code>
+The maximum far value.
+
+**Kind**: instance property of [<code>CSMShadowNode</code>](#CSMShadowNode)  
+**Default**: <code>100000</code>  
+<a name="CSMShadowNode+mode"></a>
+
+### csmShadowNode.mode : <code>&#x27;practical&#x27;</code> \| <code>&#x27;uniform&#x27;</code> \| <code>&#x27;logarithmic&#x27;</code> \| <code>&#x27;custom&#x27;</code>
+The frustum split mode.
+
+**Kind**: instance property of [<code>CSMShadowNode</code>](#CSMShadowNode)  
+**Default**: <code>&#x27;practical&#x27;</code>  
+<a name="CSMShadowNode+lightMargin"></a>
+
+### csmShadowNode.lightMargin : <code>number</code>
+The light margin.
+
+**Kind**: instance property of [<code>CSMShadowNode</code>](#CSMShadowNode)  
+**Default**: <code>200</code>  
+<a name="CSMShadowNode+customSplitsCallback"></a>
+
+### csmShadowNode.customSplitsCallback : <code>function</code>
+Custom split callback when using `mode='custom'`.
+
+**Kind**: instance property of [<code>CSMShadowNode</code>](#CSMShadowNode)  
+<a name="CSMShadowNode+fade"></a>
+
+### csmShadowNode.fade : <code>boolean</code>
+Whether to fade between cascades or not.
+
+**Kind**: instance property of [<code>CSMShadowNode</code>](#CSMShadowNode)  
+**Default**: <code>false</code>  
+<a name="CSMShadowNode+breaks"></a>
+
+### csmShadowNode.breaks : <code>Array.&lt;number&gt;</code>
+An array of numbers in the range `[0,1]` the defines how the
+mainCSM frustum should be split up.
+
+**Kind**: instance property of [<code>CSMShadowNode</code>](#CSMShadowNode)  
+<a name="CSMShadowNode+mainFrustum"></a>
+
+### csmShadowNode.mainFrustum : <code>CSMFrustum</code>
+The main frustum.
+
+**Kind**: instance property of [<code>CSMShadowNode</code>](#CSMShadowNode)  
+**Default**: <code>null</code>  
+<a name="CSMShadowNode+frustums"></a>
+
+### csmShadowNode.frustums : <code>Array.&lt;CSMFrustum&gt;</code>
+An array of frustums representing the cascades.
+
+**Kind**: instance property of [<code>CSMShadowNode</code>](#CSMShadowNode)  
+<a name="CSMShadowNode+lights"></a>
+
+### csmShadowNode.lights : <code>Array.&lt;DirectionalLight&gt;</code>
+An array of directional lights which cast the shadows for
+the different cascades. There is one directional light for each
+cascade.
+
+**Kind**: instance property of [<code>CSMShadowNode</code>](#CSMShadowNode)  
+<a name="CSMShadowNode+updateFrustums"></a>
+
+### csmShadowNode.updateFrustums()
+Applications must call this method every time they change camera or CSM settings.
+
+**Kind**: instance method of [<code>CSMShadowNode</code>](#CSMShadowNode)  
+<a name="CSMShadowNode+dispose"></a>
+
+### csmShadowNode.dispose()
+Frees the GPU-related resources allocated by this instance. Call this
+method whenever this instance is no longer used in your app.
+
+**Kind**: instance method of [<code>CSMShadowNode</code>](#CSMShadowNode)  
+<a name="CSMShadowNode..Data"></a>
+
+### CSMShadowNode~Data : <code>Object</code>
+Constructor data of `CSMShadowNode`.
+
+**Kind**: inner typedef of [<code>CSMShadowNode</code>](#CSMShadowNode)  
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [cascades] | <code>number</code> | <code>3</code> | The number of cascades. |
+| [maxFar] | <code>number</code> | <code>100000</code> | The maximum far value. |
+| [mode] | <code>&#x27;practical&#x27;</code> \| <code>&#x27;uniform&#x27;</code> \| <code>&#x27;logarithmic&#x27;</code> \| <code>&#x27;custom&#x27;</code> | <code>&#x27;practical&#x27;</code> | The frustum split mode. |
+| [customSplitsCallback] | <code>function</code> |  | Custom split callback when using `mode='custom'`. |
+| [lightMargin] | <code>number</code> | <code>200</code> | The light margin. |
+
+## Classes
+
+<dl>
+<dt><a href="#GrannyKnot">GrannyKnot</a> ⇐ <code>Curve</code></dt>
+<dd><p>A Granny Knot curve.</p>
+</dd>
+<dt><a href="#HeartCurve">HeartCurve</a> ⇐ <code>Curve</code></dt>
+<dd><p>A heart curve.</p>
+</dd>
+<dt><a href="#VivianiCurve">VivianiCurve</a> ⇐ <code>Curve</code></dt>
+<dd><p>A Viviani curve.</p>
+</dd>
+<dt><a href="#KnotCurve">KnotCurve</a> ⇐ <code>Curve</code></dt>
+<dd><p>A knot curve.</p>
+</dd>
+<dt><a href="#HelixCurve">HelixCurve</a> ⇐ <code>Curve</code></dt>
+<dd><p>A helix curve.</p>
+</dd>
+<dt><a href="#TrefoilKnot">TrefoilKnot</a> ⇐ <code>Curve</code></dt>
+<dd><p>A Trefoil Knot.</p>
+</dd>
+<dt><a href="#TorusKnot">TorusKnot</a> ⇐ <code>Curve</code></dt>
+<dd><p>A torus knot.</p>
+</dd>
+<dt><a href="#CinquefoilKnot">CinquefoilKnot</a> ⇐ <code>Curve</code></dt>
+<dd><p>A Cinquefoil Knot.</p>
+</dd>
+<dt><a href="#TrefoilPolynomialKnot">TrefoilPolynomialKnot</a> ⇐ <code>Curve</code></dt>
+<dd><p>A Trefoil Polynomial Knot.</p>
+</dd>
+<dt><a href="#FigureEightPolynomialKnot">FigureEightPolynomialKnot</a> ⇐ <code>Curve</code></dt>
+<dd><p>A Figure Eight Polynomial Knot.</p>
+</dd>
+<dt><a href="#DecoratedTorusKnot4a">DecoratedTorusKnot4a</a> ⇐ <code>Curve</code></dt>
+<dd><p>A Decorated Torus Knot 4a.</p>
+</dd>
+<dt><a href="#DecoratedTorusKnot4b">DecoratedTorusKnot4b</a> ⇐ <code>Curve</code></dt>
+<dd><p>A Decorated Torus Knot 4b.</p>
+</dd>
+<dt><a href="#DecoratedTorusKnot5a">DecoratedTorusKnot5a</a> ⇐ <code>Curve</code></dt>
+<dd><p>A Decorated Torus Knot 5a.</p>
+</dd>
+<dt><a href="#DecoratedTorusKnot5c">DecoratedTorusKnot5c</a> ⇐ <code>Curve</code></dt>
+<dd><p>A Decorated Torus Knot 5c.</p>
+</dd>
+</dl>
+
+<a name="GrannyKnot"></a>
+
+## GrannyKnot ⇐ <code>Curve</code>
+A Granny Knot curve.
+
+**Kind**: global class  
+**Extends**: <code>Curve</code>  
+<a name="GrannyKnot+getPoint"></a>
+
+### grannyKnot.getPoint(t, [optionalTarget]) ⇒ <code>Vector3</code>
+This method returns a vector in 3D space for the given interpolation factor.
+
+**Kind**: instance method of [<code>GrannyKnot</code>](#GrannyKnot)  
+**Returns**: <code>Vector3</code> - The position on the curve.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| t | <code>number</code> | A interpolation factor representing a position on the curve. Must be in the range `[0,1]`. |
+| [optionalTarget] | <code>Vector3</code> | The optional target vector the result is written to. |
+
+<a name="HeartCurve"></a>
+
+## HeartCurve ⇐ <code>Curve</code>
+A heart curve.
+
+**Kind**: global class  
+**Extends**: <code>Curve</code>  
+
+* [HeartCurve](#HeartCurve) ⇐ <code>Curve</code>
+    * [new HeartCurve([scale])](#new_HeartCurve_new)
+    * [.scale](#HeartCurve+scale) : <code>number</code>
+    * [.getPoint(t, [optionalTarget])](#HeartCurve+getPoint) ⇒ <code>Vector3</code>
+
+<a name="new_HeartCurve_new"></a>
+
+### new HeartCurve([scale])
+Constructs a new heart curve.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [scale] | <code>number</code> | <code>5</code> | The curve's scale. |
+
+<a name="HeartCurve+scale"></a>
+
+### heartCurve.scale : <code>number</code>
+The curve's scale.
+
+**Kind**: instance property of [<code>HeartCurve</code>](#HeartCurve)  
+**Default**: <code>5</code>  
+<a name="HeartCurve+getPoint"></a>
+
+### heartCurve.getPoint(t, [optionalTarget]) ⇒ <code>Vector3</code>
+This method returns a vector in 3D space for the given interpolation factor.
+
+**Kind**: instance method of [<code>HeartCurve</code>](#HeartCurve)  
+**Returns**: <code>Vector3</code> - The position on the curve.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| t | <code>number</code> | A interpolation factor representing a position on the curve. Must be in the range `[0,1]`. |
+| [optionalTarget] | <code>Vector3</code> | The optional target vector the result is written to. |
+
+<a name="VivianiCurve"></a>
+
+## VivianiCurve ⇐ <code>Curve</code>
+A Viviani curve.
+
+**Kind**: global class  
+**Extends**: <code>Curve</code>  
+
+* [VivianiCurve](#VivianiCurve) ⇐ <code>Curve</code>
+    * [new VivianiCurve([scale])](#new_VivianiCurve_new)
+    * [.scale](#VivianiCurve+scale) : <code>number</code>
+    * [.getPoint(t, [optionalTarget])](#VivianiCurve+getPoint) ⇒ <code>Vector3</code>
+
+<a name="new_VivianiCurve_new"></a>
+
+### new VivianiCurve([scale])
+Constructs a new Viviani curve.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [scale] | <code>number</code> | <code>70</code> | The curve's scale. |
+
+<a name="VivianiCurve+scale"></a>
+
+### vivianiCurve.scale : <code>number</code>
+The curve's scale.
+
+**Kind**: instance property of [<code>VivianiCurve</code>](#VivianiCurve)  
+**Default**: <code>70</code>  
+<a name="VivianiCurve+getPoint"></a>
+
+### vivianiCurve.getPoint(t, [optionalTarget]) ⇒ <code>Vector3</code>
+This method returns a vector in 3D space for the given interpolation factor.
+
+**Kind**: instance method of [<code>VivianiCurve</code>](#VivianiCurve)  
+**Returns**: <code>Vector3</code> - The position on the curve.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| t | <code>number</code> | A interpolation factor representing a position on the curve. Must be in the range `[0,1]`. |
+| [optionalTarget] | <code>Vector3</code> | The optional target vector the result is written to. |
+
+<a name="KnotCurve"></a>
+
+## KnotCurve ⇐ <code>Curve</code>
+A knot curve.
+
+**Kind**: global class  
+**Extends**: <code>Curve</code>  
+<a name="KnotCurve+getPoint"></a>
+
+### knotCurve.getPoint(t, [optionalTarget]) ⇒ <code>Vector3</code>
+This method returns a vector in 3D space for the given interpolation factor.
+
+**Kind**: instance method of [<code>KnotCurve</code>](#KnotCurve)  
+**Returns**: <code>Vector3</code> - The position on the curve.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| t | <code>number</code> | A interpolation factor representing a position on the curve. Must be in the range `[0,1]`. |
+| [optionalTarget] | <code>Vector3</code> | The optional target vector the result is written to. |
+
+<a name="HelixCurve"></a>
+
+## HelixCurve ⇐ <code>Curve</code>
+A helix curve.
+
+**Kind**: global class  
+**Extends**: <code>Curve</code>  
+<a name="HelixCurve+getPoint"></a>
+
+### helixCurve.getPoint(t, [optionalTarget]) ⇒ <code>Vector3</code>
+This method returns a vector in 3D space for the given interpolation factor.
+
+**Kind**: instance method of [<code>HelixCurve</code>](#HelixCurve)  
+**Returns**: <code>Vector3</code> - The position on the curve.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| t | <code>number</code> | A interpolation factor representing a position on the curve. Must be in the range `[0,1]`. |
+| [optionalTarget] | <code>Vector3</code> | The optional target vector the result is written to. |
+
+<a name="TrefoilKnot"></a>
+
+## TrefoilKnot ⇐ <code>Curve</code>
+A Trefoil Knot.
+
+**Kind**: global class  
+**Extends**: <code>Curve</code>  
+
+* [TrefoilKnot](#TrefoilKnot) ⇐ <code>Curve</code>
+    * [new TrefoilKnot([scale])](#new_TrefoilKnot_new)
+    * [.scale](#TrefoilKnot+scale) : <code>number</code>
+    * [.getPoint(t, [optionalTarget])](#TrefoilKnot+getPoint) ⇒ <code>Vector3</code>
+
+<a name="new_TrefoilKnot_new"></a>
+
+### new TrefoilKnot([scale])
+Constructs a new Trefoil Knot.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [scale] | <code>number</code> | <code>10</code> | The curve's scale. |
+
+<a name="TrefoilKnot+scale"></a>
+
+### trefoilKnot.scale : <code>number</code>
+The curve's scale.
+
+**Kind**: instance property of [<code>TrefoilKnot</code>](#TrefoilKnot)  
+**Default**: <code>10</code>  
+<a name="TrefoilKnot+getPoint"></a>
+
+### trefoilKnot.getPoint(t, [optionalTarget]) ⇒ <code>Vector3</code>
+This method returns a vector in 3D space for the given interpolation factor.
+
+**Kind**: instance method of [<code>TrefoilKnot</code>](#TrefoilKnot)  
+**Returns**: <code>Vector3</code> - The position on the curve.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| t | <code>number</code> | A interpolation factor representing a position on the curve. Must be in the range `[0,1]`. |
+| [optionalTarget] | <code>Vector3</code> | The optional target vector the result is written to. |
+
+<a name="TorusKnot"></a>
+
+## TorusKnot ⇐ <code>Curve</code>
+A torus knot.
+
+**Kind**: global class  
+**Extends**: <code>Curve</code>  
+
+* [TorusKnot](#TorusKnot) ⇐ <code>Curve</code>
+    * [new TorusKnot([scale])](#new_TorusKnot_new)
+    * [.scale](#TorusKnot+scale) : <code>number</code>
+    * [.getPoint(t, [optionalTarget])](#TorusKnot+getPoint) ⇒ <code>Vector3</code>
+
+<a name="new_TorusKnot_new"></a>
+
+### new TorusKnot([scale])
+Constructs a new torus knot.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [scale] | <code>number</code> | <code>10</code> | The curve's scale. |
+
+<a name="TorusKnot+scale"></a>
+
+### torusKnot.scale : <code>number</code>
+The curve's scale.
+
+**Kind**: instance property of [<code>TorusKnot</code>](#TorusKnot)  
+**Default**: <code>10</code>  
+<a name="TorusKnot+getPoint"></a>
+
+### torusKnot.getPoint(t, [optionalTarget]) ⇒ <code>Vector3</code>
+This method returns a vector in 3D space for the given interpolation factor.
+
+**Kind**: instance method of [<code>TorusKnot</code>](#TorusKnot)  
+**Returns**: <code>Vector3</code> - The position on the curve.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| t | <code>number</code> | A interpolation factor representing a position on the curve. Must be in the range `[0,1]`. |
+| [optionalTarget] | <code>Vector3</code> | The optional target vector the result is written to. |
+
+<a name="CinquefoilKnot"></a>
+
+## CinquefoilKnot ⇐ <code>Curve</code>
+A Cinquefoil Knot.
+
+**Kind**: global class  
+**Extends**: <code>Curve</code>  
+
+* [CinquefoilKnot](#CinquefoilKnot) ⇐ <code>Curve</code>
+    * [new CinquefoilKnot([scale])](#new_CinquefoilKnot_new)
+    * [.scale](#CinquefoilKnot+scale) : <code>number</code>
+    * [.getPoint(t, [optionalTarget])](#CinquefoilKnot+getPoint) ⇒ <code>Vector3</code>
+
+<a name="new_CinquefoilKnot_new"></a>
+
+### new CinquefoilKnot([scale])
+Constructs a new Cinquefoil Knot.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [scale] | <code>number</code> | <code>10</code> | The curve's scale. |
+
+<a name="CinquefoilKnot+scale"></a>
+
+### cinquefoilKnot.scale : <code>number</code>
+The curve's scale.
+
+**Kind**: instance property of [<code>CinquefoilKnot</code>](#CinquefoilKnot)  
+**Default**: <code>10</code>  
+<a name="CinquefoilKnot+getPoint"></a>
+
+### cinquefoilKnot.getPoint(t, [optionalTarget]) ⇒ <code>Vector3</code>
+This method returns a vector in 3D space for the given interpolation factor.
+
+**Kind**: instance method of [<code>CinquefoilKnot</code>](#CinquefoilKnot)  
+**Returns**: <code>Vector3</code> - The position on the curve.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| t | <code>number</code> | A interpolation factor representing a position on the curve. Must be in the range `[0,1]`. |
+| [optionalTarget] | <code>Vector3</code> | The optional target vector the result is written to. |
+
+<a name="TrefoilPolynomialKnot"></a>
+
+## TrefoilPolynomialKnot ⇐ <code>Curve</code>
+A Trefoil Polynomial Knot.
+
+**Kind**: global class  
+**Extends**: <code>Curve</code>  
+
+* [TrefoilPolynomialKnot](#TrefoilPolynomialKnot) ⇐ <code>Curve</code>
+    * [new TrefoilPolynomialKnot([scale])](#new_TrefoilPolynomialKnot_new)
+    * [.scale](#TrefoilPolynomialKnot+scale) : <code>number</code>
+    * [.getPoint(t, [optionalTarget])](#TrefoilPolynomialKnot+getPoint) ⇒ <code>Vector3</code>
+
+<a name="new_TrefoilPolynomialKnot_new"></a>
+
+### new TrefoilPolynomialKnot([scale])
+Constructs a new Trefoil Polynomial Knot.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [scale] | <code>number</code> | <code>10</code> | The curve's scale. |
+
+<a name="TrefoilPolynomialKnot+scale"></a>
+
+### trefoilPolynomialKnot.scale : <code>number</code>
+The curve's scale.
+
+**Kind**: instance property of [<code>TrefoilPolynomialKnot</code>](#TrefoilPolynomialKnot)  
+**Default**: <code>10</code>  
+<a name="TrefoilPolynomialKnot+getPoint"></a>
+
+### trefoilPolynomialKnot.getPoint(t, [optionalTarget]) ⇒ <code>Vector3</code>
+This method returns a vector in 3D space for the given interpolation factor.
+
+**Kind**: instance method of [<code>TrefoilPolynomialKnot</code>](#TrefoilPolynomialKnot)  
+**Returns**: <code>Vector3</code> - The position on the curve.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| t | <code>number</code> | A interpolation factor representing a position on the curve. Must be in the range `[0,1]`. |
+| [optionalTarget] | <code>Vector3</code> | The optional target vector the result is written to. |
+
+<a name="FigureEightPolynomialKnot"></a>
+
+## FigureEightPolynomialKnot ⇐ <code>Curve</code>
+A Figure Eight Polynomial Knot.
+
+**Kind**: global class  
+**Extends**: <code>Curve</code>  
+
+* [FigureEightPolynomialKnot](#FigureEightPolynomialKnot) ⇐ <code>Curve</code>
+    * [new FigureEightPolynomialKnot([scale])](#new_FigureEightPolynomialKnot_new)
+    * [.scale](#FigureEightPolynomialKnot+scale) : <code>number</code>
+    * [.getPoint(t, [optionalTarget])](#FigureEightPolynomialKnot+getPoint) ⇒ <code>Vector3</code>
+
+<a name="new_FigureEightPolynomialKnot_new"></a>
+
+### new FigureEightPolynomialKnot([scale])
+Constructs a new Figure Eight Polynomial Knot.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [scale] | <code>number</code> | <code>1</code> | The curve's scale. |
+
+<a name="FigureEightPolynomialKnot+scale"></a>
+
+### figureEightPolynomialKnot.scale : <code>number</code>
+The curve's scale.
+
+**Kind**: instance property of [<code>FigureEightPolynomialKnot</code>](#FigureEightPolynomialKnot)  
+**Default**: <code>1</code>  
+<a name="FigureEightPolynomialKnot+getPoint"></a>
+
+### figureEightPolynomialKnot.getPoint(t, [optionalTarget]) ⇒ <code>Vector3</code>
+This method returns a vector in 3D space for the given interpolation factor.
+
+**Kind**: instance method of [<code>FigureEightPolynomialKnot</code>](#FigureEightPolynomialKnot)  
+**Returns**: <code>Vector3</code> - The position on the curve.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| t | <code>number</code> | A interpolation factor representing a position on the curve. Must be in the range `[0,1]`. |
+| [optionalTarget] | <code>Vector3</code> | The optional target vector the result is written to. |
+
+<a name="DecoratedTorusKnot4a"></a>
+
+## DecoratedTorusKnot4a ⇐ <code>Curve</code>
+A Decorated Torus Knot 4a.
+
+**Kind**: global class  
+**Extends**: <code>Curve</code>  
+
+* [DecoratedTorusKnot4a](#DecoratedTorusKnot4a) ⇐ <code>Curve</code>
+    * [new DecoratedTorusKnot4a([scale])](#new_DecoratedTorusKnot4a_new)
+    * [.scale](#DecoratedTorusKnot4a+scale) : <code>number</code>
+    * [.getPoint(t, [optionalTarget])](#DecoratedTorusKnot4a+getPoint) ⇒ <code>Vector3</code>
+
+<a name="new_DecoratedTorusKnot4a_new"></a>
+
+### new DecoratedTorusKnot4a([scale])
+Constructs a new Decorated Torus Knot 4a.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [scale] | <code>number</code> | <code>1</code> | The curve's scale. |
+
+<a name="DecoratedTorusKnot4a+scale"></a>
+
+### decoratedTorusKnot4a.scale : <code>number</code>
+The curve's scale.
+
+**Kind**: instance property of [<code>DecoratedTorusKnot4a</code>](#DecoratedTorusKnot4a)  
+**Default**: <code>40</code>  
+<a name="DecoratedTorusKnot4a+getPoint"></a>
+
+### decoratedTorusKnot4a.getPoint(t, [optionalTarget]) ⇒ <code>Vector3</code>
+This method returns a vector in 3D space for the given interpolation factor.
+
+**Kind**: instance method of [<code>DecoratedTorusKnot4a</code>](#DecoratedTorusKnot4a)  
+**Returns**: <code>Vector3</code> - The position on the curve.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| t | <code>number</code> | A interpolation factor representing a position on the curve. Must be in the range `[0,1]`. |
+| [optionalTarget] | <code>Vector3</code> | The optional target vector the result is written to. |
+
+<a name="DecoratedTorusKnot4b"></a>
+
+## DecoratedTorusKnot4b ⇐ <code>Curve</code>
+A Decorated Torus Knot 4b.
+
+**Kind**: global class  
+**Extends**: <code>Curve</code>  
+
+* [DecoratedTorusKnot4b](#DecoratedTorusKnot4b) ⇐ <code>Curve</code>
+    * [new DecoratedTorusKnot4b([scale])](#new_DecoratedTorusKnot4b_new)
+    * [.scale](#DecoratedTorusKnot4b+scale) : <code>number</code>
+    * [.getPoint(t, [optionalTarget])](#DecoratedTorusKnot4b+getPoint) ⇒ <code>Vector3</code>
+
+<a name="new_DecoratedTorusKnot4b_new"></a>
+
+### new DecoratedTorusKnot4b([scale])
+Constructs a new Decorated Torus Knot 4b.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [scale] | <code>number</code> | <code>1</code> | The curve's scale. |
+
+<a name="DecoratedTorusKnot4b+scale"></a>
+
+### decoratedTorusKnot4b.scale : <code>number</code>
+The curve's scale.
+
+**Kind**: instance property of [<code>DecoratedTorusKnot4b</code>](#DecoratedTorusKnot4b)  
+**Default**: <code>40</code>  
+<a name="DecoratedTorusKnot4b+getPoint"></a>
+
+### decoratedTorusKnot4b.getPoint(t, [optionalTarget]) ⇒ <code>Vector3</code>
+This method returns a vector in 3D space for the given interpolation factor.
+
+**Kind**: instance method of [<code>DecoratedTorusKnot4b</code>](#DecoratedTorusKnot4b)  
+**Returns**: <code>Vector3</code> - The position on the curve.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| t | <code>number</code> | A interpolation factor representing a position on the curve. Must be in the range `[0,1]`. |
+| [optionalTarget] | <code>Vector3</code> | The optional target vector the result is written to. |
+
+<a name="DecoratedTorusKnot5a"></a>
+
+## DecoratedTorusKnot5a ⇐ <code>Curve</code>
+A Decorated Torus Knot 5a.
+
+**Kind**: global class  
+**Extends**: <code>Curve</code>  
+
+* [DecoratedTorusKnot5a](#DecoratedTorusKnot5a) ⇐ <code>Curve</code>
+    * [new DecoratedTorusKnot5a([scale])](#new_DecoratedTorusKnot5a_new)
+    * [.scale](#DecoratedTorusKnot5a+scale) : <code>number</code>
+    * [.getPoint(t, [optionalTarget])](#DecoratedTorusKnot5a+getPoint) ⇒ <code>Vector3</code>
+
+<a name="new_DecoratedTorusKnot5a_new"></a>
+
+### new DecoratedTorusKnot5a([scale])
+Constructs a new Decorated Torus Knot 5a.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [scale] | <code>number</code> | <code>1</code> | The curve's scale. |
+
+<a name="DecoratedTorusKnot5a+scale"></a>
+
+### decoratedTorusKnot5a.scale : <code>number</code>
+The curve's scale.
+
+**Kind**: instance property of [<code>DecoratedTorusKnot5a</code>](#DecoratedTorusKnot5a)  
+**Default**: <code>40</code>  
+<a name="DecoratedTorusKnot5a+getPoint"></a>
+
+### decoratedTorusKnot5a.getPoint(t, [optionalTarget]) ⇒ <code>Vector3</code>
+This method returns a vector in 3D space for the given interpolation factor.
+
+**Kind**: instance method of [<code>DecoratedTorusKnot5a</code>](#DecoratedTorusKnot5a)  
+**Returns**: <code>Vector3</code> - The position on the curve.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| t | <code>number</code> | A interpolation factor representing a position on the curve. Must be in the range `[0,1]`. |
+| [optionalTarget] | <code>Vector3</code> | The optional target vector the result is written to. |
+
+<a name="DecoratedTorusKnot5c"></a>
+
+## DecoratedTorusKnot5c ⇐ <code>Curve</code>
+A Decorated Torus Knot 5c.
+
+**Kind**: global class  
+**Extends**: <code>Curve</code>  
+
+* [DecoratedTorusKnot5c](#DecoratedTorusKnot5c) ⇐ <code>Curve</code>
+    * [new DecoratedTorusKnot5c([scale])](#new_DecoratedTorusKnot5c_new)
+    * [.scale](#DecoratedTorusKnot5c+scale) : <code>number</code>
+    * [.getPoint(t, [optionalTarget])](#DecoratedTorusKnot5c+getPoint) ⇒ <code>Vector3</code>
+
+<a name="new_DecoratedTorusKnot5c_new"></a>
+
+### new DecoratedTorusKnot5c([scale])
+Constructs a new Decorated Torus Knot 5c.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [scale] | <code>number</code> | <code>1</code> | The curve's scale. |
+
+<a name="DecoratedTorusKnot5c+scale"></a>
+
+### decoratedTorusKnot5c.scale : <code>number</code>
+The curve's scale.
+
+**Kind**: instance property of [<code>DecoratedTorusKnot5c</code>](#DecoratedTorusKnot5c)  
+**Default**: <code>40</code>  
+<a name="DecoratedTorusKnot5c+getPoint"></a>
+
+### decoratedTorusKnot5c.getPoint(t, [optionalTarget]) ⇒ <code>Vector3</code>
+This method returns a vector in 3D space for the given interpolation factor.
+
+**Kind**: instance method of [<code>DecoratedTorusKnot5c</code>](#DecoratedTorusKnot5c)  
+**Returns**: <code>Vector3</code> - The position on the curve.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| t | <code>number</code> | A interpolation factor representing a position on the curve. Must be in the range `[0,1]`. |
+| [optionalTarget] | <code>Vector3</code> | The optional target vector the result is written to. |
+
+<a name="NURBSCurve"></a>
+
+## NURBSCurve ⇐ <code>Curve</code>
+This class represents a NURBS curve.
+
+Implementation is based on `(x, y [, z=0 [, w=1]])` control points with `w=weight`.
+
+**Kind**: global class  
+**Extends**: <code>Curve</code>  
+
+* [NURBSCurve](#NURBSCurve) ⇐ <code>Curve</code>
+    * [new NURBSCurve(degree, knots, controlPoints, [startKnot], [endKnot])](#new_NURBSCurve_new)
+    * [.degree](#NURBSCurve+degree) : <code>number</code>
+    * [.knots](#NURBSCurve+knots) : <code>Array.&lt;number&gt;</code>
+    * [.controlPoints](#NURBSCurve+controlPoints) : <code>Array.&lt;Vector4&gt;</code>
+    * [.startKnot](#NURBSCurve+startKnot) : <code>number</code>
+    * [.endKnot](#NURBSCurve+endKnot) : <code>number</code>
+    * [.getPoint(t, [optionalTarget])](#NURBSCurve+getPoint) ⇒ <code>Vector3</code>
+    * [.getTangent(t, [optionalTarget])](#NURBSCurve+getTangent) ⇒ <code>Vector3</code>
+
+<a name="new_NURBSCurve_new"></a>
+
+### new NURBSCurve(degree, knots, controlPoints, [startKnot], [endKnot])
+Constructs a new NURBS curve.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| degree | <code>number</code> | The NURBS degree. |
+| knots | <code>Array.&lt;number&gt;</code> | The knots as a flat array of numbers. |
+| controlPoints | <code>Array.&lt;(Vector2\|Vector3\|Vector4)&gt;</code> | An array holding control points. |
+| [startKnot] | <code>number</code> | Index of the start knot into the `knots` array. |
+| [endKnot] | <code>number</code> | Index of the end knot into the `knots` array. |
+
+<a name="NURBSCurve+degree"></a>
+
+### nurbsCurve.degree : <code>number</code>
+The NURBS degree.
+
+**Kind**: instance property of [<code>NURBSCurve</code>](#NURBSCurve)  
+<a name="NURBSCurve+knots"></a>
+
+### nurbsCurve.knots : <code>Array.&lt;number&gt;</code>
+The knots as a flat array of numbers.
+
+**Kind**: instance property of [<code>NURBSCurve</code>](#NURBSCurve)  
+<a name="NURBSCurve+controlPoints"></a>
+
+### nurbsCurve.controlPoints : <code>Array.&lt;Vector4&gt;</code>
+An array of control points.
+
+**Kind**: instance property of [<code>NURBSCurve</code>](#NURBSCurve)  
+<a name="NURBSCurve+startKnot"></a>
+
+### nurbsCurve.startKnot : <code>number</code>
+Index of the start knot into the `knots` array.
+
+**Kind**: instance property of [<code>NURBSCurve</code>](#NURBSCurve)  
+<a name="NURBSCurve+endKnot"></a>
+
+### nurbsCurve.endKnot : <code>number</code>
+Index of the end knot into the `knots` array.
+
+**Kind**: instance property of [<code>NURBSCurve</code>](#NURBSCurve)  
+<a name="NURBSCurve+getPoint"></a>
+
+### nurbsCurve.getPoint(t, [optionalTarget]) ⇒ <code>Vector3</code>
+This method returns a vector in 3D space for the given interpolation factor.
+
+**Kind**: instance method of [<code>NURBSCurve</code>](#NURBSCurve)  
+**Returns**: <code>Vector3</code> - The position on the curve.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| t | <code>number</code> | A interpolation factor representing a position on the curve. Must be in the range `[0,1]`. |
+| [optionalTarget] | <code>Vector3</code> | The optional target vector the result is written to. |
+
+<a name="NURBSCurve+getTangent"></a>
+
+### nurbsCurve.getTangent(t, [optionalTarget]) ⇒ <code>Vector3</code>
+Returns a unit vector tangent for the given interpolation factor.
+
+**Kind**: instance method of [<code>NURBSCurve</code>](#NURBSCurve)  
+**Returns**: <code>Vector3</code> - The tangent vector.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| t | <code>number</code> | The interpolation factor. |
+| [optionalTarget] | <code>Vector3</code> | The optional target vector the result is written to. |
+
+<a name="NURBSSurface"></a>
+
+## NURBSSurface
+This class represents a NURBS surface.
+
+Implementation is based on `(x, y [, z=0 [, w=1]])` control points with `w=weight`.
+
+**Kind**: global class  
+
+* [NURBSSurface](#NURBSSurface)
+    * [new NURBSSurface(degree1, degree2, knots1, knots2, controlPoints)](#new_NURBSSurface_new)
+    * [.degree1](#NURBSSurface+degree1) : <code>number</code>
+    * [.degree2](#NURBSSurface+degree2) : <code>number</code>
+    * [.knots1](#NURBSSurface+knots1) : <code>Array.&lt;number&gt;</code>
+    * [.knots2](#NURBSSurface+knots2) : <code>Array.&lt;number&gt;</code>
+    * [.controlPoints](#NURBSSurface+controlPoints) : <code>Array.&lt;Array.&lt;(Vector2\|Vector3\|Vector4)&gt;&gt;</code>
+    * [.getPoint(t1, t2, target)](#NURBSSurface+getPoint)
+
+<a name="new_NURBSSurface_new"></a>
+
+### new NURBSSurface(degree1, degree2, knots1, knots2, controlPoints)
+Constructs a new NURBS surface.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| degree1 | <code>number</code> | The first NURBS degree. |
+| degree2 | <code>number</code> | The second NURBS degree. |
+| knots1 | <code>Array.&lt;number&gt;</code> | The first knots as a flat array of numbers. |
+| knots2 | <code>Array.&lt;number&gt;</code> | The second knots as a flat array of numbers. |
+| controlPoints | <code>Array.&lt;Array.&lt;(Vector2\|Vector3\|Vector4)&gt;&gt;</code> | An array^2 holding control points. |
+
+<a name="NURBSSurface+degree1"></a>
+
+### nurbsSurface.degree1 : <code>number</code>
+The first NURBS degree.
+
+**Kind**: instance property of [<code>NURBSSurface</code>](#NURBSSurface)  
+<a name="NURBSSurface+degree2"></a>
+
+### nurbsSurface.degree2 : <code>number</code>
+The second NURBS degree.
+
+**Kind**: instance property of [<code>NURBSSurface</code>](#NURBSSurface)  
+<a name="NURBSSurface+knots1"></a>
+
+### nurbsSurface.knots1 : <code>Array.&lt;number&gt;</code>
+The first knots as a flat array of numbers.
+
+**Kind**: instance property of [<code>NURBSSurface</code>](#NURBSSurface)  
+<a name="NURBSSurface+knots2"></a>
+
+### nurbsSurface.knots2 : <code>Array.&lt;number&gt;</code>
+The second knots as a flat array of numbers.
+
+**Kind**: instance property of [<code>NURBSSurface</code>](#NURBSSurface)  
+<a name="NURBSSurface+controlPoints"></a>
+
+### nurbsSurface.controlPoints : <code>Array.&lt;Array.&lt;(Vector2\|Vector3\|Vector4)&gt;&gt;</code>
+An array holding arrays of control points.
+
+**Kind**: instance property of [<code>NURBSSurface</code>](#NURBSSurface)  
+<a name="NURBSSurface+getPoint"></a>
+
+### nurbsSurface.getPoint(t1, t2, target)
+This method returns a vector in 3D space for the given interpolation factor. This vector lies on the NURBS surface.
+
+**Kind**: instance method of [<code>NURBSSurface</code>](#NURBSSurface)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| t1 | <code>number</code> | The first interpolation factor representing the `u` position on the surface. Must be in the range `[0,1]`. |
+| t2 | <code>number</code> | The second interpolation factor representing the `v` position on the surface. Must be in the range `[0,1]`. |
+| target | <code>Vector3</code> | The target vector the result is written to. |
+
+<a name="module_NURBSUtils"></a>
+
+## NURBSUtils
+
+* [NURBSUtils](#module_NURBSUtils)
+    * [~findSpan(p, u, U)](#module_NURBSUtils..findSpan) ⇒ <code>number</code>
+    * [~calcBasisFunctions(span, u, p, U)](#module_NURBSUtils..calcBasisFunctions) ⇒ <code>Array.&lt;number&gt;</code>
+    * [~calcBSplinePoint(p, U, P, u)](#module_NURBSUtils..calcBSplinePoint) ⇒ <code>Vector4</code>
+    * [~calcBasisFunctionDerivatives(span, u, p, n, U)](#module_NURBSUtils..calcBasisFunctionDerivatives) ⇒ <code>Array.&lt;Array.&lt;number&gt;&gt;</code>
+    * [~calcBSplineDerivatives(p, U, P, u, nd)](#module_NURBSUtils..calcBSplineDerivatives) ⇒ <code>Array.&lt;Vector4&gt;</code>
+    * [~calcKoverI(k, i)](#module_NURBSUtils..calcKoverI) ⇒ <code>number</code>
+    * [~calcRationalCurveDerivatives(Pders)](#module_NURBSUtils..calcRationalCurveDerivatives) ⇒ <code>Array.&lt;Vector3&gt;</code>
+    * [~calcNURBSDerivatives(p, U, P, u, nd)](#module_NURBSUtils..calcNURBSDerivatives) ⇒ <code>Array.&lt;Vector3&gt;</code>
+    * [~calcSurfacePoint(p, q, U, V, P, u, v, target)](#module_NURBSUtils..calcSurfacePoint)
+    * [~calcVolumePoint(p, q, r, U, V, W, P, u, v, w, target)](#module_NURBSUtils..calcVolumePoint)
+
+<a name="module_NURBSUtils..findSpan"></a>
+
+### NURBSUtils~findSpan(p, u, U) ⇒ <code>number</code>
+Finds knot vector span.
+
+**Kind**: inner method of [<code>NURBSUtils</code>](#module_NURBSUtils)  
+**Returns**: <code>number</code> - The span.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| p | <code>number</code> | The degree. |
+| u | <code>number</code> | The parametric value. |
+| U | <code>Array.&lt;number&gt;</code> | The knot vector. |
+
+<a name="module_NURBSUtils..calcBasisFunctions"></a>
+
+### NURBSUtils~calcBasisFunctions(span, u, p, U) ⇒ <code>Array.&lt;number&gt;</code>
+Calculates basis functions. See The NURBS Book, page 70, algorithm A2.2.
+
+**Kind**: inner method of [<code>NURBSUtils</code>](#module_NURBSUtils)  
+**Returns**: <code>Array.&lt;number&gt;</code> - Array[p+1] with basis functions values.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| span | <code>number</code> | The span in which `u` lies. |
+| u | <code>number</code> | The parametric value. |
+| p | <code>number</code> | The degree. |
+| U | <code>Array.&lt;number&gt;</code> | The knot vector. |
+
+<a name="module_NURBSUtils..calcBSplinePoint"></a>
+
+### NURBSUtils~calcBSplinePoint(p, U, P, u) ⇒ <code>Vector4</code>
+Calculates B-Spline curve points. See The NURBS Book, page 82, algorithm A3.1.
+
+**Kind**: inner method of [<code>NURBSUtils</code>](#module_NURBSUtils)  
+**Returns**: <code>Vector4</code> - The point for given `u`.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| p | <code>number</code> | The degree of the B-Spline. |
+| U | <code>Array.&lt;number&gt;</code> | The knot vector. |
+| P | <code>Array.&lt;Vector4&gt;</code> | The control points |
+| u | <code>number</code> | The parametric point. |
+
+<a name="module_NURBSUtils..calcBasisFunctionDerivatives"></a>
+
+### NURBSUtils~calcBasisFunctionDerivatives(span, u, p, n, U) ⇒ <code>Array.&lt;Array.&lt;number&gt;&gt;</code>
+Calculates basis functions derivatives. See The NURBS Book, page 72, algorithm A2.3.
+
+**Kind**: inner method of [<code>NURBSUtils</code>](#module_NURBSUtils)  
+**Returns**: <code>Array.&lt;Array.&lt;number&gt;&gt;</code> - An array[n+1][p+1] with basis functions derivatives.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| span | <code>number</code> | The span in which `u` lies. |
+| u | <code>number</code> | The parametric point. |
+| p | <code>number</code> | The degree. |
+| n | <code>number</code> | number of derivatives to calculate |
+| U | <code>Array.&lt;number&gt;</code> | The knot vector. |
+
+<a name="module_NURBSUtils..calcBSplineDerivatives"></a>
+
+### NURBSUtils~calcBSplineDerivatives(p, U, P, u, nd) ⇒ <code>Array.&lt;Vector4&gt;</code>
+Calculates derivatives of a B-Spline. See The NURBS Book, page 93, algorithm A3.2.
+
+**Kind**: inner method of [<code>NURBSUtils</code>](#module_NURBSUtils)  
+**Returns**: <code>Array.&lt;Vector4&gt;</code> - An array[d+1] with derivatives.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| p | <code>number</code> | The degree. |
+| U | <code>Array.&lt;number&gt;</code> | The knot vector. |
+| P | <code>Array.&lt;Vector4&gt;</code> | The control points |
+| u | <code>number</code> | The parametric point. |
+| nd | <code>number</code> | The number of derivatives. |
+
+<a name="module_NURBSUtils..calcKoverI"></a>
+
+### NURBSUtils~calcKoverI(k, i) ⇒ <code>number</code>
+Calculates "K over I".
+
+**Kind**: inner method of [<code>NURBSUtils</code>](#module_NURBSUtils)  
+**Returns**: <code>number</code> - k!/(i!(k-i)!)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| k | <code>number</code> | The K value. |
+| i | <code>number</code> | The I value. |
+
+<a name="module_NURBSUtils..calcRationalCurveDerivatives"></a>
+
+### NURBSUtils~calcRationalCurveDerivatives(Pders) ⇒ <code>Array.&lt;Vector3&gt;</code>
+Calculates derivatives (0-nd) of rational curve. See The NURBS Book, page 127, algorithm A4.2.
+
+**Kind**: inner method of [<code>NURBSUtils</code>](#module_NURBSUtils)  
+**Returns**: <code>Array.&lt;Vector3&gt;</code> - An array with derivatives for rational curve.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Pders | <code>Array.&lt;Vector4&gt;</code> | Array with derivatives. |
+
+<a name="module_NURBSUtils..calcNURBSDerivatives"></a>
+
+### NURBSUtils~calcNURBSDerivatives(p, U, P, u, nd) ⇒ <code>Array.&lt;Vector3&gt;</code>
+Calculates NURBS curve derivatives. See The NURBS Book, page 127, algorithm A4.2.
+
+**Kind**: inner method of [<code>NURBSUtils</code>](#module_NURBSUtils)  
+**Returns**: <code>Array.&lt;Vector3&gt;</code> - array with derivatives for rational curve.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| p | <code>number</code> | The degree. |
+| U | <code>Array.&lt;number&gt;</code> | The knot vector. |
+| P | <code>Array.&lt;Vector4&gt;</code> | The control points in homogeneous space. |
+| u | <code>number</code> | The parametric point. |
+| nd | <code>number</code> | The number of derivatives. |
+
+<a name="module_NURBSUtils..calcSurfacePoint"></a>
+
+### NURBSUtils~calcSurfacePoint(p, q, U, V, P, u, v, target)
+Calculates a rational B-Spline surface point. See The NURBS Book, page 134, algorithm A4.3.
+
+**Kind**: inner method of [<code>NURBSUtils</code>](#module_NURBSUtils)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| p | <code>number</code> | The first degree of B-Spline surface. |
+| q | <code>number</code> | The second degree of B-Spline surface. |
+| U | <code>Array.&lt;number&gt;</code> | The first knot vector. |
+| V | <code>Array.&lt;number&gt;</code> | The second knot vector. |
+| P | <code>Array.&lt;Array.&lt;Vector4&gt;&gt;</code> | The control points in homogeneous space. |
+| u | <code>number</code> | The first parametric point. |
+| v | <code>number</code> | The second parametric point. |
+| target | <code>Vector3</code> | The target vector. |
+
+<a name="module_NURBSUtils..calcVolumePoint"></a>
+
+### NURBSUtils~calcVolumePoint(p, q, r, U, V, W, P, u, v, w, target)
+Calculates a rational B-Spline volume point. See The NURBS Book, page 134, algorithm A4.3.
+
+**Kind**: inner method of [<code>NURBSUtils</code>](#module_NURBSUtils)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| p | <code>number</code> | The first degree of B-Spline surface. |
+| q | <code>number</code> | The second degree of B-Spline surface. |
+| r | <code>number</code> | The third degree of B-Spline surface. |
+| U | <code>Array.&lt;number&gt;</code> | The first knot vector. |
+| V | <code>Array.&lt;number&gt;</code> | The second knot vector. |
+| W | <code>Array.&lt;number&gt;</code> | The third knot vector. |
+| P | <code>Array.&lt;Array.&lt;Array.&lt;Vector4&gt;&gt;&gt;</code> | The control points in homogeneous space. |
+| u | <code>number</code> | The first parametric point. |
+| v | <code>number</code> | The second parametric point. |
+| w | <code>number</code> | The third parametric point. |
+| target | <code>Vector3</code> | The target vector. |
+
+<a name="NURBSVolume"></a>
+
+## NURBSVolume
+This class represents a NURBS volume.
+
+Implementation is based on `(x, y [, z=0 [, w=1]])` control points with `w=weight`.
+
+**Kind**: global class  
+
+* [NURBSVolume](#NURBSVolume)
+    * [new NURBSVolume(degree1, degree2, degree3, knots1, knots2, knots3, controlPoints)](#new_NURBSVolume_new)
+    * [.getPoint(t1, t2, t3, target)](#NURBSVolume+getPoint)
+
+<a name="new_NURBSVolume_new"></a>
+
+### new NURBSVolume(degree1, degree2, degree3, knots1, knots2, knots3, controlPoints)
+Constructs a new NURBS surface.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| degree1 | <code>number</code> | The first NURBS degree. |
+| degree2 | <code>number</code> | The second NURBS degree. |
+| degree3 | <code>number</code> | The third NURBS degree. |
+| knots1 | <code>Array.&lt;number&gt;</code> | The first knots as a flat array of numbers. |
+| knots2 | <code>Array.&lt;number&gt;</code> | The second knots as a flat array of numbers. |
+| knots3 | <code>Array.&lt;number&gt;</code> | The third knots as a flat array of numbers. |
+| controlPoints | <code>Array.&lt;Array.&lt;Array.&lt;(Vector2\|Vector3\|Vector4)&gt;&gt;&gt;</code> | An array^3 holding control points. |
+
+<a name="NURBSVolume+getPoint"></a>
+
+### nurbsVolume.getPoint(t1, t2, t3, target)
+This method returns a vector in 3D space for the given interpolation factor. This vector lies within the NURBS volume.
+
+**Kind**: instance method of [<code>NURBSVolume</code>](#NURBSVolume)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| t1 | <code>number</code> | The first interpolation factor representing the `u` position within the volume. Must be in the range `[0,1]`. |
+| t2 | <code>number</code> | The second interpolation factor representing the `v` position within the volume. Must be in the range `[0,1]`. |
+| t3 | <code>number</code> | The third interpolation factor representing the `w` position within the volume. Must be in the range `[0,1]`. |
+| target | <code>Vector3</code> | The target vector the result is written to. |
+
+<a name="AnaglyphEffect"></a>
+

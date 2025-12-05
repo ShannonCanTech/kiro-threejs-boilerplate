@@ -1,0 +1,17 @@
+{
+  "enabled": true,
+  "name": "React Component Documenter",
+  "description": "Automatically extracts props interface, updates documentation comments, generates usage examples, and updates README.md for React component files when saved",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/*.tsx",
+      "**/*.jsx"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A React component file has been saved. Please perform the following tasks:\n\n1. Extract the component's props interface/type definition\n2. Update or create a JSDoc documentation comment above the component that describes:\n   - What the component does\n   - Each prop and its purpose\n   - Any important usage notes\n3. Generate 2-3 practical usage examples based on the props, showing common use cases\n4. If a README.md exists in the same directory as the component, update it with:\n   - Component description\n   - Props documentation table\n   - Usage examples\n   - If no README.md exists, create one with this information\n\nFollow React best practices and ensure the documentation is clear and helpful for other developers."
+  }
+}

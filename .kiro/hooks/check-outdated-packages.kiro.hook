@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Check Outdated NPM Packages",
+  "description": "Monitors package.json for changes and checks if any npm packages are outdated, providing recommendations for updates",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "package.json"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "The package.json file has been modified. Please run 'npm outdated' to check for outdated packages and provide a summary of which packages need updating, including their current versions, wanted versions, and latest versions. Also suggest whether updates should be made and highlight any potential breaking changes based on semantic versioning."
+  }
+}

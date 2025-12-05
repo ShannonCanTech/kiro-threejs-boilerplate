@@ -1,0 +1,84 @@
+{
+  "hooks": [
+    {
+      "id": "validate-threejs-patterns",
+      "name": "Validate Three.js Patterns",
+      "description": "Checks Three.js components for proper cleanup and best practices",
+      "trigger": {
+        "type": "onFileSave",
+        "filePattern": "src/**/*.{jsx,tsx}"
+      },
+      "action": {
+        "type": "sendMessage",
+        "message": "Check the saved file for Three.js best practices: proper cleanup (dispose), resource management, and React patterns. Only report issues if found."
+      },
+      "enabled": true
+    },
+    {
+      "id": "check-api-reference",
+      "name": "Suggest API Reference",
+      "description": "Suggests relevant API documentation when working with Three.js files",
+      "trigger": {
+        "type": "manual"
+      },
+      "action": {
+        "type": "sendMessage",
+        "message": "Based on the current file, suggest which API reference file from .kiro/reference/threejs-api/ would be most helpful. Use QUICK-REFERENCE.md to determine the right file."
+      },
+      "enabled": true
+    },
+    {
+      "id": "optimize-scene",
+      "name": "Optimize Three.js Scene",
+      "description": "Reviews current scene for performance optimizations",
+      "trigger": {
+        "type": "manual"
+      },
+      "action": {
+        "type": "sendMessage",
+        "message": "Review the current Three.js scene for performance optimizations. Check: geometry/material reuse, InstancedMesh usage, proper disposal, lighting count, texture sizes, and polygon counts. Reference best-practices.md."
+      },
+      "enabled": true
+    },
+    {
+      "id": "generate-example",
+      "name": "Generate Three.js Example",
+      "description": "Creates a new example component in src/examples/",
+      "trigger": {
+        "type": "manual"
+      },
+      "action": {
+        "type": "sendMessage",
+        "message": "Help me create a new Three.js example. Ask what I want to demonstrate, then create a component in src/examples/ following the template patterns from threejs-expert.md."
+      },
+      "enabled": true
+    },
+    {
+      "id": "debug-scene",
+      "name": "Debug Three.js Scene",
+      "description": "Adds debug helpers to visualize the scene",
+      "trigger": {
+        "type": "manual"
+      },
+      "action": {
+        "type": "sendMessage",
+        "message": "Add debug helpers to the current scene: AxesHelper, GridHelper, and any relevant helpers for lights or cameras. Reference llms-helpers.txt for available helpers."
+      },
+      "enabled": true
+    },
+    {
+      "id": "update-dependencies",
+      "name": "Check Three.js Version",
+      "description": "Checks if Three.js and related dependencies are up to date",
+      "trigger": {
+        "type": "onFileSave",
+        "filePattern": "package.json"
+      },
+      "action": {
+        "type": "command",
+        "command": "npm outdated three @react-three/fiber @react-three/drei"
+      },
+      "enabled": false
+    }
+  ]
+}

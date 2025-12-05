@@ -1,0 +1,378 @@
+# three.js 
+
+> JavaScript 3D Library. 
+
+<a name="AnimationClipCreator"></a>
+
+# three.js 
+
+> JavaScript 3D Library. 
+
+<a name="AnimationClipCreator"></a>
+
+## AnimationClipCreator
+A utility class with factory methods for creating basic animation clips.
+
+**Kind**: global class  
+
+* [AnimationClipCreator](#AnimationClipCreator)
+    * [.CreateRotationAnimation(period, [axis])](#AnimationClipCreator.CreateRotationAnimation) ⇒ <code>AnimationClip</code>
+    * [.CreateScaleAxisAnimation(period, [axis])](#AnimationClipCreator.CreateScaleAxisAnimation) ⇒ <code>AnimationClip</code>
+    * [.CreateShakeAnimation(duration, shakeScale)](#AnimationClipCreator.CreateShakeAnimation) ⇒ <code>AnimationClip</code>
+    * [.CreatePulsationAnimation(duration, pulseScale)](#AnimationClipCreator.CreatePulsationAnimation) ⇒ <code>AnimationClip</code>
+    * [.CreateVisibilityAnimation(duration)](#AnimationClipCreator.CreateVisibilityAnimation) ⇒ <code>AnimationClip</code>
+    * [.CreateMaterialColorAnimation(duration, colors)](#AnimationClipCreator.CreateMaterialColorAnimation) ⇒ <code>AnimationClip</code>
+
+<a name="AnimationClipCreator.CreateRotationAnimation"></a>
+
+### AnimationClipCreator.CreateRotationAnimation(period, [axis]) ⇒ <code>AnimationClip</code>
+Creates an animation clip that rotates a 3D object 360 degrees
+in the given period of time around the given axis.
+
+**Kind**: static method of [<code>AnimationClipCreator</code>](#AnimationClipCreator)  
+**Returns**: <code>AnimationClip</code> - The created animation clip.  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| period | <code>number</code> |  | The duration of the animation. |
+| [axis] | <code>&#x27;x&#x27;</code> \| <code>&#x27;y&#x27;</code> \| <code>&#x27;z&#x27;</code> | <code>&#x27;x&#x27;</code> | The axis of rotation. |
+
+<a name="AnimationClipCreator.CreateScaleAxisAnimation"></a>
+
+### AnimationClipCreator.CreateScaleAxisAnimation(period, [axis]) ⇒ <code>AnimationClip</code>
+Creates an animation clip that scales a 3D object from `0` to `1`
+in the given period of time along the given axis.
+
+**Kind**: static method of [<code>AnimationClipCreator</code>](#AnimationClipCreator)  
+**Returns**: <code>AnimationClip</code> - The created animation clip.  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| period | <code>number</code> |  | The duration of the animation. |
+| [axis] | <code>&#x27;x&#x27;</code> \| <code>&#x27;y&#x27;</code> \| <code>&#x27;z&#x27;</code> | <code>&#x27;x&#x27;</code> | The axis to scale the 3D object along. |
+
+<a name="AnimationClipCreator.CreateShakeAnimation"></a>
+
+### AnimationClipCreator.CreateShakeAnimation(duration, shakeScale) ⇒ <code>AnimationClip</code>
+Creates an animation clip that translates a 3D object in a shake pattern
+in the given period.
+
+**Kind**: static method of [<code>AnimationClipCreator</code>](#AnimationClipCreator)  
+**Returns**: <code>AnimationClip</code> - The created animation clip.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| duration | <code>number</code> | The duration of the animation. |
+| shakeScale | <code>Vector3</code> | The scale of the shake. |
+
+<a name="AnimationClipCreator.CreatePulsationAnimation"></a>
+
+### AnimationClipCreator.CreatePulsationAnimation(duration, pulseScale) ⇒ <code>AnimationClip</code>
+Creates an animation clip that scales a 3D object in a pulse pattern
+in the given period.
+
+**Kind**: static method of [<code>AnimationClipCreator</code>](#AnimationClipCreator)  
+**Returns**: <code>AnimationClip</code> - The created animation clip.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| duration | <code>number</code> | The duration of the animation. |
+| pulseScale | <code>number</code> | The scale of the pulse. |
+
+<a name="AnimationClipCreator.CreateVisibilityAnimation"></a>
+
+### AnimationClipCreator.CreateVisibilityAnimation(duration) ⇒ <code>AnimationClip</code>
+Creates an animation clip that toggles the visibility of a 3D object.
+
+**Kind**: static method of [<code>AnimationClipCreator</code>](#AnimationClipCreator)  
+**Returns**: <code>AnimationClip</code> - The created animation clip.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| duration | <code>number</code> | The duration of the animation. |
+
+<a name="AnimationClipCreator.CreateMaterialColorAnimation"></a>
+
+### AnimationClipCreator.CreateMaterialColorAnimation(duration, colors) ⇒ <code>AnimationClip</code>
+Creates an animation clip that animates the `color` property of a 3D object's
+material.
+
+**Kind**: static method of [<code>AnimationClipCreator</code>](#AnimationClipCreator)  
+**Returns**: <code>AnimationClip</code> - The created animation clip.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| duration | <code>number</code> | The duration of the animation. |
+| colors | <code>Array.&lt;Color&gt;</code> | An array of colors that should be sequentially animated. |
+
+## Classes
+
+<dl>
+<dt><a href="#CCDIKSolver">CCDIKSolver</a></dt>
+<dd><p>This class solves the Inverse Kinematics Problem with a <a href="https://web.archive.org/web/20221206080850/https://sites.google.com/site/auraliusproject/ccd-algorithm">CCD Algorithm</a>.</p>
+<p><code>CCDIKSolver</code> is designed to work with instances of <a href="SkinnedMesh">SkinnedMesh</a>.</p>
+</dd>
+<dt><a href="#CCDIKHelper">CCDIKHelper</a> ⇐ <code>Object3D</code></dt>
+<dd><p>Helper for visualizing IK bones.</p>
+</dd>
+</dl>
+
+<a name="CCDIKSolver"></a>
+
+## CCDIKSolver
+This class solves the Inverse Kinematics Problem with a [CCD Algorithm](https://web.archive.org/web/20221206080850/https://sites.google.com/site/auraliusproject/ccd-algorithm).
+
+`CCDIKSolver` is designed to work with instances of [SkinnedMesh](SkinnedMesh).
+
+**Kind**: global class  
+
+* [CCDIKSolver](#CCDIKSolver)
+    * [new CCDIKSolver(mesh, [iks])](#new_CCDIKSolver_new)
+    * _instance_
+        * [.mesh](#CCDIKSolver+mesh) : <code>SkinnedMesh</code>
+        * [.iks](#CCDIKSolver+iks) : <code>SkinnedMesh</code>
+        * [.update([globalBlendFactor])](#CCDIKSolver+update) ⇒ [<code>CCDIKSolver</code>](#CCDIKSolver)
+        * [.updateOne(ik, [overrideBlend])](#CCDIKSolver+updateOne) ⇒ [<code>CCDIKSolver</code>](#CCDIKSolver)
+        * [.createHelper(sphereSize)](#CCDIKSolver+createHelper) ⇒ [<code>CCDIKHelper</code>](#CCDIKHelper)
+    * _inner_
+        * [~IK](#CCDIKSolver..IK) : <code>Object</code>
+        * [~BoneLink](#CCDIKSolver..BoneLink) : <code>Object</code>
+
+<a name="new_CCDIKSolver_new"></a>
+
+### new CCDIKSolver(mesh, [iks])
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| mesh | <code>SkinnedMesh</code> |  | The skinned mesh. |
+| [iks] | [<code>Array.&lt;IK&gt;</code>](#CCDIKSolver..IK) | <code>[]</code> | The IK objects. |
+
+<a name="CCDIKSolver+mesh"></a>
+
+### ccdikSolver.mesh : <code>SkinnedMesh</code>
+The skinned mesh.
+
+**Kind**: instance property of [<code>CCDIKSolver</code>](#CCDIKSolver)  
+<a name="CCDIKSolver+iks"></a>
+
+### ccdikSolver.iks : <code>SkinnedMesh</code>
+The IK objects.
+
+**Kind**: instance property of [<code>CCDIKSolver</code>](#CCDIKSolver)  
+<a name="CCDIKSolver+update"></a>
+
+### ccdikSolver.update([globalBlendFactor]) ⇒ [<code>CCDIKSolver</code>](#CCDIKSolver)
+Updates all IK bones by solving the CCD algorithm.
+
+**Kind**: instance method of [<code>CCDIKSolver</code>](#CCDIKSolver)  
+**Returns**: [<code>CCDIKSolver</code>](#CCDIKSolver) - A reference to this instance.  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [globalBlendFactor] | <code>number</code> | <code>1.0</code> | Blend factor applied if an IK chain doesn't have its own .blendFactor. |
+
+<a name="CCDIKSolver+updateOne"></a>
+
+### ccdikSolver.updateOne(ik, [overrideBlend]) ⇒ [<code>CCDIKSolver</code>](#CCDIKSolver)
+Updates one IK bone solving the CCD algorithm.
+
+**Kind**: instance method of [<code>CCDIKSolver</code>](#CCDIKSolver)  
+**Returns**: [<code>CCDIKSolver</code>](#CCDIKSolver) - A reference to this instance.  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| ik | [<code>IK</code>](#CCDIKSolver..IK) |  | The IK to update. |
+| [overrideBlend] | <code>number</code> | <code>1.0</code> | If the IK object does not define `blendFactor`, this value is used. |
+
+<a name="CCDIKSolver+createHelper"></a>
+
+### ccdikSolver.createHelper(sphereSize) ⇒ [<code>CCDIKHelper</code>](#CCDIKHelper)
+Creates a helper for visualizing the CCDIK.
+
+**Kind**: instance method of [<code>CCDIKSolver</code>](#CCDIKSolver)  
+**Returns**: [<code>CCDIKHelper</code>](#CCDIKHelper) - The created helper.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sphereSize | <code>number</code> | The sphere size. |
+
+<a name="CCDIKSolver..IK"></a>
+
+### CCDIKSolver~IK : <code>Object</code>
+This type represents IK configuration objects.
+
+**Kind**: inner typedef of [<code>CCDIKSolver</code>](#CCDIKSolver)  
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| target | <code>number</code> |  | The target bone index which refers to a bone in the `Skeleton.bones` array. |
+| effector | <code>number</code> |  | The effector bone index which refers to a bone in the `Skeleton.bones` array. |
+| links | [<code>Array.&lt;BoneLink&gt;</code>](#CCDIKSolver..BoneLink) |  | An array of bone links. |
+| [iteration] | <code>number</code> | <code>1</code> | Iteration number of calculation. Smaller is faster but less precise. |
+| [minAngle] | <code>number</code> |  | Minimum rotation angle in a step in radians. |
+| [maxAngle] | <code>number</code> |  | Minimum rotation angle in a step in radians. |
+| [blendFactor] | <code>number</code> |  | The blend factor. |
+
+<a name="CCDIKSolver..BoneLink"></a>
+
+### CCDIKSolver~BoneLink : <code>Object</code>
+This type represents bone links.
+
+**Kind**: inner typedef of [<code>CCDIKSolver</code>](#CCDIKSolver)  
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| index | <code>number</code> |  | The index of a linked bone which refers to a bone in the `Skeleton.bones` array. |
+| [limitation] | <code>number</code> |  | Rotation axis. |
+| [rotationMin] | <code>number</code> |  | Rotation minimum limit. |
+| [rotationMax] | <code>number</code> |  | Rotation maximum limit. |
+| [enabled] | <code>boolean</code> | <code>true</code> | Whether the link is enabled or not. |
+
+<a name="CCDIKHelper"></a>
+
+## CCDIKHelper ⇐ <code>Object3D</code>
+Helper for visualizing IK bones.
+
+**Kind**: global class  
+**Extends**: <code>Object3D</code>  
+
+* [CCDIKHelper](#CCDIKHelper) ⇐ <code>Object3D</code>
+    * [new CCDIKHelper(mesh, [iks], [sphereSize])](#new_CCDIKHelper_new)
+    * [.root](#CCDIKHelper+root) : <code>SkinnedMesh</code>
+    * [.iks](#CCDIKHelper+iks) : [<code>Array.&lt;IK&gt;</code>](#CCDIKSolver..IK)
+    * [.sphereGeometry](#CCDIKHelper+sphereGeometry) : <code>SkinnedMesh</code>
+    * [.targetSphereMaterial](#CCDIKHelper+targetSphereMaterial) : <code>MeshBasicMaterial</code>
+    * [.effectorSphereMaterial](#CCDIKHelper+effectorSphereMaterial) : <code>MeshBasicMaterial</code>
+    * [.linkSphereMaterial](#CCDIKHelper+linkSphereMaterial) : <code>MeshBasicMaterial</code>
+    * [.lineMaterial](#CCDIKHelper+lineMaterial) : <code>LineBasicMaterial</code>
+    * [.dispose()](#CCDIKHelper+dispose)
+
+<a name="new_CCDIKHelper_new"></a>
+
+### new CCDIKHelper(mesh, [iks], [sphereSize])
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| mesh | <code>SkinnedMesh</code> |  | The skinned mesh. |
+| [iks] | [<code>Array.&lt;IK&gt;</code>](#CCDIKSolver..IK) | <code>[]</code> | The IK objects. |
+| [sphereSize] | <code>number</code> | <code>0.25</code> | The sphere size. |
+
+<a name="CCDIKHelper+root"></a>
+
+### ccdikHelper.root : <code>SkinnedMesh</code>
+The skinned mesh this helper refers to.
+
+**Kind**: instance property of [<code>CCDIKHelper</code>](#CCDIKHelper)  
+<a name="CCDIKHelper+iks"></a>
+
+### ccdikHelper.iks : [<code>Array.&lt;IK&gt;</code>](#CCDIKSolver..IK)
+The IK objects.
+
+**Kind**: instance property of [<code>CCDIKHelper</code>](#CCDIKHelper)  
+<a name="CCDIKHelper+sphereGeometry"></a>
+
+### ccdikHelper.sphereGeometry : <code>SkinnedMesh</code>
+The helpers sphere geometry.
+
+**Kind**: instance property of [<code>CCDIKHelper</code>](#CCDIKHelper)  
+<a name="CCDIKHelper+targetSphereMaterial"></a>
+
+### ccdikHelper.targetSphereMaterial : <code>MeshBasicMaterial</code>
+The material for the target spheres.
+
+**Kind**: instance property of [<code>CCDIKHelper</code>](#CCDIKHelper)  
+<a name="CCDIKHelper+effectorSphereMaterial"></a>
+
+### ccdikHelper.effectorSphereMaterial : <code>MeshBasicMaterial</code>
+The material for the effector spheres.
+
+**Kind**: instance property of [<code>CCDIKHelper</code>](#CCDIKHelper)  
+<a name="CCDIKHelper+linkSphereMaterial"></a>
+
+### ccdikHelper.linkSphereMaterial : <code>MeshBasicMaterial</code>
+The material for the link spheres.
+
+**Kind**: instance property of [<code>CCDIKHelper</code>](#CCDIKHelper)  
+<a name="CCDIKHelper+lineMaterial"></a>
+
+### ccdikHelper.lineMaterial : <code>LineBasicMaterial</code>
+A global line material.
+
+**Kind**: instance property of [<code>CCDIKHelper</code>](#CCDIKHelper)  
+<a name="CCDIKHelper+dispose"></a>
+
+### ccdikHelper.dispose()
+Frees the GPU-related resources allocated by this instance.
+Call this method whenever this instance is no longer used in your app.
+
+**Kind**: instance method of [<code>CCDIKHelper</code>](#CCDIKHelper)  
+<a name="WebGL"></a>
+
+## WebGL
+A utility module with basic WebGL 2 capability testing.
+
+**Kind**: global class  
+
+* [WebGL](#WebGL)
+    * [.isWebGL2Available()](#WebGL.isWebGL2Available) ⇒ <code>boolean</code>
+    * [.isColorSpaceAvailable(colorSpace)](#WebGL.isColorSpaceAvailable) ⇒ <code>boolean</code>
+    * [.getWebGL2ErrorMessage()](#WebGL.getWebGL2ErrorMessage) ⇒ <code>HTMLDivElement</code>
+
+<a name="WebGL.isWebGL2Available"></a>
+
+### WebGL.isWebGL2Available() ⇒ <code>boolean</code>
+Returns `true` if WebGL 2 is available.
+
+**Kind**: static method of [<code>WebGL</code>](#WebGL)  
+**Returns**: <code>boolean</code> - Whether WebGL 2 is available or not.  
+<a name="WebGL.isColorSpaceAvailable"></a>
+
+### WebGL.isColorSpaceAvailable(colorSpace) ⇒ <code>boolean</code>
+Returns `true` if the given color space is available. This method can only be used
+if WebGL 2 is supported.
+
+**Kind**: static method of [<code>WebGL</code>](#WebGL)  
+**Returns**: <code>boolean</code> - Whether the given color space is available or not.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| colorSpace | <code>string</code> | The color space to test. |
+
+<a name="WebGL.getWebGL2ErrorMessage"></a>
+
+### WebGL.getWebGL2ErrorMessage() ⇒ <code>HTMLDivElement</code>
+Returns a `div` element representing a formatted error message that can be appended in
+web sites if WebGL 2 isn't supported.
+
+**Kind**: static method of [<code>WebGL</code>](#WebGL)  
+**Returns**: <code>HTMLDivElement</code> - A `div` element representing a formatted error message that WebGL 2 isn't supported.  
+<a name="WebGPU"></a>
+
+## WebGPU
+A utility module with basic WebGPU capability testing.
+
+**Kind**: global class  
+
+* [WebGPU](#WebGPU)
+    * [.isAvailable()](#WebGPU.isAvailable) ⇒ <code>boolean</code>
+    * [.getErrorMessage()](#WebGPU.getErrorMessage) ⇒ <code>HTMLDivElement</code>
+
+<a name="WebGPU.isAvailable"></a>
+
+### WebGPU.isAvailable() ⇒ <code>boolean</code>
+Returns `true` if WebGPU is available.
+
+**Kind**: static method of [<code>WebGPU</code>](#WebGPU)  
+**Returns**: <code>boolean</code> - Whether WebGPU is available or not.  
+<a name="WebGPU.getErrorMessage"></a>
+
+### WebGPU.getErrorMessage() ⇒ <code>HTMLDivElement</code>
+Returns a `div` element representing a formatted error message that can be appended in
+web sites if WebGPU isn't supported.
+
+**Kind**: static method of [<code>WebGPU</code>](#WebGPU)  
+**Returns**: <code>HTMLDivElement</code> - A `div` element representing a formatted error message that WebGPU isn't supported.  
+<a name="ArcballControls"></a>
+

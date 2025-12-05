@@ -1,0 +1,681 @@
+# three.js 
+
+> JavaScript 3D Library. 
+
+<a name="AnimationClipCreator"></a>
+
+## DRACOExporter
+An exporter to compress geometry with the Draco library.
+
+[Draco](https://google.github.io/draco/) is an open source library for compressing and
+decompressing 3D meshes and point clouds. Compressed geometry can be significantly smaller,
+at the cost of additional decoding time on the client device.
+
+Standalone Draco files have a `.drc` extension, and contain vertex positions,
+normals, colors, and other attributes. Draco files *do not* contain materials,
+textures, animation, or node hierarchies – to use these features, embed Draco geometry
+inside of a glTF file. A normal glTF file can be converted to a Draco-compressed glTF file
+using [glTF-Pipeline](https://github.com/AnalyticalGraphicsInc/gltf-pipeline).
+
+```js
+const exporter = new DRACOExporter();
+const data = exporter.parse( mesh, options );
+```
+
+**Kind**: global class  
+
+* [DRACOExporter](#DRACOExporter)
+    * _instance_
+        * [.parse(object, options)](#DRACOExporter+parse) ⇒ <code>ArrayBuffer</code>
+    * _static_
+        * [.MESH_EDGEBREAKER_ENCODING](#DRACOExporter.MESH_EDGEBREAKER_ENCODING) : <code>number</code>
+        * [.MESH_SEQUENTIAL_ENCODING](#DRACOExporter.MESH_SEQUENTIAL_ENCODING) : <code>number</code>
+    * _inner_
+        * [~Options](#DRACOExporter..Options) : <code>Object</code>
+
+<a name="DRACOExporter+parse"></a>
+
+### dracoExporter.parse(object, options) ⇒ <code>ArrayBuffer</code>
+Parses the given mesh or point cloud and generates the Draco output.
+
+**Kind**: instance method of [<code>DRACOExporter</code>](#DRACOExporter)  
+**Returns**: <code>ArrayBuffer</code> - The exported Draco.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| object | <code>Mesh</code> \| <code>Points</code> | The mesh or point cloud to export. |
+| options | [<code>Options</code>](#DRACOExporter..Options) | The export options. |
+
+<a name="DRACOExporter.MESH_EDGEBREAKER_ENCODING"></a>
+
+### DRACOExporter.MESH\_EDGEBREAKER\_ENCODING : <code>number</code>
+Edgebreaker encoding.
+
+**Kind**: static constant of [<code>DRACOExporter</code>](#DRACOExporter)  
+**Default**: <code>1</code>  
+<a name="DRACOExporter.MESH_SEQUENTIAL_ENCODING"></a>
+
+### DRACOExporter.MESH\_SEQUENTIAL\_ENCODING : <code>number</code>
+Sequential encoding.
+
+**Kind**: static constant of [<code>DRACOExporter</code>](#DRACOExporter)  
+**Default**: <code>0</code>  
+<a name="DRACOExporter..Options"></a>
+
+### DRACOExporter~Options : <code>Object</code>
+Export options of `DRACOExporter`.
+
+**Kind**: inner typedef of [<code>DRACOExporter</code>](#DRACOExporter)  
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [decodeSpeed] | <code>number</code> | <code>5</code> | Indicates how to tune the encoder regarding decode speed (0 gives better speed but worst quality). |
+| [encodeSpeed] | <code>number</code> | <code>5</code> | Indicates how to tune the encoder parameters (0 gives better speed but worst quality). |
+| [encoderMethod] | <code>number</code> | <code>1</code> | Either sequential (very little compression) or Edgebreaker. Edgebreaker traverses the triangles of the mesh in a deterministic, spiral-like way which provides most of the benefits of this data format. |
+| [quantization] | <code>Array.&lt;number&gt;</code> | <code>[ 16, 8, 8, 8, 8 ]</code> | Indicates the precision of each type of data stored in the draco file in the order (POSITION, NORMAL, COLOR, TEX_COORD, GENERIC). |
+| [exportUvs] | <code>boolean</code> | <code>true</code> | Whether to export UVs or not. |
+| [exportNormals] | <code>boolean</code> | <code>true</code> | Whether to export normals or not. |
+| [exportColor] | <code>boolean</code> | <code>false</code> | Whether to export colors or not. |
+
+<a name="EXRExporter"></a>
+
+## EXRExporter
+An exporter for EXR.
+
+EXR ( Extended Dynamic Range) is an [open format specification](https://github.com/AcademySoftwareFoundation/openexr)
+for professional-grade image storage format of the motion picture industry. The purpose of
+format is to accurately and efficiently represent high-dynamic-range scene-linear image data
+and associated metadata. The library is widely used in host application software where accuracy
+is critical, such as photorealistic rendering, texture access, image compositing, deep compositing,
+and DI.
+
+```js
+const exporter = new EXRExporter();
+const result = await exporter.parse( renderer, options );
+```
+
+**Kind**: global class  
+
+* [EXRExporter](#EXRExporter)
+    * _instance_
+        * [.parse(arg1, arg2, [arg3])](#EXRExporter+parse) ⇒ <code>Promise.&lt;Uint8Array&gt;</code>
+    * _inner_
+        * [~Options](#EXRExporter..Options) : <code>Object</code>
+
+<a name="EXRExporter+parse"></a>
+
+### exrExporter.parse(arg1, arg2, [arg3]) ⇒ <code>Promise.&lt;Uint8Array&gt;</code>
+This method has two variants.
+
+- When exporting a data texture, it receives two parameters. The texture and the exporter options.
+- When exporting a render target (e.g. a PMREM), it receives three parameters. The renderer, the
+render target and the exporter options.
+
+**Kind**: instance method of [<code>EXRExporter</code>](#EXRExporter)  
+**Returns**: <code>Promise.&lt;Uint8Array&gt;</code> - A Promise that resolves with the exported EXR.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| arg1 | <code>DataTexture</code> \| <code>WebGPURenderer</code> \| <code>WebGLRenderer</code> | The data texture to export or a renderer. |
+| arg2 | [<code>Options</code>](#EXRExporter..Options) \| <code>RenderTarget</code> | The exporter options or a render target. |
+| [arg3] | [<code>Options</code>](#EXRExporter..Options) | The exporter options. |
+
+<a name="EXRExporter..Options"></a>
+
+### EXRExporter~Options : <code>Object</code>
+Export options of `EXRExporter`.
+
+**Kind**: inner typedef of [<code>EXRExporter</code>](#EXRExporter)  
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [type] | <code>HalfFloatType</code> \| <code>FloatType</code> | <code>HalfFloatType</code> | Output data type. |
+| [type] | <code>NO\_COMPRESSION</code> \| <code>ZIP\_COMPRESSION</code> \| <code>ZIPS\_COMPRESSION</code> | <code>ZIP_COMPRESSION</code> | The compression algorithm. |
+
+## Classes
+
+<dl>
+<dt><a href="#GLTFExporter">GLTFExporter</a></dt>
+<dd><p>An exporter for <code>glTF</code> 2.0.</p>
+<p>glTF (GL Transmission Format) is an <a href="https://github.com/KhronosGroup/glTF/tree/master/specification/2.0">open format specification</a>
+for efficient delivery and loading of 3D content. Assets may be provided either in JSON (.gltf)
+or binary (.glb) format. External files store textures (.jpg, .png) and additional binary
+data (.bin). A glTF asset may deliver one or more scenes, including meshes, materials,
+textures, skins, skeletons, morph targets, animations, lights, and/or cameras.</p>
+<p>GLTFExporter supports the <a href="https://github.com/KhronosGroup/glTF/tree/master/extensions/">glTF 2.0 extensions</a>:</p>
+<ul>
+<li>KHR_lights_punctual</li>
+<li>KHR_materials_clearcoat</li>
+<li>KHR_materials_dispersion</li>
+<li>KHR_materials_emissive_strength</li>
+<li>KHR_materials_ior</li>
+<li>KHR_materials_iridescence</li>
+<li>KHR_materials_specular</li>
+<li>KHR_materials_sheen</li>
+<li>KHR_materials_transmission</li>
+<li>KHR_materials_unlit</li>
+<li>KHR_materials_volume</li>
+<li>KHR_mesh_quantization</li>
+<li>KHR_texture_transform</li>
+<li>EXT_materials_bump</li>
+<li>EXT_mesh_gpu_instancing</li>
+</ul>
+<p>The following glTF 2.0 extension is supported by an external user plugin:</p>
+<ul>
+<li><a href="https://github.com/takahirox/three-gltf-extensions">KHR_materials_variants</a></li>
+</ul>
+<pre><code class="language-js">const exporter = new GLTFExporter();
+const data = await exporter.parseAsync( scene, options );
+</code></pre>
+</dd>
+</dl>
+
+## Constants
+
+<dl>
+<dt><a href="#KHR_mesh_quantization_ExtraAttrTypes">KHR_mesh_quantization_ExtraAttrTypes</a></dt>
+<dd><p>The KHR_mesh_quantization extension allows these extra attribute component types</p>
+</dd>
+</dl>
+
+<a name="GLTFExporter"></a>
+
+## GLTFExporter
+An exporter for `glTF` 2.0.
+
+glTF (GL Transmission Format) is an [open format specification](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0)
+for efficient delivery and loading of 3D content. Assets may be provided either in JSON (.gltf)
+or binary (.glb) format. External files store textures (.jpg, .png) and additional binary
+data (.bin). A glTF asset may deliver one or more scenes, including meshes, materials,
+textures, skins, skeletons, morph targets, animations, lights, and/or cameras.
+
+GLTFExporter supports the [glTF 2.0 extensions](https://github.com/KhronosGroup/glTF/tree/master/extensions/):
+
+- KHR_lights_punctual
+- KHR_materials_clearcoat
+- KHR_materials_dispersion
+- KHR_materials_emissive_strength
+- KHR_materials_ior
+- KHR_materials_iridescence
+- KHR_materials_specular
+- KHR_materials_sheen
+- KHR_materials_transmission
+- KHR_materials_unlit
+- KHR_materials_volume
+- KHR_mesh_quantization
+- KHR_texture_transform
+- EXT_materials_bump
+- EXT_mesh_gpu_instancing
+
+The following glTF 2.0 extension is supported by an external user plugin:
+
+- [KHR_materials_variants](https://github.com/takahirox/three-gltf-extensions)
+
+```js
+const exporter = new GLTFExporter();
+const data = await exporter.parseAsync( scene, options );
+```
+
+**Kind**: global class  
+
+* [GLTFExporter](#GLTFExporter)
+    * [new GLTFExporter()](#new_GLTFExporter_new)
+    * _instance_
+        * [.textureUtils](#GLTFExporter+textureUtils) : <code>WebGLTextureUtils</code> \| <code>WebGPUTextureUtils</code>
+        * [.register(callback)](#GLTFExporter+register) ⇒ [<code>GLTFExporter</code>](#GLTFExporter)
+        * [.unregister(callback)](#GLTFExporter+unregister) ⇒ [<code>GLTFExporter</code>](#GLTFExporter)
+        * [.setTextureUtils(utils)](#GLTFExporter+setTextureUtils) ⇒ [<code>GLTFExporter</code>](#GLTFExporter)
+        * [.parse(input, onDone, onError, options)](#GLTFExporter+parse)
+        * [.parseAsync(input, options)](#GLTFExporter+parseAsync) ⇒ <code>Promise.&lt;(ArrayBuffer\|string)&gt;</code>
+    * _inner_
+        * [~Options](#GLTFExporter..Options) : <code>Object</code>
+        * [~OnDone](#GLTFExporter..OnDone) : <code>function</code>
+        * [~OnError](#GLTFExporter..OnError) : <code>function</code>
+
+<a name="new_GLTFExporter_new"></a>
+
+### new GLTFExporter()
+Constructs a new glTF exporter.
+
+<a name="GLTFExporter+textureUtils"></a>
+
+### gltfExporter.textureUtils : <code>WebGLTextureUtils</code> \| <code>WebGPUTextureUtils</code>
+A reference to a texture utils module.
+
+**Kind**: instance property of [<code>GLTFExporter</code>](#GLTFExporter)  
+**Default**: <code>null</code>  
+<a name="GLTFExporter+register"></a>
+
+### gltfExporter.register(callback) ⇒ [<code>GLTFExporter</code>](#GLTFExporter)
+Registers a plugin callback. This API is internally used to implement the various
+glTF extensions but can also used by third-party code to add additional logic
+to the exporter.
+
+**Kind**: instance method of [<code>GLTFExporter</code>](#GLTFExporter)  
+**Returns**: [<code>GLTFExporter</code>](#GLTFExporter) - A reference to this exporter.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| callback | <code>function</code> | The callback function to register. |
+
+<a name="GLTFExporter+unregister"></a>
+
+### gltfExporter.unregister(callback) ⇒ [<code>GLTFExporter</code>](#GLTFExporter)
+Unregisters a plugin callback.
+
+**Kind**: instance method of [<code>GLTFExporter</code>](#GLTFExporter)  
+**Returns**: [<code>GLTFExporter</code>](#GLTFExporter) - A reference to this exporter.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| callback | <code>function</code> | The callback function to unregister. |
+
+<a name="GLTFExporter+setTextureUtils"></a>
+
+### gltfExporter.setTextureUtils(utils) ⇒ [<code>GLTFExporter</code>](#GLTFExporter)
+Sets the texture utils for this exporter. Only relevant when compressed textures have to be exported.
+
+Depending on whether you use [WebGLRenderer](WebGLRenderer) or [WebGPURenderer](WebGPURenderer), you must inject the
+corresponding texture utils [WebGLTextureUtils](WebGLTextureUtils) or [WebGPUTextureUtils](WebGPUTextureUtils).
+
+**Kind**: instance method of [<code>GLTFExporter</code>](#GLTFExporter)  
+**Returns**: [<code>GLTFExporter</code>](#GLTFExporter) - A reference to this exporter.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| utils | <code>WebGLTextureUtils</code> \| <code>WebGPUTextureUtils</code> | The texture utils. |
+
+<a name="GLTFExporter+parse"></a>
+
+### gltfExporter.parse(input, onDone, onError, options)
+Parses the given scenes and generates the glTF output.
+
+**Kind**: instance method of [<code>GLTFExporter</code>](#GLTFExporter)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| input | <code>Scene</code> \| <code>Array.&lt;Scene&gt;</code> | A scene or an array of scenes. |
+| onDone | [<code>OnDone</code>](#GLTFExporter..OnDone) | A callback function that is executed when the export has finished. |
+| onError | [<code>OnError</code>](#GLTFExporter..OnError) | A callback function that is executed when an error happens. |
+| options | [<code>Options</code>](#GLTFExporter..Options) | options |
+
+<a name="GLTFExporter+parseAsync"></a>
+
+### gltfExporter.parseAsync(input, options) ⇒ <code>Promise.&lt;(ArrayBuffer\|string)&gt;</code>
+Async version of [parse](#GLTFExporter+parse).
+
+**Kind**: instance method of [<code>GLTFExporter</code>](#GLTFExporter)  
+**Returns**: <code>Promise.&lt;(ArrayBuffer\|string)&gt;</code> - A Promise that resolved with the exported glTF data.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| input | <code>Scene</code> \| <code>Array.&lt;Scene&gt;</code> | A scene or an array of scenes. |
+| options | [<code>Options</code>](#GLTFExporter..Options) | options. |
+
+<a name="GLTFExporter..Options"></a>
+
+### GLTFExporter~Options : <code>Object</code>
+Export options of `GLTFExporter`.
+
+**Kind**: inner typedef of [<code>GLTFExporter</code>](#GLTFExporter)  
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [trs] | <code>boolean</code> | <code>false</code> | Export position, rotation and scale instead of matrix per node. |
+| [onlyVisible] | <code>boolean</code> | <code>true</code> | Export only visible 3D objects. |
+| [binary] | <code>boolean</code> | <code>false</code> | Export in binary (.glb) format, returning an ArrayBuffer. |
+| [maxTextureSize] | <code>number</code> | <code>Infinity</code> | Restricts the image maximum size (both width and height) to the given value. |
+| [animations] | <code>Array.&lt;AnimationClip&gt;</code> | <code>[]</code> | List of animations to be included in the export. |
+| [includeCustomExtensions] | <code>boolean</code> | <code>false</code> | Export custom glTF extensions defined on an object's `userData.gltfExtensions` property. |
+
+<a name="GLTFExporter..OnDone"></a>
+
+### GLTFExporter~OnDone : <code>function</code>
+onDone callback of `GLTFExporter`.
+
+**Kind**: inner typedef of [<code>GLTFExporter</code>](#GLTFExporter)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| result | <code>ArrayBuffer</code> \| <code>string</code> | The generated .gltf (JSON) or .glb (binary). |
+
+<a name="GLTFExporter..OnError"></a>
+
+### GLTFExporter~OnError : <code>function</code>
+onError callback of `GLTFExporter`.
+
+**Kind**: inner typedef of [<code>GLTFExporter</code>](#GLTFExporter)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| error | <code>Error</code> | The error object. |
+
+<a name="KHR_mesh_quantization_ExtraAttrTypes"></a>
+
+## KHR\_mesh\_quantization\_ExtraAttrTypes
+The KHR_mesh_quantization extension allows these extra attribute component types
+
+**Kind**: global constant  
+**See**: https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_mesh_quantization/README.md#extending-mesh-attributes  
+## Classes
+
+<dl>
+<dt><a href="#KTX2Exporter">KTX2Exporter</a></dt>
+<dd><p>An exporter for KTX2.</p>
+<pre><code class="language-js">const exporter = new KTX2Exporter();
+const result = await exporter.parse( dataTexture );
+</code></pre>
+</dd>
+</dl>
+
+## Constants
+
+<dl>
+<dt><a href="#VK_FORMAT_MAP">VK_FORMAT_MAP</a></dt>
+<dd><p>References:</p>
+<ul>
+<li><a href="https://github.khronos.org/KTX-Specification/ktxspec.v2.html">https://github.khronos.org/KTX-Specification/ktxspec.v2.html</a></li>
+<li><a href="https://registry.khronos.org/DataFormat/specs/1.3/dataformat.1.3.html">https://registry.khronos.org/DataFormat/specs/1.3/dataformat.1.3.html</a></li>
+<li><a href="https://github.com/donmccurdy/KTX-Parse">https://github.com/donmccurdy/KTX-Parse</a></li>
+</ul>
+</dd>
+</dl>
+
+<a name="KTX2Exporter"></a>
+
+## KTX2Exporter
+An exporter for KTX2.
+
+```js
+const exporter = new KTX2Exporter();
+const result = await exporter.parse( dataTexture );
+```
+
+**Kind**: global class  
+<a name="KTX2Exporter+parse"></a>
+
+### ktX2Exporter.parse(arg1, [arg2]) ⇒ <code>Promise.&lt;Uint8Array&gt;</code>
+This method has two variants.
+
+- When exporting a data texture, it receives one parameter. The data or 3D data texture.
+- When exporting a render target (e.g. a PMREM), it receives two parameters. The renderer and the
+render target.
+
+**Kind**: instance method of [<code>KTX2Exporter</code>](#KTX2Exporter)  
+**Returns**: <code>Promise.&lt;Uint8Array&gt;</code> - A Promise that resolves with the exported KTX2.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| arg1 | <code>DataTexture</code> \| <code>Data3DTexture</code> \| <code>WebGPURenderer</code> \| <code>WebGLRenderer</code> | The data texture to export or a renderer. |
+| [arg2] | <code>RenderTarget</code> | The render target that should be exported |
+
+<a name="VK_FORMAT_MAP"></a>
+
+## VK\_FORMAT\_MAP
+References:
+- https://github.khronos.org/KTX-Specification/ktxspec.v2.html
+- https://registry.khronos.org/DataFormat/specs/1.3/dataformat.1.3.html
+- https://github.com/donmccurdy/KTX-Parse
+
+**Kind**: global constant  
+<a name="OBJExporter"></a>
+
+## OBJExporter
+An exporter for OBJ.
+
+`OBJExporter` is not able to export material data into MTL files so only geometry data are supported.
+
+```js
+const exporter = new OBJExporter();
+const data = exporter.parse( scene );
+```
+
+**Kind**: global class  
+<a name="OBJExporter+parse"></a>
+
+### objExporter.parse(object) ⇒ <code>string</code>
+Parses the given 3D object and generates the OBJ output.
+
+If the 3D object is composed of multiple children and geometry, they are merged into a single mesh in the file.
+
+**Kind**: instance method of [<code>OBJExporter</code>](#OBJExporter)  
+**Returns**: <code>string</code> - The exported OBJ.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| object | <code>Object3D</code> | The 3D object to export. |
+
+<a name="PLYExporter"></a>
+
+## PLYExporter
+An exporter for PLY.
+
+PLY (Polygon or Stanford Triangle Format) is a file format for efficient delivery and
+loading of simple, static 3D content in a dense format. Both binary and ascii formats are
+supported. PLY can store vertex positions, colors, normals and uv coordinates. No textures
+or texture references are saved.
+
+```js
+const exporter = new PLYExporter();
+const data = exporter.parse( scene, options );
+```
+
+**Kind**: global class  
+
+* [PLYExporter](#PLYExporter)
+    * _instance_
+        * [.parse(object, onDone, options)](#PLYExporter+parse) ⇒ <code>string</code> \| <code>ArrayBuffer</code>
+    * _inner_
+        * [~Options](#PLYExporter..Options) : <code>Object</code>
+        * [~OnDone](#PLYExporter..OnDone) : <code>function</code>
+
+<a name="PLYExporter+parse"></a>
+
+### plyExporter.parse(object, onDone, options) ⇒ <code>string</code> \| <code>ArrayBuffer</code>
+Parses the given 3D object and generates the PLY output.
+
+If the 3D object is composed of multiple children and geometry, they are merged into a single mesh in the file.
+
+**Kind**: instance method of [<code>PLYExporter</code>](#PLYExporter)  
+**Returns**: <code>string</code> \| <code>ArrayBuffer</code> - The exported PLY.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| object | <code>Object3D</code> | The 3D object to export. |
+| onDone | [<code>OnDone</code>](#PLYExporter..OnDone) | A callback function that is executed when the export has finished. |
+| options | [<code>Options</code>](#PLYExporter..Options) | The export options. |
+
+<a name="PLYExporter..Options"></a>
+
+### PLYExporter~Options : <code>Object</code>
+Export options of `PLYExporter`.
+
+**Kind**: inner typedef of [<code>PLYExporter</code>](#PLYExporter)  
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [binary] | <code>boolean</code> | <code>false</code> | Whether to export in binary format or ASCII. |
+| [excludeAttributes] | <code>Array.&lt;string&gt;</code> |  | Which properties to explicitly exclude from the exported PLY file. Valid values are `'color'`, `'normal'`, `'uv'`, and `'index'`. If triangle indices are excluded, then a point cloud is exported. |
+| [littleEndian] | <code>boolean</code> | <code>false</code> | Whether the binary export uses little or big endian. |
+
+<a name="PLYExporter..OnDone"></a>
+
+### PLYExporter~OnDone : <code>function</code>
+onDone callback of `PLYExporter`.
+
+**Kind**: inner typedef of [<code>PLYExporter</code>](#PLYExporter)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| result | <code>string</code> \| <code>ArrayBuffer</code> | The generated PLY ascii or binary. |
+
+<a name="STLExporter"></a>
+
+## STLExporter
+An exporter for STL.
+
+STL files describe only the surface geometry of a three-dimensional object without
+any representation of color, texture or other common model attributes. The STL format
+specifies both ASCII and binary representations, with binary being more compact.
+STL files contain no scale information or indexes, and the units are arbitrary.
+
+```js
+const exporter = new STLExporter();
+const data = exporter.parse( mesh, { binary: true } );
+```
+
+**Kind**: global class  
+
+* [STLExporter](#STLExporter)
+    * _instance_
+        * [.parse(scene, options)](#STLExporter+parse) ⇒ <code>string</code> \| <code>ArrayBuffer</code>
+    * _inner_
+        * [~Options](#STLExporter..Options) : <code>Object</code>
+
+<a name="STLExporter+parse"></a>
+
+### stlExporter.parse(scene, options) ⇒ <code>string</code> \| <code>ArrayBuffer</code>
+Parses the given 3D object and generates the STL output.
+
+If the 3D object is composed of multiple children and geometry, they are merged into a single mesh in the file.
+
+**Kind**: instance method of [<code>STLExporter</code>](#STLExporter)  
+**Returns**: <code>string</code> \| <code>ArrayBuffer</code> - The exported STL.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| scene | <code>Object3D</code> | A scene, mesh or any other 3D object containing meshes to encode. |
+| options | [<code>Options</code>](#STLExporter..Options) | The export options. |
+
+<a name="STLExporter..Options"></a>
+
+### STLExporter~Options : <code>Object</code>
+Export options of `STLExporter`.
+
+**Kind**: inner typedef of [<code>STLExporter</code>](#STLExporter)  
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [binary] | <code>boolean</code> | <code>false</code> | Whether to export in binary format or ASCII. |
+
+<a name="USDZExporter"></a>
+
+## USDZExporter
+An exporter for USDZ.
+
+```js
+const exporter = new USDZExporter();
+const arraybuffer = await exporter.parseAsync( scene );
+```
+
+**Kind**: global class  
+
+* [USDZExporter](#USDZExporter)
+    * [new USDZExporter()](#new_USDZExporter_new)
+    * _instance_
+        * [.textureUtils](#USDZExporter+textureUtils) : <code>WebGLTextureUtils</code> \| <code>WebGPUTextureUtils</code>
+        * [.setTextureUtils(utils)](#USDZExporter+setTextureUtils)
+        * [.parse(scene, onDone, onError, options)](#USDZExporter+parse)
+        * [.parseAsync(scene, options)](#USDZExporter+parseAsync) ⇒ <code>Promise.&lt;ArrayBuffer&gt;</code>
+    * _inner_
+        * [~Options](#USDZExporter..Options) : <code>Object</code>
+        * [~OnDone](#USDZExporter..OnDone) : <code>function</code>
+        * [~OnError](#USDZExporter..OnError) : <code>function</code>
+
+<a name="new_USDZExporter_new"></a>
+
+### new USDZExporter()
+Constructs a new USDZ exporter.
+
+<a name="USDZExporter+textureUtils"></a>
+
+### usdzExporter.textureUtils : <code>WebGLTextureUtils</code> \| <code>WebGPUTextureUtils</code>
+A reference to a texture utils module.
+
+**Kind**: instance property of [<code>USDZExporter</code>](#USDZExporter)  
+**Default**: <code>null</code>  
+<a name="USDZExporter+setTextureUtils"></a>
+
+### usdzExporter.setTextureUtils(utils)
+Sets the texture utils for this exporter. Only relevant when compressed textures have to be exported.
+
+Depending on whether you use [WebGLRenderer](WebGLRenderer) or [WebGPURenderer](WebGPURenderer), you must inject the
+corresponding texture utils [WebGLTextureUtils](WebGLTextureUtils) or [WebGPUTextureUtils](WebGPUTextureUtils).
+
+**Kind**: instance method of [<code>USDZExporter</code>](#USDZExporter)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| utils | <code>WebGLTextureUtils</code> \| <code>WebGPUTextureUtils</code> | The texture utils. |
+
+<a name="USDZExporter+parse"></a>
+
+### usdzExporter.parse(scene, onDone, onError, options)
+Parse the given 3D object and generates the USDZ output.
+
+**Kind**: instance method of [<code>USDZExporter</code>](#USDZExporter)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| scene | <code>Object3D</code> | The 3D object to export. |
+| onDone | [<code>OnDone</code>](#USDZExporter..OnDone) | A callback function that is executed when the export has finished. |
+| onError | [<code>OnError</code>](#USDZExporter..OnError) | A callback function that is executed when an error happens. |
+| options | [<code>Options</code>](#USDZExporter..Options) | The export options. |
+
+<a name="USDZExporter+parseAsync"></a>
+
+### usdzExporter.parseAsync(scene, options) ⇒ <code>Promise.&lt;ArrayBuffer&gt;</code>
+Async version of [parse](#USDZExporter+parse).
+
+**Kind**: instance method of [<code>USDZExporter</code>](#USDZExporter)  
+**Returns**: <code>Promise.&lt;ArrayBuffer&gt;</code> - A Promise that resolved with the exported USDZ data.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| scene | <code>Object3D</code> | The 3D object to export. |
+| options | [<code>Options</code>](#USDZExporter..Options) | The export options. |
+
+<a name="USDZExporter..Options"></a>
+
+### USDZExporter~Options : <code>Object</code>
+Export options of `USDZExporter`.
+
+**Kind**: inner typedef of [<code>USDZExporter</code>](#USDZExporter)  
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [maxTextureSize] | <code>number</code> | <code>1024</code> | The maximum texture size that is going to be exported. |
+| [includeAnchoringProperties] | <code>boolean</code> | <code>false</code> | Whether to include anchoring properties or not. |
+| [ar] | <code>Object</code> |  | If `includeAnchoringProperties` is set to `true`, the anchoring type and alignment can be configured via `ar.anchoring.type` and `ar.planeAnchoring.alignment`. |
+| [quickLookCompatible] | <code>boolean</code> | <code>false</code> | Whether to make the exported USDZ compatible to QuickLook which means the asset is modified to accommodate the bugs FB10036297 and FB11442287 (Apple Feedback). |
+
+<a name="USDZExporter..OnDone"></a>
+
+### USDZExporter~OnDone : <code>function</code>
+onDone callback of `USDZExporter`.
+
+**Kind**: inner typedef of [<code>USDZExporter</code>](#USDZExporter)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| result | <code>ArrayBuffer</code> | The generated USDZ. |
+
+<a name="USDZExporter..OnError"></a>
+
+### USDZExporter~OnError : <code>function</code>
+onError callback of `USDZExporter`.
+
+**Kind**: inner typedef of [<code>USDZExporter</code>](#USDZExporter)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| error | <code>Error</code> | The error object. |
+
+<a name="BoxLineGeometry"></a>
+

@@ -1,0 +1,872 @@
+# three.js 
+
+> JavaScript 3D Library. 
+
+<a name="AnimationClipCreator"></a>
+
+## LightProbeHelper ⇐ <code>Mesh</code>
+Renders a sphere to visualize a light probe in the scene.
+
+This helper can only be used with [WebGLRenderer](WebGLRenderer).
+When using [WebGPURenderer](WebGPURenderer), import from `LightProbeHelperGPU.js`.
+
+```js
+const helper = new LightProbeHelper( lightProbe );
+scene.add( helper );
+```
+
+**Kind**: global class  
+**Extends**: <code>Mesh</code>  
+
+* [LightProbeHelper](#LightProbeHelper) ⇐ <code>Mesh</code>
+    * [new LightProbeHelper(lightProbe, [size])](#new_LightProbeHelper_new)
+    * [.lightProbe](#LightProbeHelper+lightProbe) : <code>LightProbe</code>
+    * [.size](#LightProbeHelper+size) : <code>number</code>
+    * [.dispose()](#LightProbeHelper+dispose)
+
+<a name="new_LightProbeHelper_new"></a>
+
+### new LightProbeHelper(lightProbe, [size])
+Constructs a new light probe helper.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| lightProbe | <code>LightProbe</code> |  | The light probe to visualize. |
+| [size] | <code>number</code> | <code>1</code> | The size of the helper. |
+
+<a name="LightProbeHelper+lightProbe"></a>
+
+### lightProbeHelper.lightProbe : <code>LightProbe</code>
+The light probe to visualize.
+
+**Kind**: instance property of [<code>LightProbeHelper</code>](#LightProbeHelper)  
+<a name="LightProbeHelper+size"></a>
+
+### lightProbeHelper.size : <code>number</code>
+The size of the helper.
+
+**Kind**: instance property of [<code>LightProbeHelper</code>](#LightProbeHelper)  
+**Default**: <code>1</code>  
+<a name="LightProbeHelper+dispose"></a>
+
+### lightProbeHelper.dispose()
+Frees the GPU-related resources allocated by this instance. Call this
+method whenever this instance is no longer used in your app.
+
+**Kind**: instance method of [<code>LightProbeHelper</code>](#LightProbeHelper)  
+<a name="OctreeHelper"></a>
+
+## OctreeHelper ⇐ <code>LineSegments</code>
+A helper for visualizing an Octree.
+
+```js
+const helper = new OctreeHelper( octree );
+scene.add( helper );
+```
+
+**Kind**: global class  
+**Extends**: <code>LineSegments</code>  
+
+* [OctreeHelper](#OctreeHelper) ⇐ <code>LineSegments</code>
+    * [new OctreeHelper(octree, [color])](#new_OctreeHelper_new)
+    * [.octree](#OctreeHelper+octree) : <code>Octree</code>
+    * [.color](#OctreeHelper+color) : <code>number</code> \| <code>Color</code> \| <code>string</code>
+    * [.update()](#OctreeHelper+update)
+    * [.dispose()](#OctreeHelper+dispose)
+
+<a name="new_OctreeHelper_new"></a>
+
+### new OctreeHelper(octree, [color])
+Constructs a new Octree helper.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| octree | <code>Octree</code> |  | The octree to visualize. |
+| [color] | <code>number</code> \| <code>Color</code> \| <code>string</code> | <code>0xffff00</code> | The helper's color. |
+
+<a name="OctreeHelper+octree"></a>
+
+### octreeHelper.octree : <code>Octree</code>
+The octree to visualize.
+
+**Kind**: instance property of [<code>OctreeHelper</code>](#OctreeHelper)  
+<a name="OctreeHelper+color"></a>
+
+### octreeHelper.color : <code>number</code> \| <code>Color</code> \| <code>string</code>
+The helper's color.
+
+**Kind**: instance property of [<code>OctreeHelper</code>](#OctreeHelper)  
+<a name="OctreeHelper+update"></a>
+
+### octreeHelper.update()
+Updates the helper. This method must be called whenever the Octree's
+structure is changed.
+
+**Kind**: instance method of [<code>OctreeHelper</code>](#OctreeHelper)  
+<a name="OctreeHelper+dispose"></a>
+
+### octreeHelper.dispose()
+Frees the GPU-related resources allocated by this instance. Call this
+method whenever this instance is no longer used in your app.
+
+**Kind**: instance method of [<code>OctreeHelper</code>](#OctreeHelper)  
+<a name="PositionalAudioHelper"></a>
+
+## PositionalAudioHelper ⇐ <code>Line</code>
+This helper displays the directional cone of a positional audio.
+
+`PositionalAudioHelper` must be added as a child of the positional audio.
+
+```js
+const positionalAudio = new THREE.PositionalAudio( listener );
+positionalAudio.setDirectionalCone( 180, 230, 0.1 );
+scene.add( positionalAudio );
+
+const helper = new PositionalAudioHelper( positionalAudio );
+positionalAudio.add( helper );
+```
+
+**Kind**: global class  
+**Extends**: <code>Line</code>  
+
+* [PositionalAudioHelper](#PositionalAudioHelper) ⇐ <code>Line</code>
+    * [new PositionalAudioHelper(audio, [range], [divisionsInnerAngle], [divisionsOuterAngle])](#new_PositionalAudioHelper_new)
+    * [.audio](#PositionalAudioHelper+audio) : <code>PositionalAudio</code>
+    * [.range](#PositionalAudioHelper+range) : <code>number</code>
+    * [.divisionsInnerAngle](#PositionalAudioHelper+divisionsInnerAngle) : <code>number</code>
+    * [.divisionsOuterAngle](#PositionalAudioHelper+divisionsOuterAngle) : <code>number</code>
+    * [.update()](#PositionalAudioHelper+update)
+    * [.dispose()](#PositionalAudioHelper+dispose)
+
+<a name="new_PositionalAudioHelper_new"></a>
+
+### new PositionalAudioHelper(audio, [range], [divisionsInnerAngle], [divisionsOuterAngle])
+Constructs a new positional audio helper.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| audio | <code>PositionalAudio</code> |  | The audio to visualize. |
+| [range] | <code>number</code> | <code>1</code> | The range of the directional cone. |
+| [divisionsInnerAngle] | <code>number</code> | <code>16</code> | The number of divisions of the inner part of the directional cone. |
+| [divisionsOuterAngle] | <code>number</code> | <code>2</code> | The number of divisions of the outer part of the directional cone. |
+
+<a name="PositionalAudioHelper+audio"></a>
+
+### positionalAudioHelper.audio : <code>PositionalAudio</code>
+The audio to visualize.
+
+**Kind**: instance property of [<code>PositionalAudioHelper</code>](#PositionalAudioHelper)  
+<a name="PositionalAudioHelper+range"></a>
+
+### positionalAudioHelper.range : <code>number</code>
+The range of the directional cone.
+
+**Kind**: instance property of [<code>PositionalAudioHelper</code>](#PositionalAudioHelper)  
+**Default**: <code>1</code>  
+<a name="PositionalAudioHelper+divisionsInnerAngle"></a>
+
+### positionalAudioHelper.divisionsInnerAngle : <code>number</code>
+The number of divisions of the inner part of the directional cone.
+
+**Kind**: instance property of [<code>PositionalAudioHelper</code>](#PositionalAudioHelper)  
+**Default**: <code>16</code>  
+<a name="PositionalAudioHelper+divisionsOuterAngle"></a>
+
+### positionalAudioHelper.divisionsOuterAngle : <code>number</code>
+The number of divisions of the outer part of the directional cone.
+
+**Kind**: instance property of [<code>PositionalAudioHelper</code>](#PositionalAudioHelper)  
+**Default**: <code>2</code>  
+<a name="PositionalAudioHelper+update"></a>
+
+### positionalAudioHelper.update()
+Updates the helper. This method must be called whenever the directional cone
+of the positional audio is changed.
+
+**Kind**: instance method of [<code>PositionalAudioHelper</code>](#PositionalAudioHelper)  
+<a name="PositionalAudioHelper+dispose"></a>
+
+### positionalAudioHelper.dispose()
+Frees the GPU-related resources allocated by this instance. Call this
+method whenever this instance is no longer used in your app.
+
+**Kind**: instance method of [<code>PositionalAudioHelper</code>](#PositionalAudioHelper)  
+<a name="RectAreaLightHelper"></a>
+
+## RectAreaLightHelper ⇐ <code>Line</code>
+Creates a visual aid for rect area lights.
+
+`RectAreaLightHelper` must be added as a child of the light.
+
+```js
+const light = new THREE.RectAreaLight( 0xffffbb, 1.0, 5, 5 );
+const helper = new RectAreaLightHelper( light );
+light.add( helper );
+```
+
+**Kind**: global class  
+**Extends**: <code>Line</code>  
+
+* [RectAreaLightHelper](#RectAreaLightHelper) ⇐ <code>Line</code>
+    * [new RectAreaLightHelper(light, [color])](#new_RectAreaLightHelper_new)
+    * [.light](#RectAreaLightHelper+light) : <code>RectAreaLight</code>
+    * [.color](#RectAreaLightHelper+color) : <code>number</code> \| <code>Color</code> \| <code>string</code> \| <code>undefined</code>
+    * [.dispose()](#RectAreaLightHelper+dispose)
+
+<a name="new_RectAreaLightHelper_new"></a>
+
+### new RectAreaLightHelper(light, [color])
+Constructs a new rect area light helper.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| light | <code>RectAreaLight</code> | The light to visualize. |
+| [color] | <code>number</code> \| <code>Color</code> \| <code>string</code> | The helper's color. If this is not the set, the helper will take the color of the light. |
+
+<a name="RectAreaLightHelper+light"></a>
+
+### rectAreaLightHelper.light : <code>RectAreaLight</code>
+The light to visualize.
+
+**Kind**: instance property of [<code>RectAreaLightHelper</code>](#RectAreaLightHelper)  
+<a name="RectAreaLightHelper+color"></a>
+
+### rectAreaLightHelper.color : <code>number</code> \| <code>Color</code> \| <code>string</code> \| <code>undefined</code>
+The helper's color. If `undefined`, the helper will take the color of the light.
+
+**Kind**: instance property of [<code>RectAreaLightHelper</code>](#RectAreaLightHelper)  
+<a name="RectAreaLightHelper+dispose"></a>
+
+### rectAreaLightHelper.dispose()
+Frees the GPU-related resources allocated by this instance. Call this
+method whenever this instance is no longer used in your app.
+
+**Kind**: instance method of [<code>RectAreaLightHelper</code>](#RectAreaLightHelper)  
+<a name="TextureHelper"></a>
+
+## TextureHelper ⇐ <code>Mesh</code>
+A helper that can be used to display any type of texture for
+debugging purposes. Depending on the type of texture (2D, 3D, Array),
+the helper becomes a plane or box mesh.
+
+This helper can only be used with [WebGLRenderer](WebGLRenderer).
+When using [WebGPURenderer](WebGPURenderer), import from `TextureHelperGPU.js`.
+
+**Kind**: global class  
+**Extends**: <code>Mesh</code>  
+
+* [TextureHelper](#TextureHelper) ⇐ <code>Mesh</code>
+    * [new TextureHelper(texture, [width], [height], [depth])](#new_TextureHelper_new)
+    * [.texture](#TextureHelper+texture) : <code>Texture</code>
+    * [.dispose()](#TextureHelper+dispose)
+
+<a name="new_TextureHelper_new"></a>
+
+### new TextureHelper(texture, [width], [height], [depth])
+Constructs a new texture helper.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| texture | <code>Texture</code> |  | The texture to visualize. |
+| [width] | <code>number</code> | <code>1</code> | The helper's width. |
+| [height] | <code>number</code> | <code>1</code> | The helper's height. |
+| [depth] | <code>number</code> | <code>1</code> | The helper's depth. |
+
+<a name="TextureHelper+texture"></a>
+
+### textureHelper.texture : <code>Texture</code>
+The texture to visualize.
+
+**Kind**: instance property of [<code>TextureHelper</code>](#TextureHelper)  
+<a name="TextureHelper+dispose"></a>
+
+### textureHelper.dispose()
+Frees the GPU-related resources allocated by this instance. Call this
+method whenever this instance is no longer used in your app.
+
+**Kind**: instance method of [<code>TextureHelper</code>](#TextureHelper)  
+<a name="VertexNormalsHelper"></a>
+
+## VertexNormalsHelper ⇐ <code>LineSegments</code>
+Visualizes an object's vertex normals.
+
+Requires that normals have been specified in the geometry as a buffer attribute or
+have been calculated using [BufferGeometry#computeVertexNormals](BufferGeometry#computeVertexNormals).
+```js
+const geometry = new THREE.BoxGeometry( 10, 10, 10, 2, 2, 2 );
+const material = new THREE.MeshStandardMaterial();
+const mesh = new THREE.Mesh( geometry, material );
+scene.add( mesh );
+
+const helper = new VertexNormalsHelper( mesh, 1, 0xff0000 );
+scene.add( helper );
+```
+
+**Kind**: global class  
+**Extends**: <code>LineSegments</code>  
+
+* [VertexNormalsHelper](#VertexNormalsHelper) ⇐ <code>LineSegments</code>
+    * [new VertexNormalsHelper(object, [size], [color])](#new_VertexNormalsHelper_new)
+    * [.object](#VertexNormalsHelper+object) : <code>Object3D</code>
+    * [.size](#VertexNormalsHelper+size) : <code>number</code>
+    * [.matrixAutoUpdate](#VertexNormalsHelper+matrixAutoUpdate) : <code>boolean</code>
+    * [.isVertexNormalsHelper](#VertexNormalsHelper+isVertexNormalsHelper) : <code>boolean</code>
+    * [.update()](#VertexNormalsHelper+update)
+    * [.dispose()](#VertexNormalsHelper+dispose)
+
+<a name="new_VertexNormalsHelper_new"></a>
+
+### new VertexNormalsHelper(object, [size], [color])
+Constructs a new vertex normals helper.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| object | <code>Object3D</code> |  | The object for which to visualize vertex normals. |
+| [size] | <code>number</code> | <code>1</code> | The helper's size. |
+| [color] | <code>number</code> \| <code>Color</code> \| <code>string</code> | <code>0xff0000</code> | The helper's color. |
+
+<a name="VertexNormalsHelper+object"></a>
+
+### vertexNormalsHelper.object : <code>Object3D</code>
+The object for which to visualize vertex normals.
+
+**Kind**: instance property of [<code>VertexNormalsHelper</code>](#VertexNormalsHelper)  
+<a name="VertexNormalsHelper+size"></a>
+
+### vertexNormalsHelper.size : <code>number</code>
+The helper's size.
+
+**Kind**: instance property of [<code>VertexNormalsHelper</code>](#VertexNormalsHelper)  
+**Default**: <code>1</code>  
+<a name="VertexNormalsHelper+matrixAutoUpdate"></a>
+
+### vertexNormalsHelper.matrixAutoUpdate : <code>boolean</code>
+Overwritten and set to `false` since the object's world transformation
+is encoded in the helper's geometry data.
+
+**Kind**: instance property of [<code>VertexNormalsHelper</code>](#VertexNormalsHelper)  
+**Default**: <code>false</code>  
+<a name="VertexNormalsHelper+isVertexNormalsHelper"></a>
+
+### vertexNormalsHelper.isVertexNormalsHelper : <code>boolean</code>
+This flag can be used for type testing.
+
+**Kind**: instance property of [<code>VertexNormalsHelper</code>](#VertexNormalsHelper)  
+**Default**: <code>true</code>  
+**Read only**: true  
+<a name="VertexNormalsHelper+update"></a>
+
+### vertexNormalsHelper.update()
+Updates the vertex normals preview based on the object's world transform.
+
+**Kind**: instance method of [<code>VertexNormalsHelper</code>](#VertexNormalsHelper)  
+<a name="VertexNormalsHelper+dispose"></a>
+
+### vertexNormalsHelper.dispose()
+Frees the GPU-related resources allocated by this instance. Call this
+method whenever this instance is no longer used in your app.
+
+**Kind**: instance method of [<code>VertexNormalsHelper</code>](#VertexNormalsHelper)  
+<a name="VertexTangentsHelper"></a>
+
+## VertexTangentsHelper ⇐ <code>LineSegments</code>
+Visualizes an object's vertex tangents.
+
+Requires that tangents have been specified in the geometry as a buffer attribute or
+have been calculated using [BufferGeometry#computeTangents](BufferGeometry#computeTangents).
+```js
+const helper = new VertexTangentsHelper( mesh, 1, 0xff0000 );
+scene.add( helper );
+```
+
+**Kind**: global class  
+**Extends**: <code>LineSegments</code>  
+
+* [VertexTangentsHelper](#VertexTangentsHelper) ⇐ <code>LineSegments</code>
+    * [new VertexTangentsHelper(object, [size], [color])](#new_VertexTangentsHelper_new)
+    * [.object](#VertexTangentsHelper+object) : <code>Object3D</code>
+    * [.size](#VertexTangentsHelper+size) : <code>number</code>
+    * [.matrixAutoUpdate](#VertexTangentsHelper+matrixAutoUpdate) : <code>boolean</code>
+    * [.update()](#VertexTangentsHelper+update)
+    * [.dispose()](#VertexTangentsHelper+dispose)
+
+<a name="new_VertexTangentsHelper_new"></a>
+
+### new VertexTangentsHelper(object, [size], [color])
+Constructs a new vertex tangents helper.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| object | <code>Object3D</code> |  | The object for which to visualize vertex tangents. |
+| [size] | <code>number</code> | <code>1</code> | The helper's size. |
+| [color] | <code>number</code> \| <code>Color</code> \| <code>string</code> | <code>0xff0000</code> | The helper's color. |
+
+<a name="VertexTangentsHelper+object"></a>
+
+### vertexTangentsHelper.object : <code>Object3D</code>
+The object for which to visualize vertex tangents.
+
+**Kind**: instance property of [<code>VertexTangentsHelper</code>](#VertexTangentsHelper)  
+<a name="VertexTangentsHelper+size"></a>
+
+### vertexTangentsHelper.size : <code>number</code>
+The helper's size.
+
+**Kind**: instance property of [<code>VertexTangentsHelper</code>](#VertexTangentsHelper)  
+**Default**: <code>1</code>  
+<a name="VertexTangentsHelper+matrixAutoUpdate"></a>
+
+### vertexTangentsHelper.matrixAutoUpdate : <code>boolean</code>
+Overwritten and set to `false` since the object's world transformation
+is encoded in the helper's geometry data.
+
+**Kind**: instance property of [<code>VertexTangentsHelper</code>](#VertexTangentsHelper)  
+**Default**: <code>false</code>  
+<a name="VertexTangentsHelper+update"></a>
+
+### vertexTangentsHelper.update()
+Updates the vertex normals preview based on the object's world transform.
+
+**Kind**: instance method of [<code>VertexTangentsHelper</code>](#VertexTangentsHelper)  
+<a name="VertexTangentsHelper+dispose"></a>
+
+### vertexTangentsHelper.dispose()
+Frees the GPU-related resources allocated by this instance. Call this
+method whenever this instance is no longer used in your app.
+
+**Kind**: instance method of [<code>VertexTangentsHelper</code>](#VertexTangentsHelper)  
+<a name="ViewHelper"></a>
+
+## ViewHelper ⇐ <code>Object3D</code>
+A special type of helper that visualizes the camera's transformation
+in a small viewport area as an axes helper. Such a helper is often wanted
+in 3D modeling tools or scene editors like the [three.js editor](https://threejs.org/editor).
+
+The helper allows to click on the X, Y and Z axes which animates the camera
+so it looks along the selected axis.
+
+**Kind**: global class  
+**Extends**: <code>Object3D</code>  
+
+* [ViewHelper](#ViewHelper) ⇐ <code>Object3D</code>
+    * [new ViewHelper(camera, [domElement])](#new_ViewHelper_new)
+    * [.isViewHelper](#ViewHelper+isViewHelper) : <code>boolean</code>
+    * [.animating](#ViewHelper+animating) : <code>boolean</code>
+    * [.center](#ViewHelper+center) : <code>Vector3</code>
+    * [.render(renderer)](#ViewHelper+render)
+    * [.handleClick(event)](#ViewHelper+handleClick) ⇒ <code>boolean</code>
+    * [.setLabels(labelX, labelY, labelZ)](#ViewHelper+setLabels)
+    * [.setLabelStyle([font], [color], [radius])](#ViewHelper+setLabelStyle)
+    * [.update(delta)](#ViewHelper+update)
+    * [.dispose()](#ViewHelper+dispose)
+
+<a name="new_ViewHelper_new"></a>
+
+### new ViewHelper(camera, [domElement])
+Constructs a new view helper.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| camera | <code>Camera</code> | The camera whose transformation should be visualized. |
+| [domElement] | <code>HTMLDOMElement</code> | The DOM element that is used to render the view. |
+
+<a name="ViewHelper+isViewHelper"></a>
+
+### viewHelper.isViewHelper : <code>boolean</code>
+This flag can be used for type testing.
+
+**Kind**: instance property of [<code>ViewHelper</code>](#ViewHelper)  
+**Default**: <code>true</code>  
+**Read only**: true  
+<a name="ViewHelper+animating"></a>
+
+### viewHelper.animating : <code>boolean</code>
+Whether the helper is currently animating or not.
+
+**Kind**: instance property of [<code>ViewHelper</code>](#ViewHelper)  
+**Default**: <code>false</code>  
+**Read only**: true  
+<a name="ViewHelper+center"></a>
+
+### viewHelper.center : <code>Vector3</code>
+The helper's center point.
+
+**Kind**: instance property of [<code>ViewHelper</code>](#ViewHelper)  
+<a name="ViewHelper+render"></a>
+
+### viewHelper.render(renderer)
+Renders the helper in a separate view in the bottom-right corner
+of the viewport.
+
+**Kind**: instance method of [<code>ViewHelper</code>](#ViewHelper)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| renderer | <code>WebGLRenderer</code> \| <code>WebGPURenderer</code> | The renderer. |
+
+<a name="ViewHelper+handleClick"></a>
+
+### viewHelper.handleClick(event) ⇒ <code>boolean</code>
+This method should be called when a click or pointer event
+has happened in the app.
+
+**Kind**: instance method of [<code>ViewHelper</code>](#ViewHelper)  
+**Returns**: <code>boolean</code> - Whether an intersection with the helper has been detected or not.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| event | <code>PointerEvent</code> | The event to process. |
+
+<a name="ViewHelper+setLabels"></a>
+
+### viewHelper.setLabels(labelX, labelY, labelZ)
+Sets labels for each axis. By default, they are unlabeled.
+
+**Kind**: instance method of [<code>ViewHelper</code>](#ViewHelper)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| labelX | <code>string</code> \| <code>undefined</code> | The label for the x-axis. |
+| labelY | <code>string</code> \| <code>undefined</code> | The label for the y-axis. |
+| labelZ | <code>string</code> \| <code>undefined</code> | The label for the z-axis. |
+
+<a name="ViewHelper+setLabelStyle"></a>
+
+### viewHelper.setLabelStyle([font], [color], [radius])
+Sets the label style. Has no effect when the axes are unlabeled.
+
+**Kind**: instance method of [<code>ViewHelper</code>](#ViewHelper)  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [font] | <code>string</code> | <code>&quot;&#x27;24px Arial&#x27;&quot;</code> | The label font. |
+| [color] | <code>string</code> | <code>&quot;&#x27;#000000&#x27;&quot;</code> | The label color. |
+| [radius] | <code>number</code> | <code>14</code> | The label radius. |
+
+<a name="ViewHelper+update"></a>
+
+### viewHelper.update(delta)
+Updates the helper. This method should be called in the app's animation
+loop.
+
+**Kind**: instance method of [<code>ViewHelper</code>](#ViewHelper)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| delta | <code>number</code> | The delta time in seconds. |
+
+<a name="ViewHelper+dispose"></a>
+
+### viewHelper.dispose()
+Frees the GPU-related resources allocated by this instance. Call this
+method whenever this instance is no longer used in your app.
+
+**Kind**: instance method of [<code>ViewHelper</code>](#ViewHelper)  
+<a name="HTMLMesh"></a>
+
+## HTMLMesh ⇐ <code>Mesh</code>
+This class can be used to render a DOM element onto a canvas and use it as a texture
+for a plane mesh.
+
+A typical use case for this class is to render the GUI of `lil-gui` as a texture so it
+is compatible for VR.
+
+```js
+const gui = new GUI( { width: 300 } ); // create lil-gui instance
+
+const mesh = new HTMLMesh( gui.domElement );
+scene.add( mesh );
+```
+
+**Kind**: global class  
+**Extends**: <code>Mesh</code>  
+
+* [HTMLMesh](#HTMLMesh) ⇐ <code>Mesh</code>
+    * [new HTMLMesh(dom)](#new_HTMLMesh_new)
+    * [.dispose()](#HTMLMesh+dispose)
+
+<a name="new_HTMLMesh_new"></a>
+
+### new HTMLMesh(dom)
+Constructs a new HTML mesh.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| dom | <code>HTMLElement</code> | The DOM element to display as a plane mesh. |
+
+<a name="HTMLMesh+dispose"></a>
+
+### htmlMesh.dispose()
+Frees the GPU-related resources allocated by this instance and removes all event listeners.
+Call this method whenever this instance is no longer used in your app.
+
+**Kind**: instance method of [<code>HTMLMesh</code>](#HTMLMesh)  
+<a name="InteractiveGroup"></a>
+
+## InteractiveGroup ⇐ <code>Group</code>
+This class can be used to group 3D objects in an interactive group.
+The group itself can listen to Pointer, Mouse or XR controller events to
+detect selections of descendant 3D objects. If a 3D object is selected,
+the respective event is going to dispatched to it.
+
+```js
+const group = new InteractiveGroup();
+group.listenToPointerEvents( renderer, camera );
+group.listenToXRControllerEvents( controller1 );
+group.listenToXRControllerEvents( controller2 );
+scene.add( group );
+
+// now add objects that should be interactive
+group.add( mesh1, mesh2, mesh3 );
+```
+
+**Kind**: global class  
+**Extends**: <code>Group</code>  
+
+* [InteractiveGroup](#InteractiveGroup) ⇐ <code>Group</code>
+    * [.raycaster](#InteractiveGroup+raycaster) : <code>Raycaster</code>
+    * [.element](#InteractiveGroup+element) : <code>HTMLDOMElement</code>
+    * [.camera](#InteractiveGroup+camera) : <code>Camera</code>
+    * [.controllers](#InteractiveGroup+controllers) : <code>Array.&lt;Group&gt;</code>
+    * [.listenToPointerEvents(renderer, camera)](#InteractiveGroup+listenToPointerEvents)
+    * [.disconnectionPointerEvents()](#InteractiveGroup+disconnectionPointerEvents)
+    * [.listenToXRControllerEvents(controller)](#InteractiveGroup+listenToXRControllerEvents)
+    * [.disconnectXrControllerEvents()](#InteractiveGroup+disconnectXrControllerEvents)
+    * [.disconnect()](#InteractiveGroup+disconnect)
+
+<a name="InteractiveGroup+raycaster"></a>
+
+### interactiveGroup.raycaster : <code>Raycaster</code>
+The internal raycaster.
+
+**Kind**: instance property of [<code>InteractiveGroup</code>](#InteractiveGroup)  
+<a name="InteractiveGroup+element"></a>
+
+### interactiveGroup.element : <code>HTMLDOMElement</code>
+The internal raycaster.
+
+**Kind**: instance property of [<code>InteractiveGroup</code>](#InteractiveGroup)  
+**Default**: <code>null</code>  
+<a name="InteractiveGroup+camera"></a>
+
+### interactiveGroup.camera : <code>Camera</code>
+The camera used for raycasting.
+
+**Kind**: instance property of [<code>InteractiveGroup</code>](#InteractiveGroup)  
+**Default**: <code>null</code>  
+<a name="InteractiveGroup+controllers"></a>
+
+### interactiveGroup.controllers : <code>Array.&lt;Group&gt;</code>
+An array of XR controllers.
+
+**Kind**: instance property of [<code>InteractiveGroup</code>](#InteractiveGroup)  
+<a name="InteractiveGroup+listenToPointerEvents"></a>
+
+### interactiveGroup.listenToPointerEvents(renderer, camera)
+Calling this method makes sure the interactive group listens to Pointer and Mouse events.
+The target is the `domElement` of the given renderer. The camera is required for the internal
+raycasting so 3D objects can be detected based on the events.
+
+**Kind**: instance method of [<code>InteractiveGroup</code>](#InteractiveGroup)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| renderer | <code>WebGPURenderer</code> \| <code>WebGLRenderer</code> | The renderer. |
+| camera | <code>Camera</code> | The camera. |
+
+<a name="InteractiveGroup+disconnectionPointerEvents"></a>
+
+### interactiveGroup.disconnectionPointerEvents()
+Disconnects this interactive group from all Pointer and Mouse Events.
+
+**Kind**: instance method of [<code>InteractiveGroup</code>](#InteractiveGroup)  
+<a name="InteractiveGroup+listenToXRControllerEvents"></a>
+
+### interactiveGroup.listenToXRControllerEvents(controller)
+Calling this method makes sure the interactive group listens to events of
+the given XR controller.
+
+**Kind**: instance method of [<code>InteractiveGroup</code>](#InteractiveGroup)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| controller | <code>Group</code> | The XR controller. |
+
+<a name="InteractiveGroup+disconnectXrControllerEvents"></a>
+
+### interactiveGroup.disconnectXrControllerEvents()
+Disconnects this interactive group from all XR controllers.
+
+**Kind**: instance method of [<code>InteractiveGroup</code>](#InteractiveGroup)  
+<a name="InteractiveGroup+disconnect"></a>
+
+### interactiveGroup.disconnect()
+Disconnects this interactive group from the DOM and all XR controllers.
+
+**Kind**: instance method of [<code>InteractiveGroup</code>](#InteractiveGroup)  
+<a name="SelectionBox"></a>
+
+## SelectionBox
+This class can be used to select 3D objects in a scene with a selection box.
+It is recommended to visualize the selected area with the help of [SelectionHelper](SelectionHelper).
+
+```js
+const selectionBox = new SelectionBox( camera, scene );
+const selectedObjects = selectionBox.select( startPoint, endPoint );
+```
+
+**Kind**: global class  
+
+* [SelectionBox](#SelectionBox)
+    * [new SelectionBox(camera, scene, [deep])](#new_SelectionBox_new)
+    * [.camera](#SelectionBox+camera) : <code>Camera</code>
+    * [.scene](#SelectionBox+scene) : <code>Scene</code>
+    * [.startPoint](#SelectionBox+startPoint) : <code>Vector3</code>
+    * [.endPoint](#SelectionBox+endPoint) : <code>Vector3</code>
+    * [.collection](#SelectionBox+collection) : <code>Array.&lt;Object3D&gt;</code>
+    * [.instances](#SelectionBox+instances) : <code>Object</code>
+    * [.deep](#SelectionBox+deep) : <code>number</code>
+    * [.select([startPoint], [endPoint])](#SelectionBox+select) ⇒ <code>Array.&lt;Object3D&gt;</code>
+
+<a name="new_SelectionBox_new"></a>
+
+### new SelectionBox(camera, scene, [deep])
+Constructs a new selection box.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| camera | <code>Camera</code> |  | The camera the scene is rendered with. |
+| scene | <code>Scene</code> |  | The scene. |
+| [deep] | <code>number</code> | <code>Number.MAX_VALUE</code> | How deep the selection frustum of perspective cameras should extend. |
+
+<a name="SelectionBox+camera"></a>
+
+### selectionBox.camera : <code>Camera</code>
+The camera the scene is rendered with.
+
+**Kind**: instance property of [<code>SelectionBox</code>](#SelectionBox)  
+<a name="SelectionBox+scene"></a>
+
+### selectionBox.scene : <code>Scene</code>
+The camera the scene is rendered with.
+
+**Kind**: instance property of [<code>SelectionBox</code>](#SelectionBox)  
+<a name="SelectionBox+startPoint"></a>
+
+### selectionBox.startPoint : <code>Vector3</code>
+The start point of the selection.
+
+**Kind**: instance property of [<code>SelectionBox</code>](#SelectionBox)  
+<a name="SelectionBox+endPoint"></a>
+
+### selectionBox.endPoint : <code>Vector3</code>
+The end point of the selection.
+
+**Kind**: instance property of [<code>SelectionBox</code>](#SelectionBox)  
+<a name="SelectionBox+collection"></a>
+
+### selectionBox.collection : <code>Array.&lt;Object3D&gt;</code>
+The selected 3D objects.
+
+**Kind**: instance property of [<code>SelectionBox</code>](#SelectionBox)  
+<a name="SelectionBox+instances"></a>
+
+### selectionBox.instances : <code>Object</code>
+The selected instance IDs of instanced meshes.
+
+**Kind**: instance property of [<code>SelectionBox</code>](#SelectionBox)  
+<a name="SelectionBox+deep"></a>
+
+### selectionBox.deep : <code>number</code>
+How deep the selection frustum of perspective cameras should extend.
+
+**Kind**: instance property of [<code>SelectionBox</code>](#SelectionBox)  
+**Default**: <code>Number.MAX_VALUE</code>  
+<a name="SelectionBox+select"></a>
+
+### selectionBox.select([startPoint], [endPoint]) ⇒ <code>Array.&lt;Object3D&gt;</code>
+This method selects 3D objects in the scene based on the given start
+and end point. If no parameters are provided, the method uses the start
+and end values of the respective members.
+
+**Kind**: instance method of [<code>SelectionBox</code>](#SelectionBox)  
+**Returns**: <code>Array.&lt;Object3D&gt;</code> - The selected 3D objects.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [startPoint] | <code>Vector3</code> | The start point. |
+| [endPoint] | <code>Vector3</code> | The end point. |
+
+<a name="SelectionHelper"></a>
+
+## SelectionHelper
+A helper for [SelectionBox](SelectionBox).
+
+It visualizes the current selection box with a `div` container element.
+
+**Kind**: global class  
+
+* [SelectionHelper](#SelectionHelper)
+    * [new SelectionHelper(renderer, cssClassName)](#new_SelectionHelper_new)
+    * [.element](#SelectionHelper+element) : <code>HTMLDivElement</code>
+    * [.renderer](#SelectionHelper+renderer) : <code>WebGPURenderer</code> \| <code>WebGLRenderer</code>
+    * [.isDown](#SelectionHelper+isDown) : <code>boolean</code>
+    * [.enabled](#SelectionHelper+enabled) : <code>boolean</code>
+    * [.dispose()](#SelectionHelper+dispose)
+
+<a name="new_SelectionHelper_new"></a>
+
+### new SelectionHelper(renderer, cssClassName)
+Constructs a new selection helper.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| renderer | <code>WebGPURenderer</code> \| <code>WebGLRenderer</code> | The renderer. |
+| cssClassName | <code>string</code> | The CSS class name of the `div`. |
+
+<a name="SelectionHelper+element"></a>
+
+### selectionHelper.element : <code>HTMLDivElement</code>
+The visualization of the selection box.
+
+**Kind**: instance property of [<code>SelectionHelper</code>](#SelectionHelper)  
+<a name="SelectionHelper+renderer"></a>
+
+### selectionHelper.renderer : <code>WebGPURenderer</code> \| <code>WebGLRenderer</code>
+A reference to the renderer.
+
+**Kind**: instance property of [<code>SelectionHelper</code>](#SelectionHelper)  
+<a name="SelectionHelper+isDown"></a>
+
+### selectionHelper.isDown : <code>boolean</code>
+Whether the mouse or pointer is pressed down.
+
+**Kind**: instance property of [<code>SelectionHelper</code>](#SelectionHelper)  
+**Default**: <code>false</code>  
+<a name="SelectionHelper+enabled"></a>
+
+### selectionHelper.enabled : <code>boolean</code>
+Whether helper is enabled or not.
+
+**Kind**: instance property of [<code>SelectionHelper</code>](#SelectionHelper)  
+**Default**: <code>true</code>  
+<a name="SelectionHelper+dispose"></a>
+
+### selectionHelper.dispose()
+Call this method if you no longer want use to the controls. It frees all internal
+resources and removes all event listeners.
+
+**Kind**: instance method of [<code>SelectionHelper</code>](#SelectionHelper)  
+<a name="LightProbeGenerator"></a>
+

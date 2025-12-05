@@ -1,0 +1,44 @@
+{
+  "name": "threejs-kiro-template",
+  "version": "1.0.0",
+  "description": "An intelligent Three.js starter template with AI-powered development assistance",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "eslint": "^9.15.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "vite": "^5.4.11"
+  },
+  "keywords": [
+    "threejs",
+    "three.js",
+    "react",
+    "3d",
+    "webgl",
+    "template",
+    "boilerplate",
+    "kiro",
+    "ai-assisted"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/threejs-kiro-template"
+  }
+}

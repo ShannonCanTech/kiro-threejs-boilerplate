@@ -1,0 +1,1846 @@
+# three.js 
+
+> JavaScript 3D Library. 
+
+<a name="AnimationClipCreator"></a>
+
+## ArcballControls ⇐ <code>Controls</code>
+Arcball controls allow the camera to be controlled by a virtual trackball with full touch support and advanced navigation functionality.
+Cursor/finger positions and movements are mapped over a virtual trackball surface represented by a gizmo and mapped in intuitive and
+consistent camera movements. Dragging cursor/fingers will cause camera to orbit around the center of the trackball in a conservative
+way (returning to the starting point will make the camera to return to its starting orientation).
+
+In addition to supporting pan, zoom and pinch gestures, Arcball controls provide focus< functionality with a double click/tap for intuitively
+moving the object's point of interest in the center of the virtual trackball. Focus allows a much better inspection and navigation in complex
+environment. Moreover Arcball controls allow FOV manipulation (in a vertigo-style method) and z-rotation. Saving and restoring of Camera State
+is supported also through clipboard (use ctrl+c and ctrl+v shortcuts for copy and paste the state).
+
+Unlike [OrbitControls](OrbitControls) and [TrackballControls](TrackballControls), `ArcballControls` doesn't require `update()` to be called externally in an
+animation loop when animations are on.
+
+**Kind**: global class  
+**Extends**: <code>Controls</code>  
+
+* [ArcballControls](#ArcballControls) ⇐ <code>Controls</code>
+    * [new ArcballControls(camera, [domElement], [scene])](#new_ArcballControls_new)
+    * [.scene](#ArcballControls+scene) : <code>Scene</code>
+    * [.target](#ArcballControls+target) : <code>Vector3</code>
+    * [.radiusFactor](#ArcballControls+radiusFactor) : <code>number</code>
+    * [.mouseActions](#ArcballControls+mouseActions) : <code>Array.&lt;Object&gt;</code>
+    * [.focusAnimationTime](#ArcballControls+focusAnimationTime) : <code>number</code>
+    * [.adjustNearFar](#ArcballControls+adjustNearFar) : <code>boolean</code>
+    * [.scaleFactor](#ArcballControls+scaleFactor) : <code>number</code>
+    * [.dampingFactor](#ArcballControls+dampingFactor) : <code>number</code>
+    * [.wMax](#ArcballControls+wMax) : <code>number</code>
+    * [.enableAnimations](#ArcballControls+enableAnimations) : <code>boolean</code>
+    * [.enableGrid](#ArcballControls+enableGrid) : <code>boolean</code>
+    * [.cursorZoom](#ArcballControls+cursorZoom) : <code>boolean</code>
+    * [.minFov](#ArcballControls+minFov) : <code>number</code>
+    * [.maxFov](#ArcballControls+maxFov) : <code>number</code>
+    * [.rotateSpeed](#ArcballControls+rotateSpeed) : <code>number</code>
+    * [.enablePan](#ArcballControls+enablePan) : <code>boolean</code>
+    * [.enableRotate](#ArcballControls+enableRotate) : <code>boolean</code>
+    * [.enableZoom](#ArcballControls+enableZoom) : <code>boolean</code>
+    * [.enableGizmos](#ArcballControls+enableGizmos) : <code>boolean</code>
+    * [.enableFocus](#ArcballControls+enableFocus) : <code>boolean</code>
+    * [.minDistance](#ArcballControls+minDistance) : <code>number</code>
+    * [.maxDistance](#ArcballControls+maxDistance) : <code>number</code>
+    * [.minZoom](#ArcballControls+minZoom) : <code>number</code>
+    * [.maxZoom](#ArcballControls+maxZoom) : <code>number</code>
+    * [.setMouseAction(operation, mouse, [key])](#ArcballControls+setMouseAction) ⇒ <code>boolean</code>
+    * [.unsetMouseAction(mouse, key)](#ArcballControls+unsetMouseAction) ⇒ <code>boolean</code>
+    * [.disposeGrid()](#ArcballControls+disposeGrid)
+    * [.activateGizmos(isActive)](#ArcballControls+activateGizmos)
+    * [.setCamera(camera)](#ArcballControls+setCamera)
+    * [.setGizmosVisible(value)](#ArcballControls+setGizmosVisible)
+    * [.setTbRadius(value)](#ArcballControls+setTbRadius)
+    * [.reset()](#ArcballControls+reset)
+    * [.copyState()](#ArcballControls+copyState)
+    * [.pasteState()](#ArcballControls+pasteState)
+    * [.saveState()](#ArcballControls+saveState)
+    * [.getRaycaster()](#ArcballControls+getRaycaster) ⇒ <code>Raycaster</code>
+    * ["change"](#ArcballControls+event_change)
+    * ["start"](#ArcballControls+event_start)
+    * ["end"](#ArcballControls+event_end)
+
+<a name="new_ArcballControls_new"></a>
+
+### new ArcballControls(camera, [domElement], [scene])
+Constructs a new controls instance.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| camera | <code>Camera</code> |  | The camera to be controlled. The camera must not be a child of another object, unless that object is the scene itself. |
+| [domElement] | <code>HTMLDOMElement</code> | <code></code> | The HTML element used for event listeners. |
+| [scene] | <code>Scene</code> | <code></code> | The scene rendered by the camera. If not given, gizmos cannot be shown. |
+
+<a name="ArcballControls+scene"></a>
+
+### arcballControls.scene : <code>Scene</code>
+The scene rendered by the camera. If not given, gizmos cannot be shown.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>null</code>  
+<a name="ArcballControls+target"></a>
+
+### arcballControls.target : <code>Vector3</code>
+The control's focus point.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+<a name="ArcballControls+radiusFactor"></a>
+
+### arcballControls.radiusFactor : <code>number</code>
+The size of the gizmo relative to the screen width and height.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>0.67</code>  
+<a name="ArcballControls+mouseActions"></a>
+
+### arcballControls.mouseActions : <code>Array.&lt;Object&gt;</code>
+Holds the mouse actions of this controls. This property is maintained by the methods
+`setMouseAction()` and `unsetMouseAction()`.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+<a name="ArcballControls+focusAnimationTime"></a>
+
+### arcballControls.focusAnimationTime : <code>number</code>
+Duration of focus animations in ms.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>500</code>  
+<a name="ArcballControls+adjustNearFar"></a>
+
+### arcballControls.adjustNearFar : <code>boolean</code>
+If set to `true`, the camera's near and far values will be adjusted every time zoom is
+performed trying to maintain the same visible portion given by initial near and far
+values. Only works with perspective cameras.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>false</code>  
+<a name="ArcballControls+scaleFactor"></a>
+
+### arcballControls.scaleFactor : <code>number</code>
+The scaling factor used when performing zoom operation.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>1.1</code>  
+<a name="ArcballControls+dampingFactor"></a>
+
+### arcballControls.dampingFactor : <code>number</code>
+The damping inertia used if 'enableAnimations` is set to `true`.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>25</code>  
+<a name="ArcballControls+wMax"></a>
+
+### arcballControls.wMax : <code>number</code>
+Maximum angular velocity allowed on rotation animation start.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>20</code>  
+<a name="ArcballControls+enableAnimations"></a>
+
+### arcballControls.enableAnimations : <code>boolean</code>
+Set to `true` to enable animations for rotation (damping) and focus operation.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>true</code>  
+<a name="ArcballControls+enableGrid"></a>
+
+### arcballControls.enableGrid : <code>boolean</code>
+If set to `true`, a grid will appear when panning operation is being performed
+(desktop interaction only).
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>false</code>  
+<a name="ArcballControls+cursorZoom"></a>
+
+### arcballControls.cursorZoom : <code>boolean</code>
+Set to `true` to make zoom become cursor centered.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>false</code>  
+<a name="ArcballControls+minFov"></a>
+
+### arcballControls.minFov : <code>number</code>
+The minimum FOV in degrees.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>5</code>  
+<a name="ArcballControls+maxFov"></a>
+
+### arcballControls.maxFov : <code>number</code>
+The maximum FOV in degrees.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>90</code>  
+<a name="ArcballControls+rotateSpeed"></a>
+
+### arcballControls.rotateSpeed : <code>number</code>
+Speed of rotation.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>1</code>  
+<a name="ArcballControls+enablePan"></a>
+
+### arcballControls.enablePan : <code>boolean</code>
+Enable or disable camera panning.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>true</code>  
+<a name="ArcballControls+enableRotate"></a>
+
+### arcballControls.enableRotate : <code>boolean</code>
+Enable or disable camera rotation.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>true</code>  
+<a name="ArcballControls+enableZoom"></a>
+
+### arcballControls.enableZoom : <code>boolean</code>
+Enable or disable camera zoom.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>true</code>  
+<a name="ArcballControls+enableGizmos"></a>
+
+### arcballControls.enableGizmos : <code>boolean</code>
+Enable or disable gizmos.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>true</code>  
+<a name="ArcballControls+enableFocus"></a>
+
+### arcballControls.enableFocus : <code>boolean</code>
+Enable or disable camera focusing on double-tap (or click) operations.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>true</code>  
+<a name="ArcballControls+minDistance"></a>
+
+### arcballControls.minDistance : <code>number</code>
+How far you can dolly in. For perspective cameras only.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>0</code>  
+<a name="ArcballControls+maxDistance"></a>
+
+### arcballControls.maxDistance : <code>number</code>
+How far you can dolly out. For perspective cameras only.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>Infinity</code>  
+<a name="ArcballControls+minZoom"></a>
+
+### arcballControls.minZoom : <code>number</code>
+How far you can zoom in. For orthographic cameras only.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>0</code>  
+<a name="ArcballControls+maxZoom"></a>
+
+### arcballControls.maxZoom : <code>number</code>
+How far you can zoom out. For orthographic cameras only.
+
+**Kind**: instance property of [<code>ArcballControls</code>](#ArcballControls)  
+**Default**: <code>Infinity</code>  
+<a name="ArcballControls+setMouseAction"></a>
+
+### arcballControls.setMouseAction(operation, mouse, [key]) ⇒ <code>boolean</code>
+Set a new mouse action by specifying the operation to be performed and a mouse/key combination. In case of conflict, replaces the existing one.
+
+**Kind**: instance method of [<code>ArcballControls</code>](#ArcballControls)  
+**Returns**: <code>boolean</code> - `true` if the mouse action has been successfully added, `false` otherwise.  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| operation | <code>&#x27;PAN&#x27;</code> \| <code>&#x27;ROTATE&#x27;</code> \| <code>&#x27;ZOOM&#x27;</code> \| <code>&#x27;FOV&#x27;</code> |  | The operation to be performed ('PAN', 'ROTATE', 'ZOOM', 'FOV'). |
+| mouse | <code>0</code> \| <code>1</code> \| <code>2</code> \| <code>&#x27;WHEEL&#x27;</code> |  | A mouse button (0, 1, 2) or 'WHEEL' for wheel notches. |
+| [key] | <code>&#x27;CTRL&#x27;</code> \| <code>&#x27;SHIFT&#x27;</code> \| <code>null</code> | <code></code> | The keyboard modifier ('CTRL', 'SHIFT') or null if key is not needed. |
+
+<a name="ArcballControls+unsetMouseAction"></a>
+
+### arcballControls.unsetMouseAction(mouse, key) ⇒ <code>boolean</code>
+Remove a mouse action by specifying its mouse/key combination.
+
+**Kind**: instance method of [<code>ArcballControls</code>](#ArcballControls)  
+**Returns**: <code>boolean</code> - `true` if the operation has been successfully removed, `false` otherwise.  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| mouse | <code>0</code> \| <code>1</code> \| <code>2</code> \| <code>&#x27;WHEEL&#x27;</code> |  | A mouse button (0, 1, 2) or 'WHEEL' for wheel notches. |
+| key | <code>&#x27;CTRL&#x27;</code> \| <code>&#x27;SHIFT&#x27;</code> \| <code>null</code> | <code></code> | The keyboard modifier ('CTRL', 'SHIFT') or null if key is not needed. |
+
+<a name="ArcballControls+disposeGrid"></a>
+
+### arcballControls.disposeGrid()
+Removes the grid from the scene.
+
+**Kind**: instance method of [<code>ArcballControls</code>](#ArcballControls)  
+<a name="ArcballControls+activateGizmos"></a>
+
+### arcballControls.activateGizmos(isActive)
+Makes rotation gizmos more or less visible.
+
+**Kind**: instance method of [<code>ArcballControls</code>](#ArcballControls)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| isActive | <code>boolean</code> | If set to `true`, gizmos are more visible. |
+
+<a name="ArcballControls+setCamera"></a>
+
+### arcballControls.setCamera(camera)
+Sets the camera to be controlled.  Must be called in order to set a new camera to be controlled.
+
+**Kind**: instance method of [<code>ArcballControls</code>](#ArcballControls)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| camera | <code>Camera</code> | The camera to be controlled. |
+
+<a name="ArcballControls+setGizmosVisible"></a>
+
+### arcballControls.setGizmosVisible(value)
+Sets gizmos visibility.
+
+**Kind**: instance method of [<code>ArcballControls</code>](#ArcballControls)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| value | <code>boolean</code> | Value of gizmos visibility. |
+
+<a name="ArcballControls+setTbRadius"></a>
+
+### arcballControls.setTbRadius(value)
+Sets gizmos radius factor and redraws gizmos.
+
+**Kind**: instance method of [<code>ArcballControls</code>](#ArcballControls)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| value | <code>number</code> | Value of radius factor. |
+
+<a name="ArcballControls+reset"></a>
+
+### arcballControls.reset()
+Resets the controls.
+
+**Kind**: instance method of [<code>ArcballControls</code>](#ArcballControls)  
+<a name="ArcballControls+copyState"></a>
+
+### arcballControls.copyState()
+Copy the current state to clipboard (as a readable JSON text).
+
+**Kind**: instance method of [<code>ArcballControls</code>](#ArcballControls)  
+<a name="ArcballControls+pasteState"></a>
+
+### arcballControls.pasteState()
+Set the controls state from the clipboard, assumes that the clipboard stores a JSON
+text as saved from `copyState()`.
+
+**Kind**: instance method of [<code>ArcballControls</code>](#ArcballControls)  
+<a name="ArcballControls+saveState"></a>
+
+### arcballControls.saveState()
+Saves the current state of the control. This can later be recover with `reset()`.
+
+**Kind**: instance method of [<code>ArcballControls</code>](#ArcballControls)  
+<a name="ArcballControls+getRaycaster"></a>
+
+### arcballControls.getRaycaster() ⇒ <code>Raycaster</code>
+Returns the raycaster that is used for user interaction. This object is shared between all
+instances of `ArcballControls`.
+
+**Kind**: instance method of [<code>ArcballControls</code>](#ArcballControls)  
+**Returns**: <code>Raycaster</code> - The internal raycaster.  
+<a name="ArcballControls+event_change"></a>
+
+### "change"
+Fires when the camera has been transformed by the controls.
+
+**Kind**: event emitted by [<code>ArcballControls</code>](#ArcballControls)  
+<a name="ArcballControls+event_start"></a>
+
+### "start"
+Fires when an interaction was initiated.
+
+**Kind**: event emitted by [<code>ArcballControls</code>](#ArcballControls)  
+<a name="ArcballControls+event_end"></a>
+
+### "end"
+Fires when an interaction has finished.
+
+**Kind**: event emitted by [<code>ArcballControls</code>](#ArcballControls)  
+<a name="DragControls"></a>
+
+## DragControls ⇐ <code>Controls</code>
+This class can be used to provide a drag'n'drop interaction.
+
+```js
+const controls = new DragControls( objects, camera, renderer.domElement );
+
+// add event listener to highlight dragged objects
+controls.addEventListener( 'dragstart', function ( event ) {
+
+	event.object.material.emissive.set( 0xaaaaaa );
+
+} );
+
+controls.addEventListener( 'dragend', function ( event ) {
+
+	event.object.material.emissive.set( 0x000000 );
+
+} );
+```
+
+**Kind**: global class  
+**Extends**: <code>Controls</code>  
+
+* [DragControls](#DragControls) ⇐ <code>Controls</code>
+    * [new DragControls(objects, camera, [domElement])](#new_DragControls_new)
+    * [.objects](#DragControls+objects) : <code>Array.&lt;Object3D&gt;</code>
+    * [.recursive](#DragControls+recursive) : <code>boolean</code>
+    * [.transformGroup](#DragControls+transformGroup) : <code>boolean</code>
+    * [.rotateSpeed](#DragControls+rotateSpeed) : <code>number</code>
+    * [.raycaster](#DragControls+raycaster) : <code>Raycaster</code>
+    * ["drag"](#DragControls+event_drag)
+    * ["dragend"](#DragControls+event_dragend)
+    * ["hoveron"](#DragControls+event_hoveron)
+    * ["hoveroff"](#DragControls+event_hoveroff)
+
+<a name="new_DragControls_new"></a>
+
+### new DragControls(objects, camera, [domElement])
+Constructs a new controls instance.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| objects | <code>Array.&lt;Object3D&gt;</code> |  | An array of draggable 3D objects. |
+| camera | <code>Camera</code> |  | The camera of the rendered scene. |
+| [domElement] | <code>HTMLDOMElement</code> | <code></code> | The HTML DOM element used for event listeners. |
+
+<a name="DragControls+objects"></a>
+
+### dragControls.objects : <code>Array.&lt;Object3D&gt;</code>
+An array of draggable 3D objects.
+
+**Kind**: instance property of [<code>DragControls</code>](#DragControls)  
+<a name="DragControls+recursive"></a>
+
+### dragControls.recursive : <code>boolean</code>
+Whether children of draggable objects can be dragged independently from their parent.
+
+**Kind**: instance property of [<code>DragControls</code>](#DragControls)  
+**Default**: <code>true</code>  
+<a name="DragControls+transformGroup"></a>
+
+### dragControls.transformGroup : <code>boolean</code>
+This option only works if the `objects` array contains a single draggable  group object.
+If set to `true`, the controls does not transform individual objects but the entire group.
+
+**Kind**: instance property of [<code>DragControls</code>](#DragControls)  
+**Default**: <code>false</code>  
+<a name="DragControls+rotateSpeed"></a>
+
+### dragControls.rotateSpeed : <code>number</code>
+The speed at which the object will rotate when dragged in `rotate` mode.
+The higher the number the faster the rotation.
+
+**Kind**: instance property of [<code>DragControls</code>](#DragControls)  
+**Default**: <code>1</code>  
+<a name="DragControls+raycaster"></a>
+
+### dragControls.raycaster : <code>Raycaster</code>
+The raycaster used for detecting 3D objects.
+
+**Kind**: instance property of [<code>DragControls</code>](#DragControls)  
+<a name="DragControls+event_drag"></a>
+
+### "drag"
+Fires when the user drags a 3D object.
+
+**Kind**: event emitted by [<code>DragControls</code>](#DragControls)  
+<a name="DragControls+event_dragend"></a>
+
+### "dragend"
+Fires when the user has finished dragging a 3D object.
+
+**Kind**: event emitted by [<code>DragControls</code>](#DragControls)  
+<a name="DragControls+event_hoveron"></a>
+
+### "hoveron"
+Fires when the pointer is moved onto a 3D object, or onto one of its children.
+
+**Kind**: event emitted by [<code>DragControls</code>](#DragControls)  
+<a name="DragControls+event_hoveroff"></a>
+
+### "hoveroff"
+Fires when the pointer is moved out of a 3D object.
+
+**Kind**: event emitted by [<code>DragControls</code>](#DragControls)  
+<a name="FirstPersonControls"></a>
+
+## FirstPersonControls ⇐ <code>Controls</code>
+This class is an alternative implementation of [FlyControls](FlyControls).
+
+**Kind**: global class  
+**Extends**: <code>Controls</code>  
+
+* [FirstPersonControls](#FirstPersonControls) ⇐ <code>Controls</code>
+    * [new FirstPersonControls(object, domElement)](#new_FirstPersonControls_new)
+    * [.movementSpeed](#FirstPersonControls+movementSpeed) : <code>number</code>
+    * [.lookSpeed](#FirstPersonControls+lookSpeed) : <code>number</code>
+    * [.lookVertical](#FirstPersonControls+lookVertical) : <code>boolean</code>
+    * [.autoForward](#FirstPersonControls+autoForward) : <code>boolean</code>
+    * [.activeLook](#FirstPersonControls+activeLook) : <code>boolean</code>
+    * [.heightSpeed](#FirstPersonControls+heightSpeed) : <code>boolean</code>
+    * [.heightCoef](#FirstPersonControls+heightCoef) : <code>number</code>
+    * [.heightMin](#FirstPersonControls+heightMin) : <code>number</code>
+    * [.heightMax](#FirstPersonControls+heightMax) : <code>number</code>
+    * [.constrainVertical](#FirstPersonControls+constrainVertical) : <code>boolean</code>
+    * [.verticalMin](#FirstPersonControls+verticalMin) : <code>number</code>
+    * [.verticalMax](#FirstPersonControls+verticalMax) : <code>number</code>
+    * [.mouseDragOn](#FirstPersonControls+mouseDragOn) : <code>boolean</code>
+    * [.handleResize()](#FirstPersonControls+handleResize)
+    * [.lookAt(x, y, z)](#FirstPersonControls+lookAt) ⇒ [<code>FirstPersonControls</code>](#FirstPersonControls)
+
+<a name="new_FirstPersonControls_new"></a>
+
+### new FirstPersonControls(object, domElement)
+Constructs a new controls instance.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| object | <code>Object3D</code> |  | The object that is managed by the controls. |
+| domElement | <code>HTMLDOMElement</code> | <code></code> | The HTML element used for event listeners. |
+
+<a name="FirstPersonControls+movementSpeed"></a>
+
+### firstPersonControls.movementSpeed : <code>number</code>
+The movement speed.
+
+**Kind**: instance property of [<code>FirstPersonControls</code>](#FirstPersonControls)  
+**Default**: <code>1</code>  
+<a name="FirstPersonControls+lookSpeed"></a>
+
+### firstPersonControls.lookSpeed : <code>number</code>
+The look around speed.
+
+**Kind**: instance property of [<code>FirstPersonControls</code>](#FirstPersonControls)  
+**Default**: <code>0.005</code>  
+<a name="FirstPersonControls+lookVertical"></a>
+
+### firstPersonControls.lookVertical : <code>boolean</code>
+Whether it's possible to vertically look around or not.
+
+**Kind**: instance property of [<code>FirstPersonControls</code>](#FirstPersonControls)  
+**Default**: <code>true</code>  
+<a name="FirstPersonControls+autoForward"></a>
+
+### firstPersonControls.autoForward : <code>boolean</code>
+Whether the camera is automatically moved forward or not.
+
+**Kind**: instance property of [<code>FirstPersonControls</code>](#FirstPersonControls)  
+**Default**: <code>false</code>  
+<a name="FirstPersonControls+activeLook"></a>
+
+### firstPersonControls.activeLook : <code>boolean</code>
+Whether it's possible to look around or not.
+
+**Kind**: instance property of [<code>FirstPersonControls</code>](#FirstPersonControls)  
+**Default**: <code>true</code>  
+<a name="FirstPersonControls+heightSpeed"></a>
+
+### firstPersonControls.heightSpeed : <code>boolean</code>
+Whether or not the camera's height influences the forward movement speed.
+Use the properties `heightCoef`, `heightMin` and `heightMax` for configuration.
+
+**Kind**: instance property of [<code>FirstPersonControls</code>](#FirstPersonControls)  
+**Default**: <code>false</code>  
+<a name="FirstPersonControls+heightCoef"></a>
+
+### firstPersonControls.heightCoef : <code>number</code>
+Determines how much faster the camera moves when it's y-component is near `heightMax`.
+
+**Kind**: instance property of [<code>FirstPersonControls</code>](#FirstPersonControls)  
+**Default**: <code>1</code>  
+<a name="FirstPersonControls+heightMin"></a>
+
+### firstPersonControls.heightMin : <code>number</code>
+Lower camera height limit used for movement speed adjustment.
+
+**Kind**: instance property of [<code>FirstPersonControls</code>](#FirstPersonControls)  
+**Default**: <code>0</code>  
+<a name="FirstPersonControls+heightMax"></a>
+
+### firstPersonControls.heightMax : <code>number</code>
+Upper camera height limit used for movement speed adjustment.
+
+**Kind**: instance property of [<code>FirstPersonControls</code>](#FirstPersonControls)  
+**Default**: <code>1</code>  
+<a name="FirstPersonControls+constrainVertical"></a>
+
+### firstPersonControls.constrainVertical : <code>boolean</code>
+Whether or not looking around is vertically constrained by `verticalMin` and `verticalMax`.
+
+**Kind**: instance property of [<code>FirstPersonControls</code>](#FirstPersonControls)  
+**Default**: <code>false</code>  
+<a name="FirstPersonControls+verticalMin"></a>
+
+### firstPersonControls.verticalMin : <code>number</code>
+How far you can vertically look around, lower limit. Range is `0` to `Math.PI` in radians.
+
+**Kind**: instance property of [<code>FirstPersonControls</code>](#FirstPersonControls)  
+**Default**: <code>0</code>  
+<a name="FirstPersonControls+verticalMax"></a>
+
+### firstPersonControls.verticalMax : <code>number</code>
+How far you can vertically look around, upper limit. Range is `0` to `Math.PI` in radians.
+
+**Kind**: instance property of [<code>FirstPersonControls</code>](#FirstPersonControls)  
+**Default**: <code>0</code>  
+<a name="FirstPersonControls+mouseDragOn"></a>
+
+### firstPersonControls.mouseDragOn : <code>boolean</code>
+Whether the mouse is pressed down or not.
+
+**Kind**: instance property of [<code>FirstPersonControls</code>](#FirstPersonControls)  
+**Default**: <code>false</code>  
+**Read only**: true  
+<a name="FirstPersonControls+handleResize"></a>
+
+### firstPersonControls.handleResize()
+Must be called if the application window is resized.
+
+**Kind**: instance method of [<code>FirstPersonControls</code>](#FirstPersonControls)  
+<a name="FirstPersonControls+lookAt"></a>
+
+### firstPersonControls.lookAt(x, y, z) ⇒ [<code>FirstPersonControls</code>](#FirstPersonControls)
+Rotates the camera towards the defined target position.
+
+**Kind**: instance method of [<code>FirstPersonControls</code>](#FirstPersonControls)  
+**Returns**: [<code>FirstPersonControls</code>](#FirstPersonControls) - A reference to this controls.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| x | <code>number</code> \| <code>Vector3</code> | The x coordinate of the target position or alternatively a vector representing the target position. |
+| y | <code>number</code> | The y coordinate of the target position. |
+| z | <code>number</code> | The z coordinate of the target position. |
+
+<a name="FlyControls"></a>
+
+## FlyControls ⇐ <code>Controls</code>
+This class enables a navigation similar to fly modes in DCC tools like Blender.
+You can arbitrarily transform the camera in 3D space without any limitations
+(e.g. focus on a specific target).
+
+**Kind**: global class  
+**Extends**: <code>Controls</code>  
+
+* [FlyControls](#FlyControls) ⇐ <code>Controls</code>
+    * [new FlyControls(object, domElement)](#new_FlyControls_new)
+    * [.movementSpeed](#FlyControls+movementSpeed) : <code>number</code>
+    * [.rollSpeed](#FlyControls+rollSpeed) : <code>number</code>
+    * [.dragToLook](#FlyControls+dragToLook) : <code>boolean</code>
+    * [.autoForward](#FlyControls+autoForward) : <code>boolean</code>
+    * ["change"](#FlyControls+event_change)
+
+<a name="new_FlyControls_new"></a>
+
+### new FlyControls(object, domElement)
+Constructs a new controls instance.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| object | <code>Object3D</code> |  | The object that is managed by the controls. |
+| domElement | <code>HTMLDOMElement</code> | <code></code> | The HTML element used for event listeners. |
+
+<a name="FlyControls+movementSpeed"></a>
+
+### flyControls.movementSpeed : <code>number</code>
+The movement speed.
+
+**Kind**: instance property of [<code>FlyControls</code>](#FlyControls)  
+**Default**: <code>1</code>  
+<a name="FlyControls+rollSpeed"></a>
+
+### flyControls.rollSpeed : <code>number</code>
+The rotation speed.
+
+**Kind**: instance property of [<code>FlyControls</code>](#FlyControls)  
+**Default**: <code>0.005</code>  
+<a name="FlyControls+dragToLook"></a>
+
+### flyControls.dragToLook : <code>boolean</code>
+If set to `true`, you can only look around by performing a drag interaction.
+
+**Kind**: instance property of [<code>FlyControls</code>](#FlyControls)  
+**Default**: <code>false</code>  
+<a name="FlyControls+autoForward"></a>
+
+### flyControls.autoForward : <code>boolean</code>
+If set to `true`, the camera automatically moves forward (and does not stop) when initially translated.
+
+**Kind**: instance property of [<code>FlyControls</code>](#FlyControls)  
+**Default**: <code>false</code>  
+<a name="FlyControls+event_change"></a>
+
+### "change"
+Fires when the camera has been transformed by the controls.
+
+**Kind**: event emitted by [<code>FlyControls</code>](#FlyControls)  
+<a name="MapControls"></a>
+
+## MapControls ⇐ <code>OrbitControls</code>
+This class is intended for transforming a camera over a map from bird's eye perspective.
+The class shares its implementation with [OrbitControls](OrbitControls) but uses a specific preset
+for mouse/touch interaction and disables screen space panning by default.
+
+- Orbit: Right mouse, or left mouse + ctrl/meta/shiftKey / touch: two-finger rotate.
+- Zoom: Middle mouse, or mousewheel / touch: two-finger spread or squish.
+- Pan: Left mouse, or arrow keys / touch: one-finger move.
+
+**Kind**: global class  
+**Extends**: <code>OrbitControls</code>  
+
+* [MapControls](#MapControls) ⇐ <code>OrbitControls</code>
+    * [.screenSpacePanning](#MapControls+screenSpacePanning) : <code>boolean</code>
+    * [.mouseButtons](#MapControls+mouseButtons) : <code>Object</code>
+    * [.touches](#MapControls+touches) : <code>Object</code>
+
+<a name="MapControls+screenSpacePanning"></a>
+
+### mapControls.screenSpacePanning : <code>boolean</code>
+Overwritten and set to `false` to pan orthogonal to world-space direction `camera.up`.
+
+**Kind**: instance property of [<code>MapControls</code>](#MapControls)  
+**Default**: <code>false</code>  
+<a name="MapControls+mouseButtons"></a>
+
+### mapControls.mouseButtons : <code>Object</code>
+This object contains references to the mouse actions used by the controls.
+
+```js
+controls.mouseButtons = {
+	LEFT: THREE.MOUSE.PAN,
+	MIDDLE: THREE.MOUSE.DOLLY,
+	RIGHT: THREE.MOUSE.ROTATE
+}
+```
+
+**Kind**: instance property of [<code>MapControls</code>](#MapControls)  
+<a name="MapControls+touches"></a>
+
+### mapControls.touches : <code>Object</code>
+This object contains references to the touch actions used by the controls.
+
+```js
+controls.mouseButtons = {
+	ONE: THREE.TOUCH.PAN,
+	TWO: THREE.TOUCH.DOLLY_ROTATE
+}
+```
+
+**Kind**: instance property of [<code>MapControls</code>](#MapControls)  
+<a name="OrbitControls"></a>
+
+## OrbitControls ⇐ <code>Controls</code>
+Orbit controls allow the camera to orbit around a target.
+
+OrbitControls performs orbiting, dollying (zooming), and panning. Unlike [TrackballControls](TrackballControls),
+it maintains the "up" direction `object.up` (+Y by default).
+
+- Orbit: Left mouse / touch: one-finger move.
+- Zoom: Middle mouse, or mousewheel / touch: two-finger spread or squish.
+- Pan: Right mouse, or left mouse + ctrl/meta/shiftKey, or arrow keys / touch: two-finger move.
+
+```js
+const controls = new OrbitControls( camera, renderer.domElement );
+
+// controls.update() must be called after any manual changes to the camera's transform
+camera.position.set( 0, 20, 100 );
+controls.update();
+
+function animate() {
+
+	// required if controls.enableDamping or controls.autoRotate are set to true
+	controls.update();
+
+	renderer.render( scene, camera );
+
+}
+```
+
+**Kind**: global class  
+**Extends**: <code>Controls</code>  
+
+* [OrbitControls](#OrbitControls) ⇐ <code>Controls</code>
+    * [new OrbitControls(object, domElement)](#new_OrbitControls_new)
+    * [.target](#OrbitControls+target) : <code>Vector3</code>
+    * [.cursor](#OrbitControls+cursor) : <code>Vector3</code>
+    * [.minDistance](#OrbitControls+minDistance) : <code>number</code>
+    * [.maxDistance](#OrbitControls+maxDistance) : <code>number</code>
+    * [.minZoom](#OrbitControls+minZoom) : <code>number</code>
+    * [.maxZoom](#OrbitControls+maxZoom) : <code>number</code>
+    * [.minTargetRadius](#OrbitControls+minTargetRadius) : <code>number</code>
+    * [.maxTargetRadius](#OrbitControls+maxTargetRadius) : <code>number</code>
+    * [.minPolarAngle](#OrbitControls+minPolarAngle) : <code>number</code>
+    * [.maxPolarAngle](#OrbitControls+maxPolarAngle) : <code>number</code>
+    * [.minAzimuthAngle](#OrbitControls+minAzimuthAngle) : <code>number</code>
+    * [.maxAzimuthAngle](#OrbitControls+maxAzimuthAngle) : <code>number</code>
+    * [.enableDamping](#OrbitControls+enableDamping) : <code>boolean</code>
+    * [.dampingFactor](#OrbitControls+dampingFactor) : <code>number</code>
+    * [.enableZoom](#OrbitControls+enableZoom) : <code>boolean</code>
+    * [.zoomSpeed](#OrbitControls+zoomSpeed) : <code>number</code>
+    * [.enableRotate](#OrbitControls+enableRotate) : <code>boolean</code>
+    * [.rotateSpeed](#OrbitControls+rotateSpeed) : <code>number</code>
+    * [.keyRotateSpeed](#OrbitControls+keyRotateSpeed) : <code>number</code>
+    * [.enablePan](#OrbitControls+enablePan) : <code>boolean</code>
+    * [.panSpeed](#OrbitControls+panSpeed) : <code>number</code>
+    * [.screenSpacePanning](#OrbitControls+screenSpacePanning) : <code>boolean</code>
+    * [.keyPanSpeed](#OrbitControls+keyPanSpeed) : <code>number</code>
+    * [.zoomToCursor](#OrbitControls+zoomToCursor) : <code>boolean</code>
+    * [.autoRotate](#OrbitControls+autoRotate) : <code>boolean</code>
+    * [.autoRotateSpeed](#OrbitControls+autoRotateSpeed) : <code>number</code>
+    * [.keys](#OrbitControls+keys) : <code>Object</code>
+    * [.mouseButtons](#OrbitControls+mouseButtons) : <code>Object</code>
+    * [.touches](#OrbitControls+touches) : <code>Object</code>
+    * [.target0](#OrbitControls+target0) : <code>Vector3</code>
+    * [.position0](#OrbitControls+position0) : <code>Vector3</code>
+    * [.zoom0](#OrbitControls+zoom0) : <code>number</code>
+    * [.getPolarAngle()](#OrbitControls+getPolarAngle) ⇒ <code>number</code>
+    * [.getAzimuthalAngle()](#OrbitControls+getAzimuthalAngle) ⇒ <code>number</code>
+    * [.getDistance()](#OrbitControls+getDistance) ⇒ <code>number</code>
+    * [.listenToKeyEvents(domElement)](#OrbitControls+listenToKeyEvents)
+    * [.stopListenToKeyEvents()](#OrbitControls+stopListenToKeyEvents)
+    * [.saveState()](#OrbitControls+saveState)
+    * [.reset()](#OrbitControls+reset)
+    * ["change"](#OrbitControls+event_change)
+    * ["start"](#OrbitControls+event_start)
+    * ["end"](#OrbitControls+event_end)
+
+<a name="new_OrbitControls_new"></a>
+
+### new OrbitControls(object, domElement)
+Constructs a new controls instance.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| object | <code>Object3D</code> |  | The object that is managed by the controls. |
+| domElement | <code>HTMLDOMElement</code> | <code></code> | The HTML element used for event listeners. |
+
+<a name="OrbitControls+target"></a>
+
+### orbitControls.target : <code>Vector3</code>
+The focus point of the controls, the `object` orbits around this.
+It can be updated manually at any point to change the focus of the controls.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+<a name="OrbitControls+cursor"></a>
+
+### orbitControls.cursor : <code>Vector3</code>
+The focus point of the `minTargetRadius` and `maxTargetRadius` limits.
+It can be updated manually at any point to change the center of interest
+for the `target`.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+<a name="OrbitControls+minDistance"></a>
+
+### orbitControls.minDistance : <code>number</code>
+How far you can dolly in (perspective camera only).
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>0</code>  
+<a name="OrbitControls+maxDistance"></a>
+
+### orbitControls.maxDistance : <code>number</code>
+How far you can dolly out (perspective camera only).
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>Infinity</code>  
+<a name="OrbitControls+minZoom"></a>
+
+### orbitControls.minZoom : <code>number</code>
+How far you can zoom in (orthographic camera only).
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>0</code>  
+<a name="OrbitControls+maxZoom"></a>
+
+### orbitControls.maxZoom : <code>number</code>
+How far you can zoom out (orthographic camera only).
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>Infinity</code>  
+<a name="OrbitControls+minTargetRadius"></a>
+
+### orbitControls.minTargetRadius : <code>number</code>
+How close you can get the target to the 3D `cursor`.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>0</code>  
+<a name="OrbitControls+maxTargetRadius"></a>
+
+### orbitControls.maxTargetRadius : <code>number</code>
+How far you can move the target from the 3D `cursor`.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>Infinity</code>  
+<a name="OrbitControls+minPolarAngle"></a>
+
+### orbitControls.minPolarAngle : <code>number</code>
+How far you can orbit vertically, lower limit. Range is `[0, Math.PI]` radians.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>0</code>  
+<a name="OrbitControls+maxPolarAngle"></a>
+
+### orbitControls.maxPolarAngle : <code>number</code>
+How far you can orbit vertically, upper limit. Range is `[0, Math.PI]` radians.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>Math.PI</code>  
+<a name="OrbitControls+minAzimuthAngle"></a>
+
+### orbitControls.minAzimuthAngle : <code>number</code>
+How far you can orbit horizontally, lower limit. If set, the interval `[ min, max ]`
+must be a sub-interval of `[ - 2 PI, 2 PI ]`, with `( max - min < 2 PI )`.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>-Infinity</code>  
+<a name="OrbitControls+maxAzimuthAngle"></a>
+
+### orbitControls.maxAzimuthAngle : <code>number</code>
+How far you can orbit horizontally, upper limit. If set, the interval `[ min, max ]`
+must be a sub-interval of `[ - 2 PI, 2 PI ]`, with `( max - min < 2 PI )`.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>-Infinity</code>  
+<a name="OrbitControls+enableDamping"></a>
+
+### orbitControls.enableDamping : <code>boolean</code>
+Set to `true` to enable damping (inertia), which can be used to give a sense of weight
+to the controls. Note that if this is enabled, you must call `update()` in your animation
+loop.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>false</code>  
+<a name="OrbitControls+dampingFactor"></a>
+
+### orbitControls.dampingFactor : <code>number</code>
+The damping inertia used if `enableDamping` is set to `true`.
+
+Note that for this to work, you must call `update()` in your animation loop.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>0.05</code>  
+<a name="OrbitControls+enableZoom"></a>
+
+### orbitControls.enableZoom : <code>boolean</code>
+Enable or disable zooming (dollying) of the camera.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>true</code>  
+<a name="OrbitControls+zoomSpeed"></a>
+
+### orbitControls.zoomSpeed : <code>number</code>
+Speed of zooming / dollying.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>1</code>  
+<a name="OrbitControls+enableRotate"></a>
+
+### orbitControls.enableRotate : <code>boolean</code>
+Enable or disable horizontal and vertical rotation of the camera.
+
+Note that it is possible to disable a single axis by setting the min and max of the
+`minPolarAngle` or `minAzimuthAngle` to the same value, which will cause the vertical
+or horizontal rotation to be fixed at that value.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>true</code>  
+<a name="OrbitControls+rotateSpeed"></a>
+
+### orbitControls.rotateSpeed : <code>number</code>
+Speed of rotation.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>1</code>  
+<a name="OrbitControls+keyRotateSpeed"></a>
+
+### orbitControls.keyRotateSpeed : <code>number</code>
+How fast to rotate the camera when the keyboard is used.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>1</code>  
+<a name="OrbitControls+enablePan"></a>
+
+### orbitControls.enablePan : <code>boolean</code>
+Enable or disable camera panning.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>true</code>  
+<a name="OrbitControls+panSpeed"></a>
+
+### orbitControls.panSpeed : <code>number</code>
+Speed of panning.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>1</code>  
+<a name="OrbitControls+screenSpacePanning"></a>
+
+### orbitControls.screenSpacePanning : <code>boolean</code>
+Defines how the camera's position is translated when panning. If `true`, the camera pans
+in screen space. Otherwise, the camera pans in the plane orthogonal to the camera's up
+direction.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>true</code>  
+<a name="OrbitControls+keyPanSpeed"></a>
+
+### orbitControls.keyPanSpeed : <code>number</code>
+How fast to pan the camera when the keyboard is used in
+pixels per keypress.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>7</code>  
+<a name="OrbitControls+zoomToCursor"></a>
+
+### orbitControls.zoomToCursor : <code>boolean</code>
+Setting this property to `true` allows to zoom to the cursor's position.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>false</code>  
+<a name="OrbitControls+autoRotate"></a>
+
+### orbitControls.autoRotate : <code>boolean</code>
+Set to true to automatically rotate around the target
+
+Note that if this is enabled, you must call `update()` in your animation loop.
+If you want the auto-rotate speed to be independent of the frame rate (the refresh
+rate of the display), you must pass the time `deltaTime`, in seconds, to `update()`.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>false</code>  
+<a name="OrbitControls+autoRotateSpeed"></a>
+
+### orbitControls.autoRotateSpeed : <code>number</code>
+How fast to rotate around the target if `autoRotate` is `true`. The default  equates to 30 seconds
+per orbit at 60fps.
+
+Note that if `autoRotate` is enabled, you must call `update()` in your animation loop.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+**Default**: <code>2</code>  
+<a name="OrbitControls+keys"></a>
+
+### orbitControls.keys : <code>Object</code>
+This object contains references to the keycodes for controlling camera panning.
+
+```js
+controls.keys = {
+	LEFT: 'ArrowLeft', //left arrow
+	UP: 'ArrowUp', // up arrow
+	RIGHT: 'ArrowRight', // right arrow
+	BOTTOM: 'ArrowDown' // down arrow
+}
+```
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+<a name="OrbitControls+mouseButtons"></a>
+
+### orbitControls.mouseButtons : <code>Object</code>
+This object contains references to the mouse actions used by the controls.
+
+```js
+controls.mouseButtons = {
+	LEFT: THREE.MOUSE.ROTATE,
+	MIDDLE: THREE.MOUSE.DOLLY,
+	RIGHT: THREE.MOUSE.PAN
+}
+```
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+<a name="OrbitControls+touches"></a>
+
+### orbitControls.touches : <code>Object</code>
+This object contains references to the touch actions used by the controls.
+
+```js
+controls.mouseButtons = {
+	ONE: THREE.TOUCH.ROTATE,
+	TWO: THREE.TOUCH.DOLLY_PAN
+}
+```
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+<a name="OrbitControls+target0"></a>
+
+### orbitControls.target0 : <code>Vector3</code>
+Used internally by `saveState()` and `reset()`.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+<a name="OrbitControls+position0"></a>
+
+### orbitControls.position0 : <code>Vector3</code>
+Used internally by `saveState()` and `reset()`.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+<a name="OrbitControls+zoom0"></a>
+
+### orbitControls.zoom0 : <code>number</code>
+Used internally by `saveState()` and `reset()`.
+
+**Kind**: instance property of [<code>OrbitControls</code>](#OrbitControls)  
+<a name="OrbitControls+getPolarAngle"></a>
+
+### orbitControls.getPolarAngle() ⇒ <code>number</code>
+Get the current vertical rotation, in radians.
+
+**Kind**: instance method of [<code>OrbitControls</code>](#OrbitControls)  
+**Returns**: <code>number</code> - The current vertical rotation, in radians.  
+<a name="OrbitControls+getAzimuthalAngle"></a>
+
+### orbitControls.getAzimuthalAngle() ⇒ <code>number</code>
+Get the current horizontal rotation, in radians.
+
+**Kind**: instance method of [<code>OrbitControls</code>](#OrbitControls)  
+**Returns**: <code>number</code> - The current horizontal rotation, in radians.  
+<a name="OrbitControls+getDistance"></a>
+
+### orbitControls.getDistance() ⇒ <code>number</code>
+Returns the distance from the camera to the target.
+
+**Kind**: instance method of [<code>OrbitControls</code>](#OrbitControls)  
+**Returns**: <code>number</code> - The distance from the camera to the target.  
+<a name="OrbitControls+listenToKeyEvents"></a>
+
+### orbitControls.listenToKeyEvents(domElement)
+Adds key event listeners to the given DOM element.
+`window` is a recommended argument for using this method.
+
+**Kind**: instance method of [<code>OrbitControls</code>](#OrbitControls)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| domElement | <code>HTMLDOMElement</code> | The DOM element |
+
+<a name="OrbitControls+stopListenToKeyEvents"></a>
+
+### orbitControls.stopListenToKeyEvents()
+Removes the key event listener previously defined with `listenToKeyEvents()`.
+
+**Kind**: instance method of [<code>OrbitControls</code>](#OrbitControls)  
+<a name="OrbitControls+saveState"></a>
+
+### orbitControls.saveState()
+Save the current state of the controls. This can later be recovered with `reset()`.
+
+**Kind**: instance method of [<code>OrbitControls</code>](#OrbitControls)  
+<a name="OrbitControls+reset"></a>
+
+### orbitControls.reset()
+Reset the controls to their state from either the last time the `saveState()`
+was called, or the initial state.
+
+**Kind**: instance method of [<code>OrbitControls</code>](#OrbitControls)  
+<a name="OrbitControls+event_change"></a>
+
+### "change"
+Fires when the camera has been transformed by the controls.
+
+**Kind**: event emitted by [<code>OrbitControls</code>](#OrbitControls)  
+<a name="OrbitControls+event_start"></a>
+
+### "start"
+Fires when an interaction was initiated.
+
+**Kind**: event emitted by [<code>OrbitControls</code>](#OrbitControls)  
+<a name="OrbitControls+event_end"></a>
+
+### "end"
+Fires when an interaction has finished.
+
+**Kind**: event emitted by [<code>OrbitControls</code>](#OrbitControls)  
+<a name="PointerLockControls"></a>
+
+## PointerLockControls ⇐ <code>Controls</code>
+The implementation of this class is based on the [Pointer Lock API](https://developer.mozilla.org/en-US/docs/Web/API/Pointer_Lock_API).
+`PointerLockControls` is a perfect choice for first person 3D games.
+
+```js
+const controls = new PointerLockControls( camera, document.body );
+
+// add event listener to show/hide a UI (e.g. the game's menu)
+controls.addEventListener( 'lock', function () {
+
+	menu.style.display = 'none';
+
+} );
+
+controls.addEventListener( 'unlock', function () {
+
+	menu.style.display = 'block';
+
+} );
+```
+
+**Kind**: global class  
+**Extends**: <code>Controls</code>  
+
+* [PointerLockControls](#PointerLockControls) ⇐ <code>Controls</code>
+    * [new PointerLockControls(camera, domElement)](#new_PointerLockControls_new)
+    * [.isLocked](#PointerLockControls+isLocked) : <code>boolean</code>
+    * [.minPolarAngle](#PointerLockControls+minPolarAngle) : <code>number</code>
+    * [.maxPolarAngle](#PointerLockControls+maxPolarAngle) : <code>number</code>
+    * [.pointerSpeed](#PointerLockControls+pointerSpeed) : <code>number</code>
+    * [.getDirection(v)](#PointerLockControls+getDirection) ⇒ <code>Vector3</code>
+    * [.moveForward(distance)](#PointerLockControls+moveForward)
+    * [.moveRight(distance)](#PointerLockControls+moveRight)
+    * [.lock([unadjustedMovement])](#PointerLockControls+lock)
+    * [.unlock()](#PointerLockControls+unlock)
+    * ["change"](#PointerLockControls+event_change)
+    * ["lock"](#PointerLockControls+event_lock)
+    * ["unlock"](#PointerLockControls+event_unlock)
+
+<a name="new_PointerLockControls_new"></a>
+
+### new PointerLockControls(camera, domElement)
+Constructs a new controls instance.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| camera | <code>Camera</code> |  | The camera that is managed by the controls. |
+| domElement | <code>HTMLDOMElement</code> | <code></code> | The HTML element used for event listeners. |
+
+<a name="PointerLockControls+isLocked"></a>
+
+### pointerLockControls.isLocked : <code>boolean</code>
+Whether the controls are locked or not.
+
+**Kind**: instance property of [<code>PointerLockControls</code>](#PointerLockControls)  
+**Default**: <code>false</code>  
+**Read only**: true  
+<a name="PointerLockControls+minPolarAngle"></a>
+
+### pointerLockControls.minPolarAngle : <code>number</code>
+Camera pitch, lower limit. Range is '[0, Math.PI]' in radians.
+
+**Kind**: instance property of [<code>PointerLockControls</code>](#PointerLockControls)  
+**Default**: <code>0</code>  
+<a name="PointerLockControls+maxPolarAngle"></a>
+
+### pointerLockControls.maxPolarAngle : <code>number</code>
+Camera pitch, upper limit. Range is '[0, Math.PI]' in radians.
+
+**Kind**: instance property of [<code>PointerLockControls</code>](#PointerLockControls)  
+**Default**: <code>Math.PI</code>  
+<a name="PointerLockControls+pointerSpeed"></a>
+
+### pointerLockControls.pointerSpeed : <code>number</code>
+Multiplier for how much the pointer movement influences the camera rotation.
+
+**Kind**: instance property of [<code>PointerLockControls</code>](#PointerLockControls)  
+**Default**: <code>1</code>  
+<a name="PointerLockControls+getDirection"></a>
+
+### pointerLockControls.getDirection(v) ⇒ <code>Vector3</code>
+Returns the look direction of the camera.
+
+**Kind**: instance method of [<code>PointerLockControls</code>](#PointerLockControls)  
+**Returns**: <code>Vector3</code> - The normalized direction vector.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| v | <code>Vector3</code> | The target vector that is used to store the method's result. |
+
+<a name="PointerLockControls+moveForward"></a>
+
+### pointerLockControls.moveForward(distance)
+Moves the camera forward parallel to the xz-plane. Assumes camera.up is y-up.
+
+**Kind**: instance method of [<code>PointerLockControls</code>](#PointerLockControls)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| distance | <code>number</code> | The signed distance. |
+
+<a name="PointerLockControls+moveRight"></a>
+
+### pointerLockControls.moveRight(distance)
+Moves the camera sidewards parallel to the xz-plane.
+
+**Kind**: instance method of [<code>PointerLockControls</code>](#PointerLockControls)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| distance | <code>number</code> | The signed distance. |
+
+<a name="PointerLockControls+lock"></a>
+
+### pointerLockControls.lock([unadjustedMovement])
+Activates the pointer lock.
+
+**Kind**: instance method of [<code>PointerLockControls</code>](#PointerLockControls)  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [unadjustedMovement] | <code>boolean</code> | <code>false</code> | Disables OS-level adjustment for mouse acceleration, and accesses raw mouse input instead. Setting it to true will disable mouse acceleration. |
+
+<a name="PointerLockControls+unlock"></a>
+
+### pointerLockControls.unlock()
+Exits the pointer lock.
+
+**Kind**: instance method of [<code>PointerLockControls</code>](#PointerLockControls)  
+<a name="PointerLockControls+event_change"></a>
+
+### "change"
+Fires when the user moves the mouse.
+
+**Kind**: event emitted by [<code>PointerLockControls</code>](#PointerLockControls)  
+<a name="PointerLockControls+event_lock"></a>
+
+### "lock"
+Fires when the pointer lock status is "locked" (in other words: the mouse is captured).
+
+**Kind**: event emitted by [<code>PointerLockControls</code>](#PointerLockControls)  
+<a name="PointerLockControls+event_unlock"></a>
+
+### "unlock"
+Fires when the pointer lock status is "unlocked" (in other words: the mouse is not captured anymore).
+
+**Kind**: event emitted by [<code>PointerLockControls</code>](#PointerLockControls)  
+<a name="TrackballControls"></a>
+
+## TrackballControls ⇐ <code>Controls</code>
+This class is similar to [OrbitControls](OrbitControls). However, it does not maintain a constant camera
+`up` vector. That means if the camera orbits over the “north” and “south” poles, it does not flip
+to stay "right side up".
+
+**Kind**: global class  
+**Extends**: <code>Controls</code>  
+
+* [TrackballControls](#TrackballControls) ⇐ <code>Controls</code>
+    * [new TrackballControls(object, domElement)](#new_TrackballControls_new)
+    * [.screen](#TrackballControls+screen) : <code>Object</code>
+    * [.rotateSpeed](#TrackballControls+rotateSpeed) : <code>number</code>
+    * [.zoomSpeed](#TrackballControls+zoomSpeed) : <code>number</code>
+    * [.panSpeed](#TrackballControls+panSpeed) : <code>number</code>
+    * [.noRotate](#TrackballControls+noRotate) : <code>boolean</code>
+    * [.noZoom](#TrackballControls+noZoom) : <code>boolean</code>
+    * [.noPan](#TrackballControls+noPan) : <code>boolean</code>
+    * [.staticMoving](#TrackballControls+staticMoving) : <code>boolean</code>
+    * [.dynamicDampingFactor](#TrackballControls+dynamicDampingFactor) : <code>number</code>
+    * [.minDistance](#TrackballControls+minDistance) : <code>number</code>
+    * [.maxDistance](#TrackballControls+maxDistance) : <code>number</code>
+    * [.minZoom](#TrackballControls+minZoom) : <code>number</code>
+    * [.maxZoom](#TrackballControls+maxZoom) : <code>number</code>
+    * [.keys](#TrackballControls+keys) : <code>Array.&lt;string&gt;</code>
+    * [.mouseButtons](#TrackballControls+mouseButtons) : <code>Object</code>
+    * [.target](#TrackballControls+target) : <code>Vector3</code>
+    * [.handleResize()](#TrackballControls+handleResize)
+    * [.reset()](#TrackballControls+reset)
+    * ["change"](#TrackballControls+event_change)
+    * ["start"](#TrackballControls+event_start)
+    * ["end"](#TrackballControls+event_end)
+
+<a name="new_TrackballControls_new"></a>
+
+### new TrackballControls(object, domElement)
+Constructs a new controls instance.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| object | <code>Object3D</code> |  | The object that is managed by the controls. |
+| domElement | <code>HTMLDOMElement</code> | <code></code> | The HTML element used for event listeners. |
+
+<a name="TrackballControls+screen"></a>
+
+### trackballControls.screen : <code>Object</code>
+Represents the properties of the screen. Automatically set when `handleResize()` is called.
+
+**Kind**: instance property of [<code>TrackballControls</code>](#TrackballControls)  
+**Read only**: true  
+<a name="TrackballControls+rotateSpeed"></a>
+
+### trackballControls.rotateSpeed : <code>number</code>
+The rotation speed.
+
+**Kind**: instance property of [<code>TrackballControls</code>](#TrackballControls)  
+**Default**: <code>1</code>  
+<a name="TrackballControls+zoomSpeed"></a>
+
+### trackballControls.zoomSpeed : <code>number</code>
+The zoom speed.
+
+**Kind**: instance property of [<code>TrackballControls</code>](#TrackballControls)  
+**Default**: <code>1.2</code>  
+<a name="TrackballControls+panSpeed"></a>
+
+### trackballControls.panSpeed : <code>number</code>
+The pan speed.
+
+**Kind**: instance property of [<code>TrackballControls</code>](#TrackballControls)  
+**Default**: <code>0.3</code>  
+<a name="TrackballControls+noRotate"></a>
+
+### trackballControls.noRotate : <code>boolean</code>
+Whether rotation is disabled or not.
+
+**Kind**: instance property of [<code>TrackballControls</code>](#TrackballControls)  
+**Default**: <code>false</code>  
+<a name="TrackballControls+noZoom"></a>
+
+### trackballControls.noZoom : <code>boolean</code>
+Whether zooming is disabled or not.
+
+**Kind**: instance property of [<code>TrackballControls</code>](#TrackballControls)  
+**Default**: <code>false</code>  
+<a name="TrackballControls+noPan"></a>
+
+### trackballControls.noPan : <code>boolean</code>
+Whether panning is disabled or not.
+
+**Kind**: instance property of [<code>TrackballControls</code>](#TrackballControls)  
+**Default**: <code>false</code>  
+<a name="TrackballControls+staticMoving"></a>
+
+### trackballControls.staticMoving : <code>boolean</code>
+Whether damping is disabled or not.
+
+**Kind**: instance property of [<code>TrackballControls</code>](#TrackballControls)  
+**Default**: <code>false</code>  
+<a name="TrackballControls+dynamicDampingFactor"></a>
+
+### trackballControls.dynamicDampingFactor : <code>number</code>
+Defines the intensity of damping. Only considered if `staticMoving` is set to `false`.
+
+**Kind**: instance property of [<code>TrackballControls</code>](#TrackballControls)  
+**Default**: <code>0.2</code>  
+<a name="TrackballControls+minDistance"></a>
+
+### trackballControls.minDistance : <code>number</code>
+How far you can dolly in (perspective camera only).
+
+**Kind**: instance property of [<code>TrackballControls</code>](#TrackballControls)  
+**Default**: <code>0</code>  
+<a name="TrackballControls+maxDistance"></a>
+
+### trackballControls.maxDistance : <code>number</code>
+How far you can dolly out (perspective camera only).
+
+**Kind**: instance property of [<code>TrackballControls</code>](#TrackballControls)  
+**Default**: <code>Infinity</code>  
+<a name="TrackballControls+minZoom"></a>
+
+### trackballControls.minZoom : <code>number</code>
+How far you can zoom in (orthographic camera only).
+
+**Kind**: instance property of [<code>TrackballControls</code>](#TrackballControls)  
+**Default**: <code>0</code>  
+<a name="TrackballControls+maxZoom"></a>
+
+### trackballControls.maxZoom : <code>number</code>
+How far you can zoom out (orthographic camera only).
+
+**Kind**: instance property of [<code>TrackballControls</code>](#TrackballControls)  
+**Default**: <code>Infinity</code>  
+<a name="TrackballControls+keys"></a>
+
+### trackballControls.keys : <code>Array.&lt;string&gt;</code>
+This array holds keycodes for controlling interactions.
+
+- When the first defined key is pressed, all mouse interactions (left, middle, right) performs orbiting.
+- When the second defined key is pressed, all mouse interactions (left, middle, right) performs zooming.
+- When the third defined key is pressed, all mouse interactions (left, middle, right) performs panning.
+
+Default is *KeyA, KeyS, KeyD* which represents A, S, D.
+
+**Kind**: instance property of [<code>TrackballControls</code>](#TrackballControls)  
+<a name="TrackballControls+mouseButtons"></a>
+
+### trackballControls.mouseButtons : <code>Object</code>
+This object contains references to the mouse actions used by the controls.
+
+```js
+controls.mouseButtons = {
+	LEFT: THREE.MOUSE.ROTATE,
+	MIDDLE: THREE.MOUSE.DOLLY,
+	RIGHT: THREE.MOUSE.PAN
+}
+```
+
+**Kind**: instance property of [<code>TrackballControls</code>](#TrackballControls)  
+<a name="TrackballControls+target"></a>
+
+### trackballControls.target : <code>Vector3</code>
+The focus point of the controls.
+
+**Kind**: instance property of [<code>TrackballControls</code>](#TrackballControls)  
+<a name="TrackballControls+handleResize"></a>
+
+### trackballControls.handleResize()
+Must be called if the application window is resized.
+
+**Kind**: instance method of [<code>TrackballControls</code>](#TrackballControls)  
+<a name="TrackballControls+reset"></a>
+
+### trackballControls.reset()
+Resets the controls to its initial state.
+
+**Kind**: instance method of [<code>TrackballControls</code>](#TrackballControls)  
+<a name="TrackballControls+event_change"></a>
+
+### "change"
+Fires when the camera has been transformed by the controls.
+
+**Kind**: event emitted by [<code>TrackballControls</code>](#TrackballControls)  
+<a name="TrackballControls+event_start"></a>
+
+### "start"
+Fires when an interaction was initiated.
+
+**Kind**: event emitted by [<code>TrackballControls</code>](#TrackballControls)  
+<a name="TrackballControls+event_end"></a>
+
+### "end"
+Fires when an interaction has finished.
+
+**Kind**: event emitted by [<code>TrackballControls</code>](#TrackballControls)  
+<a name="TransformControls"></a>
+
+## TransformControls ⇐ <code>Controls</code>
+This class can be used to transform objects in 3D space by adapting a similar interaction model
+of DCC tools like Blender. Unlike other controls, it is not intended to transform the scene's camera.
+
+`TransformControls` expects that its attached 3D object is part of the scene graph.
+
+**Kind**: global class  
+**Extends**: <code>Controls</code>  
+
+* [TransformControls](#TransformControls) ⇐ <code>Controls</code>
+    * [new TransformControls(camera, domElement)](#new_TransformControls_new)
+    * [.camera](#TransformControls+camera) : <code>Camera</code>
+    * [.axis](#TransformControls+axis) : <code>string</code>
+    * [.mode](#TransformControls+mode) : <code>&#x27;translate&#x27;</code> \| <code>&#x27;rotate&#x27;</code> \| <code>&#x27;scale&#x27;</code>
+    * [.translationSnap](#TransformControls+translationSnap) : <code>number</code>
+    * [.rotationSnap](#TransformControls+rotationSnap) : <code>number</code>
+    * [.scaleSnap](#TransformControls+scaleSnap) : <code>number</code>
+    * [.space](#TransformControls+space) : <code>&#x27;world&#x27;</code> \| <code>&#x27;local&#x27;</code>
+    * [.size](#TransformControls+size) : <code>number</code>
+    * [.dragging](#TransformControls+dragging) : <code>boolean</code>
+    * [.showX](#TransformControls+showX) : <code>boolean</code>
+    * [.showY](#TransformControls+showY) : <code>boolean</code>
+    * [.showZ](#TransformControls+showZ) : <code>boolean</code>
+    * [.minX](#TransformControls+minX) : <code>number</code>
+    * [.maxX](#TransformControls+maxX) : <code>number</code>
+    * [.minY](#TransformControls+minY) : <code>number</code>
+    * [.maxY](#TransformControls+maxY) : <code>number</code>
+    * [.minZ](#TransformControls+minZ) : <code>number</code>
+    * [.maxZ](#TransformControls+maxZ) : <code>number</code>
+    * [.getHelper()](#TransformControls+getHelper) ⇒ <code>TransformControlsRoot</code>
+    * [.attach(object)](#TransformControls+attach) ⇒ [<code>TransformControls</code>](#TransformControls)
+    * [.detach()](#TransformControls+detach) ⇒ [<code>TransformControls</code>](#TransformControls)
+    * [.reset()](#TransformControls+reset)
+    * [.getRaycaster()](#TransformControls+getRaycaster) ⇒ <code>Raycaster</code>
+    * [.getMode()](#TransformControls+getMode) ⇒ <code>&#x27;translate&#x27;</code> \| <code>&#x27;rotate&#x27;</code> \| <code>&#x27;scale&#x27;</code>
+    * [.setMode(mode)](#TransformControls+setMode)
+    * [.setTranslationSnap(translationSnap)](#TransformControls+setTranslationSnap)
+    * [.setRotationSnap(rotationSnap)](#TransformControls+setRotationSnap)
+    * [.setScaleSnap(scaleSnap)](#TransformControls+setScaleSnap)
+    * [.setSize(size)](#TransformControls+setSize)
+    * [.setSpace(space)](#TransformControls+setSpace)
+    * ["change"](#TransformControls+event_change)
+    * ["mouseDown"](#TransformControls+event_mouseDown)
+    * ["mouseUp"](#TransformControls+event_mouseUp)
+    * ["objectChange"](#TransformControls+event_objectChange)
+
+<a name="new_TransformControls_new"></a>
+
+### new TransformControls(camera, domElement)
+Constructs a new controls instance.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| camera | <code>Camera</code> |  | The camera of the rendered scene. |
+| domElement | <code>HTMLDOMElement</code> | <code></code> | The HTML element used for event listeners. |
+
+<a name="TransformControls+camera"></a>
+
+### transformControls.camera : <code>Camera</code>
+The camera of the rendered scene.
+
+**Kind**: instance property of [<code>TransformControls</code>](#TransformControls)  
+<a name="TransformControls+axis"></a>
+
+### transformControls.axis : <code>string</code>
+The current transformation axis.
+
+**Kind**: instance property of [<code>TransformControls</code>](#TransformControls)  
+<a name="TransformControls+mode"></a>
+
+### transformControls.mode : <code>&#x27;translate&#x27;</code> \| <code>&#x27;rotate&#x27;</code> \| <code>&#x27;scale&#x27;</code>
+The current transformation axis.
+
+**Kind**: instance property of [<code>TransformControls</code>](#TransformControls)  
+**Default**: <code>&#x27;translate&#x27;</code>  
+<a name="TransformControls+translationSnap"></a>
+
+### transformControls.translationSnap : <code>number</code>
+By default, 3D objects are continuously translated. If you set this property to a numeric
+value (world units), you can define in which steps the 3D object should be translated.
+
+**Kind**: instance property of [<code>TransformControls</code>](#TransformControls)  
+**Default**: <code>null</code>  
+<a name="TransformControls+rotationSnap"></a>
+
+### transformControls.rotationSnap : <code>number</code>
+By default, 3D objects are continuously rotated. If you set this property to a numeric
+value (radians), you can define in which steps the 3D object should be rotated.
+
+**Kind**: instance property of [<code>TransformControls</code>](#TransformControls)  
+**Default**: <code>null</code>  
+<a name="TransformControls+scaleSnap"></a>
+
+### transformControls.scaleSnap : <code>number</code>
+By default, 3D objects are continuously scaled. If you set this property to a numeric
+value, you can define in which steps the 3D object should be scaled.
+
+**Kind**: instance property of [<code>TransformControls</code>](#TransformControls)  
+**Default**: <code>null</code>  
+<a name="TransformControls+space"></a>
+
+### transformControls.space : <code>&#x27;world&#x27;</code> \| <code>&#x27;local&#x27;</code>
+Defines in which coordinate space transformations should be performed.
+
+**Kind**: instance property of [<code>TransformControls</code>](#TransformControls)  
+**Default**: <code>&#x27;world&#x27;</code>  
+<a name="TransformControls+size"></a>
+
+### transformControls.size : <code>number</code>
+The size of the helper UI (axes/planes).
+
+**Kind**: instance property of [<code>TransformControls</code>](#TransformControls)  
+**Default**: <code>1</code>  
+<a name="TransformControls+dragging"></a>
+
+### transformControls.dragging : <code>boolean</code>
+Whether dragging is currently performed or not.
+
+**Kind**: instance property of [<code>TransformControls</code>](#TransformControls)  
+**Default**: <code>false</code>  
+**Read only**: true  
+<a name="TransformControls+showX"></a>
+
+### transformControls.showX : <code>boolean</code>
+Whether the x-axis helper should be visible or not.
+
+**Kind**: instance property of [<code>TransformControls</code>](#TransformControls)  
+**Default**: <code>true</code>  
+<a name="TransformControls+showY"></a>
+
+### transformControls.showY : <code>boolean</code>
+Whether the y-axis helper should be visible or not.
+
+**Kind**: instance property of [<code>TransformControls</code>](#TransformControls)  
+**Default**: <code>true</code>  
+<a name="TransformControls+showZ"></a>
+
+### transformControls.showZ : <code>boolean</code>
+Whether the z-axis helper should be visible or not.
+
+**Kind**: instance property of [<code>TransformControls</code>](#TransformControls)  
+**Default**: <code>true</code>  
+<a name="TransformControls+minX"></a>
+
+### transformControls.minX : <code>number</code>
+The minimum allowed X position during translation.
+
+**Kind**: instance property of [<code>TransformControls</code>](#TransformControls)  
+**Default**: <code>-Infinity</code>  
+<a name="TransformControls+maxX"></a>
+
+### transformControls.maxX : <code>number</code>
+The maximum allowed X position during translation.
+
+**Kind**: instance property of [<code>TransformControls</code>](#TransformControls)  
+**Default**: <code>Infinity</code>  
+<a name="TransformControls+minY"></a>
+
+### transformControls.minY : <code>number</code>
+The minimum allowed y position during translation.
+
+**Kind**: instance property of [<code>TransformControls</code>](#TransformControls)  
+**Default**: <code>-Infinity</code>  
+<a name="TransformControls+maxY"></a>
+
+### transformControls.maxY : <code>number</code>
+The maximum allowed Y position during translation.
+
+**Kind**: instance property of [<code>TransformControls</code>](#TransformControls)  
+**Default**: <code>Infinity</code>  
+<a name="TransformControls+minZ"></a>
+
+### transformControls.minZ : <code>number</code>
+The minimum allowed z position during translation.
+
+**Kind**: instance property of [<code>TransformControls</code>](#TransformControls)  
+**Default**: <code>-Infinity</code>  
+<a name="TransformControls+maxZ"></a>
+
+### transformControls.maxZ : <code>number</code>
+The maximum allowed Z position during translation.
+
+**Kind**: instance property of [<code>TransformControls</code>](#TransformControls)  
+**Default**: <code>Infinity</code>  
+<a name="TransformControls+getHelper"></a>
+
+### transformControls.getHelper() ⇒ <code>TransformControlsRoot</code>
+Returns the visual representation of the controls. Add the helper to your scene to
+visually transform the attached  3D object.
+
+**Kind**: instance method of [<code>TransformControls</code>](#TransformControls)  
+**Returns**: <code>TransformControlsRoot</code> - The helper.  
+<a name="TransformControls+attach"></a>
+
+### transformControls.attach(object) ⇒ [<code>TransformControls</code>](#TransformControls)
+Sets the 3D object that should be transformed and ensures the controls UI is visible.
+
+**Kind**: instance method of [<code>TransformControls</code>](#TransformControls)  
+**Returns**: [<code>TransformControls</code>](#TransformControls) - A reference to this controls.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| object | <code>Object3D</code> | The 3D object that should be transformed. |
+
+<a name="TransformControls+detach"></a>
+
+### transformControls.detach() ⇒ [<code>TransformControls</code>](#TransformControls)
+Removes the current 3D object from the controls and makes the helper UI invisible.
+
+**Kind**: instance method of [<code>TransformControls</code>](#TransformControls)  
+**Returns**: [<code>TransformControls</code>](#TransformControls) - A reference to this controls.  
+<a name="TransformControls+reset"></a>
+
+### transformControls.reset()
+Resets the object's position, rotation and scale to when the current transform began.
+
+**Kind**: instance method of [<code>TransformControls</code>](#TransformControls)  
+<a name="TransformControls+getRaycaster"></a>
+
+### transformControls.getRaycaster() ⇒ <code>Raycaster</code>
+Returns the raycaster that is used for user interaction. This object is shared between all
+instances of `TransformControls`.
+
+**Kind**: instance method of [<code>TransformControls</code>](#TransformControls)  
+**Returns**: <code>Raycaster</code> - The internal raycaster.  
+<a name="TransformControls+getMode"></a>
+
+### transformControls.getMode() ⇒ <code>&#x27;translate&#x27;</code> \| <code>&#x27;rotate&#x27;</code> \| <code>&#x27;scale&#x27;</code>
+Returns the transformation mode.
+
+**Kind**: instance method of [<code>TransformControls</code>](#TransformControls)  
+**Returns**: <code>&#x27;translate&#x27;</code> \| <code>&#x27;rotate&#x27;</code> \| <code>&#x27;scale&#x27;</code> - The transformation mode.  
+<a name="TransformControls+setMode"></a>
+
+### transformControls.setMode(mode)
+Sets the given transformation mode.
+
+**Kind**: instance method of [<code>TransformControls</code>](#TransformControls)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| mode | <code>&#x27;translate&#x27;</code> \| <code>&#x27;rotate&#x27;</code> \| <code>&#x27;scale&#x27;</code> | The transformation mode to set. |
+
+<a name="TransformControls+setTranslationSnap"></a>
+
+### transformControls.setTranslationSnap(translationSnap)
+Sets the translation snap.
+
+**Kind**: instance method of [<code>TransformControls</code>](#TransformControls)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| translationSnap | <code>number</code> | The translation snap to set. |
+
+<a name="TransformControls+setRotationSnap"></a>
+
+### transformControls.setRotationSnap(rotationSnap)
+Sets the rotation snap.
+
+**Kind**: instance method of [<code>TransformControls</code>](#TransformControls)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| rotationSnap | <code>number</code> | The rotation snap to set. |
+
+<a name="TransformControls+setScaleSnap"></a>
+
+### transformControls.setScaleSnap(scaleSnap)
+Sets the scale snap.
+
+**Kind**: instance method of [<code>TransformControls</code>](#TransformControls)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| scaleSnap | <code>number</code> | The scale snap to set. |
+
+<a name="TransformControls+setSize"></a>
+
+### transformControls.setSize(size)
+Sets the size of the helper UI.
+
+**Kind**: instance method of [<code>TransformControls</code>](#TransformControls)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| size | <code>number</code> | The size to set. |
+
+<a name="TransformControls+setSpace"></a>
+
+### transformControls.setSpace(space)
+Sets the coordinate space in which transformations are applied.
+
+**Kind**: instance method of [<code>TransformControls</code>](#TransformControls)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| space | <code>&#x27;world&#x27;</code> \| <code>&#x27;local&#x27;</code> | The space to set. |
+
+<a name="TransformControls+event_change"></a>
+
+### "change"
+Fires if any type of change (object or property change) is performed. Property changes
+are separate events you can add event listeners to. The event type is "propertyname-changed".
+
+**Kind**: event emitted by [<code>TransformControls</code>](#TransformControls)  
+<a name="TransformControls+event_mouseDown"></a>
+
+### "mouseDown"
+Fires if a pointer (mouse/touch) becomes active.
+
+**Kind**: event emitted by [<code>TransformControls</code>](#TransformControls)  
+<a name="TransformControls+event_mouseUp"></a>
+
+### "mouseUp"
+Fires if a pointer (mouse/touch) is no longer active.
+
+**Kind**: event emitted by [<code>TransformControls</code>](#TransformControls)  
+<a name="TransformControls+event_objectChange"></a>
+
+### "objectChange"
+Fires if the controlled 3D object is changed.
+
+**Kind**: event emitted by [<code>TransformControls</code>](#TransformControls)  
+<a name="CSMFrustum"></a>
+
